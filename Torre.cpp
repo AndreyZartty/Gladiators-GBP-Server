@@ -1,5 +1,13 @@
-//
-// Created by ruben on 02/05/19.
-//
 
 #include "Torre.h"
+
+
+/**
+ * Representa una Torre
+ *
+ * @since 02/05/19
+ */
+
+Torre::Torre() {
+
+}

@@ -2,8 +2,6 @@
 #ifndef GLADIATORS_GBP_NODE_H
 #define GLADIATORS_GBP_NODE_H
 
-#define ZONE_SIZE 10
-
 #include "Gladiador.h"
 #include "Torre.h"
 
@@ -18,24 +16,35 @@
 class Node {
 
 private:
-    Torre* torre;
-    Gladiador* gladiador1;
-    Gladiador* gladiador2;
-    bool libre;
 
-    int xCoord;
-    int yCoord;
+    int fila;
+    int columna;
     int id;
     Node* parent;
     float gCost;
     float hCost;
     float fCost;
 
+    Torre* torre;
+    Gladiador* gladiador1;
+    Gladiador* gladiador2;
+    bool inAStarPath;
+    bool inBacktrackingPath;
+
+    int zoneSize;
+
+
+
+
+
+
 
 public:
     ///Constructores
     Node();
-    Node(int _xCoord, int _yCoord, Node* _parent);
+    Node(int _fila, int _columna, int _zoneSize);
+    //Node(int _fila, int _columna, Node* _parent);
+
 
     ///Métodos
     float ManhattanDistance(Node* endNode);
@@ -43,15 +52,21 @@ public:
 
     ///Getters & Setters
 
-    //torre
+    Torre* getTorre();
+    void setTorre(Torre* _torre);
+
     //glad1
     //glad2
     //libre
 
-    int getXCoord();
-    void setXCoord(int _xCoord);
-    int getYCoord();
-    void setYCoord(int _yCoord);
+
+    int getFila();
+    void setFila(int _fila);
+    int getColumna();
+    void setColumna(int _columna);
+
+
+
     int getId();
     void setId(int _id);
     Node* getParent();
@@ -62,6 +77,14 @@ public:
     void setHCost(float _hCost);
     float getFCost();
     void setFCost(float _fCost);
+
+    bool isInAStarPath();
+    void setInAStarPath(bool _inAStarPath);
+
+    int getZoneSize();
+    void setZoneSize(int _zoneSize);
+
+
 
 
 };

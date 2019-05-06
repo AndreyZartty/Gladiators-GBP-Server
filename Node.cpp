@@ -1,6 +1,9 @@
 
 #include <math.h>
+#include <iostream>
 #include "Node.h"
+
+using namespace std;
 
 
 /**
@@ -10,9 +13,6 @@
  */
 
 
-
-
-
 ///Constructores
 
 
@@ -20,20 +20,42 @@
  * Constructor sin parametros de Node.
  */
 Node::Node(){
+
+    torre = nullptr;
+    gladiador1 = nullptr;
+    gladiador2 = nullptr;
+
+    zoneSize = -1;
+
+    fila = -1;
+    columna = -1;
+
     parent = nullptr;
+    id = -1;
+    gCost = -1;
+    hCost = -1;
+    fCost = -1;
 }
 
 /**
  * Constructor con paramentros de Node.
- * @param _xCoord
+ * @param _fila
  * @param _yCoord
- * @param _parent
+ * @param _zoneSize
  */
-Node::Node(int _xCoord, int _yCoord, Node* _parent = nullptr) {
-    xCoord = _xCoord;
-    yCoord = _yCoord;
-    parent = _parent;
-    id = yCoord * ZONE_SIZE + yCoord;
+Node::Node(int _fila, int _columna, int _zoneSize) {
+    torre = nullptr;
+    gladiador1 = nullptr;
+    gladiador2 = nullptr;
+
+    zoneSize = _zoneSize;
+
+    fila = _fila;
+    columna = _columna;
+
+
+    parent = nullptr;
+    id = fila * zoneSize + columna;
     gCost = 0;
     hCost = 0;
     fCost = 0;
@@ -58,10 +80,14 @@ float Node::obtainF() {
  * @return distancia
  */
 float Node::ManhattanDistance(Node* endNode) {
-    float x = (float) ( fabs ( xCoord - endNode->getXCoord() ) );
-    float y = (float) ( fabs ( yCoord - endNode->getYCoord() ) );
+    float i = ( fabs ( (float) fila - endNode->getFila() ) );
+    float j = ( fabs ( (float) columna - endNode->getColumna() ) );
 
-    return x + y;
+    int h = i + j;
+
+    setHCost(h);
+
+    return h;
 }
 
 
@@ -69,36 +95,41 @@ float Node::ManhattanDistance(Node* endNode) {
 
 
 /**
- * Getter de la coordenada x del Node.
- * @return x
+ * Getter de Torre del Node.
+ * @return Torre
  */
-int Node::getXCoord() {
-    return xCoord;
+Torre* Node::getTorre(){
+    return torre;
 }
 
 /**
- * Setter de la coordenada x del Node.
- * @param _xCoord
+ * Setter de Torre del Node.
+ * @param _torre
  */
-void Node::setXCoord(int _xCoord) {
-    xCoord = _xCoord;
+void Node::setTorre(Torre* _torre){
+    torre = _torre;
 }
 
-/**
- * Getter de la coordenada y del Node.
- * @return y
- */
-int Node::getYCoord() {
-    return yCoord;
+
+
+int Node::getFila() {
+    return fila;
 }
 
-/**
- * Setter de la coordenada y del Node.
- * @param _yCoord
- */
-void Node::setYCoord(int _yCoord) {
-    yCoord = _yCoord;
+void Node::setFila(int _fila) {
+    fila = _fila;
 }
+
+int Node::getColumna() {
+    return columna;
+}
+
+void Node::setColumna(int _columna) {
+    columna = _columna;
+}
+
+
+
 
 /**
  * Getter del id del Node.
@@ -129,7 +160,7 @@ Node* Node::getParent() {
  * @param _parent
  */
 void Node::setParent(Node* _parent) {
-    parent =_parent;
+    parent = _parent;
 }
 
 /**
@@ -178,4 +209,36 @@ float Node::getFCost() {
  */
 void Node::setFCost(float _fCost) {
     fCost = _fCost;
+}
+
+/**
+ * Getter de inAStarPath de Node.
+ * @return bool
+ */
+bool Node::isInAStarPath() {
+    return inAStarPath;
+}
+
+/**
+ * Setter de inAStarPath de Node.
+ * @param _inAStarPath
+ */
+void Node::setInAStarPath(bool _inAStarPath) {
+    inAStarPath = _inAStarPath;
+}
+
+/**
+ * Getter de zoneSize de Node.
+ * @return zoneSize
+ */
+int Node::getZoneSize(){
+    return zoneSize;
+}
+
+/**
+ * Setter de zoneSize de Node.
+ * @param _zoneSize
+ */
+void Node::setZoneSize(int _zoneSize) {
+    zoneSize = _zoneSize;
 }

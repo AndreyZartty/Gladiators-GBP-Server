@@ -20,11 +20,15 @@ public:
     ///Constructor
     Vector2(int _x, int _y);
 
+    ///Métodos
+    void print();
+
     ///Getters & Setters
     int getX();
     void setX(int _x);
     int getY();
     void setY(int _y);
+
 
 };
 
