@@ -32,13 +32,28 @@ Cuadricula::Cuadricula() {
  */
 void Cuadricula::buildZone(int n) {
 
+    ///Posiciones graficas
+    int x = 380;
+    int y = 100;
+
+    ///Espacio entre cada nodo graficamente
+    int dxy = 450/ZONE_SIZE;
+
     for (int i = 0 ; i < n ; i++) {
         for (int j = 0 ; j < n ; j++) {
+
+            ///Instancia el nuevo nodo
             Node* nNode = new Node(i, j, ZONE_SIZE);
+            ///Es añadido en la cuadricula
             matriz[i][j] = nNode;
-            cout << "["<< i << "," << j <<"]" ;
+
+            ///Ingresa las posiciones graficas de los nodos
+            matriz[i][j]->setXCoord( x + dxy * j );
+            matriz[i][j]->setYCoord( y + dxy * i );
+
+            //cout << "["<< i << "," << j <<"]" ;
         }
-        cout << "" << endl;
+        //cout << "" << endl;
     }
     cout << "\nMatriz de cuadricula lista" << endl;
 }
@@ -49,14 +64,14 @@ void Cuadricula::generateTowers() {
     ///Genera un valor diferente cada vez que se llame a la funcion dependiendo de la hora y fecha.
     srand (time(NULL));
 
-    for (int n = 0; n < 29; n++) {
+    for (int n = 0; n < 3; n++) {
 
         ///Obtiene un int aleatorio
         int i = rand() % (ZONE_SIZE - 1) + 1;
         int j = rand() % (ZONE_SIZE - 1) + 1;
 
         ///Si no posee ya una torre
-        if (matriz[i][j]->getTorre() == nullptr && matriz[i][j]->getId() != 0 && matriz[i][j]->getId() != 99 ) {
+        if (matriz[i][j]->getTorre() == nullptr && matriz[i][j]->getId() != 0 && matriz[i][j]->getId() != ( (ZONE_SIZE-1)*(ZONE_SIZE) + (ZONE_SIZE-1) ) ) {
             matriz[i][j]->setTorre( new Torre() );
             towerIdList.push_back( matriz[i][j]->getId() );
         } else {
@@ -121,8 +136,6 @@ Node* Cuadricula::getNode(int id) {
 
     return nullptr;
 
-
-
 }
 
 
@@ -146,7 +159,11 @@ void Cuadricula::print() {
                 hayTorre = 1;
             }
 
-            cout << " ["<< i << "," << j << "," << id << "," << hayTorre << "," << hCost << "," << parent << "] " ;
+            int x = printee->getXCoord();
+            int y = printee->getYCoord();
+
+            cout << " ["<< i << "," << j << "," << id << "," << hayTorre << ","
+                 << hCost << "," << parent << "," << x << "," << y << "] " ;
 
         }
         cout << "\n" << endl;
@@ -167,6 +184,14 @@ void Cuadricula::printTorres() {
 
             if (matriz[i][j]->isInAStarPath()) {
                 place = "0";
+            }
+
+            if (matriz[i][j]->isInBacktrakingPath()) {
+                place = "X";
+            }
+
+            if (matriz[i][j]->isInAStarPath() && matriz[i][j]->isInBacktrakingPath()) {
+                place = "#";
             }
 
             cout << "["<< place <<"]" ;

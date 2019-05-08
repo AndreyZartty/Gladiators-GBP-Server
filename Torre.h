@@ -11,6 +11,9 @@
 
 
 class Torre {
+    bool flechaSencilla;
+    bool flechaFuego;
+    bool flechaExplosivo;
 
 
 public:

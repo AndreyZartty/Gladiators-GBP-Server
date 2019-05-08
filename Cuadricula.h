@@ -43,11 +43,8 @@ public:
     Node* getNode(int i, int j);
     Node* getNode(int id);
 
-
     void print();
     void printTorres();
-
-
 
 
     ///Getters & Setters

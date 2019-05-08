@@ -20,6 +20,8 @@ Juego::Juego() {
 
     aStarAlgorithm = new AStar(cuadricula);
 
+    backtrackingAlgorithm = new Backtracking(cuadricula);
+
 
 }
 
@@ -27,10 +29,16 @@ Juego::Juego() {
 ///Metodos
 
 
-
+/**
+ * Inicia el algoritmo A*
+ */
 void Juego::doAStar() {
-    cuadricula->calculateHeuristic();
     aStarAlgorithm->n_findPath(nodoInicio, nodoFinal);
+}
+
+void Juego::doBacktracking() {
+    backtrackingAlgorithm->findPath(nodoInicio,nodoFinal);
+    //backtrackingAlgorithm->printVector("pathToGoal");
 }
 
 
@@ -68,4 +76,21 @@ AStar* Juego::getAStarAlgorithm(){
 void Juego::setAStarAlgorithm(AStar* _aStarAlgorithm) {
     aStarAlgorithm = _aStarAlgorithm;
 }
+
+/**
+ * Getter del backtrackingAlgorithm de Juego.
+ * @return _backtrackingAlgorithm
+ */
+Backtracking* Juego::getBacktrackingAlgorithm() {
+    return backtrackingAlgorithm;
+}
+
+/**
+ * Setter del backtrackingAlgorithm de Juego.
+ * @param _backtrackingAlgorithm
+ */
+void Juego::setBacktrackingAlgorithm(Backtracking* _backtrackingAlgorithm) {
+    backtrackingAlgorithm = _backtrackingAlgorithm;
+}
+
 

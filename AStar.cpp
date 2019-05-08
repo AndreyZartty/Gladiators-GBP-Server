@@ -12,6 +12,10 @@
 ///Constructor
 
 
+/**
+ * Constructor de AStar.
+ * @param _cuadricula
+ */
 AStar::AStar(Cuadricula* _cuadricula) {
 
     cuadricula = _cuadricula;
@@ -22,25 +26,21 @@ AStar::AStar(Cuadricula* _cuadricula) {
 
 }
 
-AStar::~AStar() {
-
-}
-
 
 ///Métodos
 
 
-
-
-
+/**
+ * Empezará o continuará el camino por medio de su posición actual y su target.
+ * @param currentPosition
+ * @param targetPosition
+ */
 void AStar::n_findPath(Node* currentPosition, Node* targetPosition) {
 
     string current = "[" + to_string( currentPosition->getFila() ) + "," + to_string( currentPosition->getColumna() ) + "]";
     string target = "[" + to_string( targetPosition->getFila() ) + "," + to_string( targetPosition->getColumna() ) + "]";
 
-    cout << "\nA path will be found between: " + current + " & " + target;
-
-
+    cout << "\nA path will be found between: " + current + " & " + target << endl;
 
     ///En la primera iteracion
     if (!initializedStartGoal) {
@@ -55,6 +55,9 @@ void AStar::n_findPath(Node* currentPosition, Node* targetPosition) {
         ///Limpia pathToGoal
         n_pathToGoal.clear();
 
+        ///Calcula el Heuristicos de la zona
+        cuadricula->calculateHeuristic();
+
 
         n_setStartAndGoal(currentPosition, targetPosition);
         setInitializedStartGoal(true);
@@ -65,12 +68,14 @@ void AStar::n_findPath(Node* currentPosition, Node* targetPosition) {
         n_continuePath(currentPosition);
     }
 
-
-
 }
 
 
-
+/**
+ * Configura el inicio y el target del algoritmo.
+ * @param start
+ * @param goal
+ */
 void AStar::n_setStartAndGoal(Node* start, Node* goal) {
 
     cout << "\nsetStartAndGoal" << endl;
@@ -89,7 +94,10 @@ void AStar::n_setStartAndGoal(Node* start, Node* goal) {
 }
 
 
-
+/**
+ * Comienza a calcular los costos de los caminos al rededor del actual
+ * @param currentNode
+ */
 void AStar::n_continuePath(Node* currentNode){
 
     cout << "\ncontinuePath" << endl;
@@ -121,8 +129,6 @@ void AStar::n_continuePath(Node* currentNode){
 
         }
 
-
-
         setFoundGoal(true);
 
         showPath();
@@ -135,12 +141,9 @@ void AStar::n_continuePath(Node* currentNode){
 
     }
 
-
     else {
 
-
         ///Si el camino debe continuar, se recalcularán los costos de este
-
 
         ///RightNode
         n_pathOpened(currentNode->getFila() + 1, currentNode->getColumna(), currentNode->getGCost() + 10, currentNode);
@@ -175,7 +178,6 @@ void AStar::n_continuePath(Node* currentNode){
             }
         }
 
-
         Node* nextNode = n_getNextNode();
 
         cuadricula->print();
@@ -187,8 +189,14 @@ void AStar::n_continuePath(Node* currentNode){
 }
 
 
-
-
+/**
+ * Verificará si las coordenadas pertenecen a uno ya revisado o a una torre
+ * Si no es así, comparará su valor F y si este es mejor que el nuevo, se actualizan sus parámetros.
+ * @param fila
+ * @param columna
+ * @param newGCost
+ * @param parent
+ */
 void AStar::n_pathOpened(int fila, int columna, float newGCost, Node* parent){
 
     cout << "\npathOpened" << endl;
@@ -250,6 +258,10 @@ void AStar::n_pathOpened(int fila, int columna, float newGCost, Node* parent){
 }
 
 
+/**
+ * Busca cual será el siguiente Node.
+ * @return nextNode
+ */
 Node* AStar::n_getNextNode() {
 
     cout << "getNextNode" << endl;
@@ -281,314 +293,9 @@ Node* AStar::n_getNextNode() {
 
 
 /**
- * Empezará o continuará el camino por medio de su posición actual y su target.
- * @param currentPosition - Vector
- * @param targetPosition - Vector
+ * Imprime el vector deseado.
+ * @param list
  */
-
-/*
-void AStar::findPath(Vector2* currentPosition, Vector2* targetPosition) {
-
-    cout << "\nfindPath" << endl;
-
-    if (!initializedStartGoal) {
-
-        ///Limpia openList
-        for (int i = 0; i < openList.size(); i++) {
-            delete openList[i];
-        }
-        openList.clear();
-
-        ///Limpia visitedList
-        for (int i = 0; i < visitedList.size(); i++) {
-            delete visitedList[i];
-        }
-        visitedList.clear();
-
-        ///Limpia pathToGoal
-        for (int i = 0; i < pathToGoal.size(); i++) {
-            delete pathToGoal[i];
-        }
-        pathToGoal.clear();
-
-        ///Inicializa el startpoint del recorrido
-        Node* start = new Node();
-        start->setXCoord( currentPosition->getX() );
-        start->setYCoord( currentPosition->getY() );
-
-        ///Initialize el goal del recorrido
-        Node* goal = new Node();
-        goal->setXCoord( targetPosition->getX() );
-        goal->setYCoord( targetPosition->getY() );
-
-        setStartAndGoal(start, goal);
-        setInitializedStartGoal(true);
-
-    }
-
-    if (initializedStartGoal)  {
-        continuePath();
-    }
-
-}
- */
-
-
-
-
-/**
- * Configura el inicio y el target del algoritmo.
- * @param start - Node
- * @param goal - Node
- */
-
-/*
-void AStar::setStartAndGoal(Node* start, Node* goal) {
-
-    cout << "\nsetStartAndGoal" << endl;
-
-    ///Instancia el nodo start y el goal
-    startNode = new Node(start->getXCoord(), start->getYCoord(), nullptr);
-    goalNode = new Node(goal->getXCoord(), goal->getYCoord(), goal);
-
-    ///Calcula la Distancia Manhattan del nodo de inicio, configura su G y su padre
-    startNode->setGCost(0);
-    startNode->setHCost( startNode->ManhattanDistance(goalNode) );
-    startNode->setParent(nullptr);
-
-    ///Ingresa el startNode al openList
-    openList.push_back(startNode);
-
-}
- */
-
-
-
-/**
- * Busca cual será el siguiente Node.
- * @return nextNode
- */
-
-/*
-Node* AStar::getNextNode(){
-
-    cout << "\ngetNextNode" << endl;
-
-    ///Numero muy grande para su primera comparacion
-    float bestF = 999999.0f;
-    ///Index para saber donde sera guardado en el vector
-    int nodeIndex = -1;
-    Node* nextNode = nullptr;
-
-    ///Calculo del F
-    for (int i = 0; i < openList.size(); i++) {
-
-        if (openList[i]->obtainF() < bestF) {
-
-            bestF = openList[i]->getFCost();
-            nodeIndex = i;
-
-        }
-    }
-
-
-    if (nodeIndex >= 0) {
-
-        nextNode = openList[nodeIndex];
-        visitedList.push_back(nextNode);
-        openList.erase(openList.begin() + nodeIndex);
-
-    }
-
-    return nextNode;
-
-}
-*/
-
-
-
-
-/**
- * Verificará si las coordenadas pertenecen a uno ya revisado o a una torre
- * Si no es así, comparará su valor F y si este es mejor que el nuevo, se actualizan sus parámetros.
- * @param x - coord
- * @param y - coord
- * @param newGCost - nuevo gCost
- * @param parent - Node
- */
-
-/*
-void AStar::pathOpened(int x, int y, float newGCost, Node* parent){
-
-    cout << "\npathOpened" << endl;
-
-    ///Genera el id para ser comparado
-    int id = y * ZONE_SIZE + x;
-
-    ///Revisa en visitedList si estas x y y pertenecen a uno de los ya visitados por medio de su id
-    for (int i = 0; i < visitedList.size(); i++) {
-
-        if ( id == visitedList[i]->getId() ) {
-            return;
-        }
-    }
-
-    ///Revisa en towerIdList si estas x y y pertenecen a una de las torres por medio de su id
-    for (int i = 0; i < towerIdList.size(); i++) {
-
-        if ( id == towerIdList[i] ) {
-            return;
-        }
-    }
-
-    Node* newChild = new Node(x, y, parent);
-    newChild->setGCost( newGCost );
-    newChild->setHCost( parent->ManhattanDistance(getGoalNode()) );
-
-    ///Se compara el valor de F
-    for (int i = 0; i < openList.size(); i++) {
-
-        if (id == openList[i]->getId()) {
-
-            float newF = newChild->getGCost() + newGCost + openList[i]->getHCost();
-
-            if (openList[i]->obtainF() > newF) {
-
-                openList[i]->setGCost( newChild->getGCost() + newGCost );
-                openList[i]->setParent(newChild);
-
-            }
-            else { ///Si el F no es mejor
-
-                delete newChild;
-                return;
-
-            }
-        }
-    }
-
-    ///Se agrega al openList
-    openList.push_back(newChild);
-
-}
- */
-
-/**
- * Ingresará, en forma de Vectores, el path mas corto que se debe seguir si llega al goal
- * Si no seguirá calculando los costos de los movimientos de los Nodos
- */
-
-/*
-void AStar::continuePath(){
-
-    cout << "\ncontinuePath" << endl;
-
-    if (openList.empty()) {
-        return;
-    }
-
-    Node* currentNode = getNextNode();
-
-
-    ///Si llega al goal comienza a llenar lista del Path
-    if (currentNode->getId() == goalNode->getId()) {
-
-        goalNode->setParent( currentNode->getParent() );
-
-        Node* getPath;
-
-        for (getPath = goalNode; getPath != nullptr; getPath = getPath->getParent()) {
-
-            pathToGoal.push_back( new Vector2( getPath->getXCoord(), getPath->getYCoord() ) );
-
-        }
-
-        setFoundGoal(true);
-
-        cout << "\nCOMPLETE" << endl;
-
-        showPath();
-
-        return;
-
-    }
-    ///Si el camino debe continuar, se recalcularán los costos de este
-    else {
-
-        ///RightNode
-        pathOpened( currentNode->getXCoord() + 1 , currentNode->getYCoord() , currentNode->getGCost() + 10 , currentNode );
-        ///LeftNode
-        pathOpened( currentNode->getXCoord() - 1 , currentNode->getYCoord() , currentNode->getGCost() + 10, currentNode );
-        ///TopNode
-        pathOpened( currentNode->getXCoord() , currentNode->getYCoord() + 1 , currentNode->getGCost() + 10 , currentNode );
-        ///BottomNode
-        pathOpened( currentNode->getXCoord() , currentNode->getYCoord() - 1 , currentNode->getGCost() + 10, currentNode );
-        ///TopLeftNode (Diagonal)
-        pathOpened( currentNode->getXCoord() - 1 , currentNode->getYCoord() + 1 , currentNode->getGCost() + 14, currentNode );
-        ///TopRightNode (Diagonal)
-        pathOpened( currentNode->getXCoord() + 1 , currentNode->getYCoord() + 1 , currentNode->getGCost() + 14, currentNode );
-        ///BottomRightNode (Diagonal)
-        pathOpened( currentNode->getXCoord() - 1 , currentNode->getYCoord() - 1 , currentNode->getGCost() + 14, currentNode );
-        ///BottomRightNode (Diagonal)
-        pathOpened( currentNode->getXCoord() + 1 , currentNode->getYCoord() - 1 , currentNode->getGCost() + 14, currentNode );
-
-
-        ///Saca del open list al revisado, si se encuentra ahi
-        for (int i = 0; i < openList.size(); i++) {
-
-            if ( currentNode->getId() == openList[i]->getId() ) {
-
-                openList.erase( openList.begin() + i );
-
-            }
-        }
-
-
-    }
-
-
-}
-
-*/
-
-/**
- * Obtendrá la primera posición del camino mas corto de la lista
- * @return vector
- */
-
-/*
-Vector2* AStar::nextPathPosition(Gladiador* gladiador) {
-
-    cout << "\nnextPathPosition" << endl;
-
-    int index = 1;
-
-    Vector2* nextPosition = new Vector2(-1,-1);
-
-    nextPosition->setX( pathToGoal[ pathToGoal.size() - index ]->getX() );
-    nextPosition->setY( pathToGoal[ pathToGoal.size() - index ]->getY() );
-
-    //Vector2 distance = nextPosition - gladiador.position;
-
-    if (index < pathToGoal.size()) {
-
-        /*
-        if (distance.length() < radius) {
-
-            pathToGoal.erase( pathToGoal.end() - index );
-
-        }
-
-
-    }
-
-    return nextPosition;
-
-}
-*/
-
-
-
 void AStar::printVector(string list) {
 
     cout << list << endl;
@@ -617,16 +324,18 @@ void AStar::printVector(string list) {
 
     cout << "\n" << endl;
 
-
 }
 
+
+/**
+ * Muestra el path de AStar.
+ */
 void AStar::showPath() {
     printVector("pathToGoal");
 }
 
 
 ///Getters y Setters
-
 
 
 /**

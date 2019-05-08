@@ -35,6 +35,10 @@ Node::Node(){
     gCost = -1;
     hCost = -1;
     fCost = -1;
+
+    xCoord = 0;
+    yCoord = 0;
+
 }
 
 /**
@@ -228,6 +232,22 @@ void Node::setInAStarPath(bool _inAStarPath) {
 }
 
 /**
+ *
+ * @return
+ */
+bool Node::isInBacktrakingPath() {
+    return inBacktrackingPath;
+}
+
+/**
+ *
+ * @param _inBacktrackingPath
+ */
+void Node::setInBacktrakingPath(bool _inBacktrackingPath) {
+    inBacktrackingPath = _inBacktrackingPath;
+}
+
+/**
  * Getter de zoneSize de Node.
  * @return zoneSize
  */
@@ -241,4 +261,36 @@ int Node::getZoneSize(){
  */
 void Node::setZoneSize(int _zoneSize) {
     zoneSize = _zoneSize;
+}
+
+/**
+ *
+ * @return
+ */
+int Node::getXCoord() {
+    return xCoord;
+}
+
+/**
+ *
+ * @param _xCoord
+ */
+void Node::setXCoord(int _xCoord) {
+    xCoord = _xCoord;
+}
+
+/**
+ *
+ * @return
+ */
+int Node::getYCoord() {
+    return yCoord;
+}
+
+/**
+ *
+ * @param _yCoord
+ */
+void Node::setYCoord(int _yCoord) {
+    yCoord =_yCoord;
 }

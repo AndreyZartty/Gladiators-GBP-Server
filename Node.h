@@ -32,6 +32,8 @@ private:
     bool inBacktrackingPath;
 
     int zoneSize;
+    int xCoord;
+    int yCoord;
 
 
 
@@ -80,10 +82,16 @@ public:
 
     bool isInAStarPath();
     void setInAStarPath(bool _inAStarPath);
+    bool isInBacktrakingPath();
+    void setInBacktrakingPath(bool _inBacktrackingPath);
 
     int getZoneSize();
     void setZoneSize(int _zoneSize);
 
+    int getXCoord();
+    void setXCoord(int _xCoord);
+    int getYCoord();
+    void setYCoord(int _yCoord);
 
 
 
