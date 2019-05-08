@@ -34,9 +34,13 @@ int main() {
 
     juego->getCuadricula()->print();
 
+    juego->doBacktracking();
+
     juego->doAStar();
 
-    juego->doBacktracking();
+    juego->reasignarTorres();
+
+    //juego->reasignarTorres();
 
     juego->getCuadricula()->printTorres();
 
