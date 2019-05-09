@@ -64,7 +64,7 @@ void Cuadricula::generateTowers() {
     ///Genera un valor diferente cada vez que se llame a la funcion dependiendo de la hora y fecha.
     srand (time(NULL));
 
-    for (int n = 0; n < 25; n++) {
+    for (int n = 0; n < 19; n++) {
 
         ///Obtiene un int aleatorio
         int i = rand() % (ZONE_SIZE ) ;
