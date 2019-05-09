@@ -142,7 +142,13 @@ string sendCoordTorre(string coord, string i) {
 
 
 
+    juego->doBacktracking();
 
+    juego->doAStar();
+
+    juego->reasignarTorres();
+
+    //juego->reasignarTorres();
 
 
     if ( coord == "x") {

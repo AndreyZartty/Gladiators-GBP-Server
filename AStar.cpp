@@ -42,6 +42,7 @@ void AStar::n_findPath(Node* currentPosition, Node* targetPosition) {
 
     cout << "\nA path will be found between: " + current + " & " + target << endl;
 
+
     ///En la primera iteracion
     if (!initializedStartGoal) {
 

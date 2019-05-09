@@ -22,7 +22,7 @@ Juego::Juego() {
 
     backtrackingAlgorithm = new Backtracking(cuadricula);
 
-
+    //reasignarTorres();
 }
 
 
@@ -34,6 +34,7 @@ Juego::Juego() {
  */
 void Juego::doAStar() {
     aStarAlgorithm->n_findPath(nodoInicio, nodoFinal);
+    cout << " A* Encontro ruta(0 7= NO / 1 = SI) =" << aStarAlgorithm->isFoundGoal()<< endl;
 }
 
 void Juego::doBacktracking() {
@@ -91,6 +92,15 @@ Backtracking* Juego::getBacktrackingAlgorithm() {
  */
 void Juego::setBacktrackingAlgorithm(Backtracking* _backtrackingAlgorithm) {
     backtrackingAlgorithm = _backtrackingAlgorithm;
+}
+
+void Juego::reasignarTorres() {
+    getCuadricula()->generateTowers();
+    doAStar();
+    if(getAStarAlgorithm()->isFoundGoal() == false ){
+        cout << "Recalcular torres" << endl;
+    }
+
 }
 
 
