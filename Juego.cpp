@@ -97,10 +97,16 @@ void Juego::setBacktrackingAlgorithm(Backtracking* _backtrackingAlgorithm) {
 void Juego::reasignarTorres() {
     getCuadricula()->generateTowers();
     doAStar();
+    doBacktracking();
     if(getAStarAlgorithm()->isFoundGoal() == false ){
         cout << "Recalcular torres" << endl;
     }
-
+    else if(getBacktrackingAlgorithm()->isFoundGoal() == false ){
+        cout << "Recalcular torres" << endl;
+    }
+    else{
+        cout << "Si puede seguir" << endl;
+    }
 }
 
 
