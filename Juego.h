@@ -40,8 +40,6 @@ public:
     Backtracking* getBacktrackingAlgorithm();
     void setBacktrackingAlgorithm(Backtracking* _backtrackingAlgorithm);
 
-
-
 };
 
 

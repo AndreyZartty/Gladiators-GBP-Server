@@ -28,6 +28,7 @@ private:
     Node* nodoFinal;
 
     vector<int> towerIdList;
+    vector<int> clientTowerIdList;
 
     int cantTorres;
     bool recorrible;
@@ -51,6 +52,7 @@ public:
     int getSize();
 
     vector<int> getTowerIdList();
+    vector<int> getClientTowerIdList();
 
 };
 

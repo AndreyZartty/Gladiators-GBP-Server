@@ -38,7 +38,7 @@ void Juego::doAStar() {
 
 void Juego::doBacktracking() {
     backtrackingAlgorithm->findPath(nodoInicio,nodoFinal);
-    //backtrackingAlgorithm->printVector("pathToGoal");
+    cout << "Backtracking completed: " << backtrackingAlgorithm->isFoundGoal() << "\n" << endl;
 }
 
 
