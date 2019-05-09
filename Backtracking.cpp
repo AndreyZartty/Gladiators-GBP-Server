@@ -17,6 +17,7 @@ Backtracking::Backtracking(Cuadricula*_cuadricula) {
     cuadricula = _cuadricula;
     towerIdList = cuadricula->getTowerIdList();
     initializedStartGoal = false;
+    foundGoal = false;
 
 }
 
@@ -75,6 +76,8 @@ bool Backtracking::continuePath(Node* currentPosition) {
 
         pathToGoal.push_back(currentPosition->getId());
         currentPosition->setInBacktrakingPath(true);
+
+        setFoundGoal(true);
         return true;
 
     }
@@ -92,6 +95,8 @@ bool Backtracking::continuePath(Node* currentPosition) {
             if (continuePath(nextNodeFila) == true) {
                 pathToGoal.push_back(currentPosition->getId());
                 currentPosition->setInBacktrakingPath(true);
+
+                setFoundGoal(true);
                 return true;
             }
 
@@ -104,6 +109,8 @@ bool Backtracking::continuePath(Node* currentPosition) {
             if (continuePath(nextNodeColumna) == true) {
                 pathToGoal.push_back(currentPosition->getId());
                 currentPosition->setInBacktrakingPath(true);
+
+                setFoundGoal(true);
                 return true;
             }
 
@@ -114,6 +121,7 @@ bool Backtracking::continuePath(Node* currentPosition) {
     }
 
     ///Si no esta dentro de la cuadricula
+    setFoundGoal(false);
     return false;
 
 
@@ -167,7 +175,26 @@ vector<int> Backtracking::getPathToGoal() {
     return pathToGoal;
 }
 
-
+/**
+ *
+ * @return
+ */
 vector<int> Backtracking::getFullPath() {
     return fullPath;
+}
+
+/**
+ *
+ * @return
+ */
+bool Backtracking::isFoundGoal() {
+    return foundGoal;
+}
+
+/**
+ *
+ * @param _foundGoal
+ */
+void Backtracking::setFoundGoal(bool _foundGoal) {
+    foundGoal = _foundGoal;
 }

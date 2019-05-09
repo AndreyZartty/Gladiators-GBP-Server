@@ -19,6 +19,7 @@ private:
     Cuadricula* cuadricula;
 
     bool initializedStartGoal;
+    bool foundGoal;
 
     vector<int> towerIdList;
     vector<int> pathToGoal;
@@ -43,8 +44,10 @@ public:
 
     void setInitializedStartGoal(bool _initializedStartGoal);
 
-    vector<int> getPathToGoal();
+    bool isFoundGoal();
+    void setFoundGoal(bool _foundGoal);
 
+    vector<int> getPathToGoal();
     vector<int> getFullPath();
 
 
