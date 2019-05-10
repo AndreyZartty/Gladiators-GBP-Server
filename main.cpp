@@ -142,11 +142,11 @@ string sendCoordTorre(string coord, string i) {
 
 
 
-    juego->doBacktracking();
+    //juego->doBacktracking();
 
-    juego->doAStar();
+    //juego->doAStar();
 
-    juego->reasignarTorres();
+    //juego->reasignarTorres();
 
     //juego->reasignarTorres();
 
@@ -382,12 +382,14 @@ int main() {
 
     //juego->doAStar();
 
-    juego->doBacktracking();
+    //juego->doBacktracking();
+
+    juego->reasignarTorres();
 
     juego->getCuadricula()->printTorres();
 
 
-    runServer();
+    //runServer();
 
 
 

@@ -61,7 +61,6 @@ void Backtracking::findPath(Node* currentPosition, Node* targetPosition) {
         }
 
     }
-
 }
 
 

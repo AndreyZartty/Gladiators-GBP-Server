@@ -64,7 +64,7 @@ void Cuadricula::generateTowers() {
     ///Genera un valor diferente cada vez que se llame a la funcion dependiendo de la hora y fecha.
     srand (time(NULL));
 
-    for (int n = 0; n < 25; n++) {
+    for (int n = 0; n < 1; n++) {
 
         ///Obtiene un int aleatorio
         int i = rand() % (ZONE_SIZE ) ;
@@ -74,7 +74,7 @@ void Cuadricula::generateTowers() {
         if (matriz[i][j]->getTorre() == nullptr && matriz[i][j]->getId() != 0 && matriz[i][j]->getId() != ( (ZONE_SIZE-1)*(ZONE_SIZE) + (ZONE_SIZE-1) ) ) {
             matriz[i][j]->setTorre( new Torre() );
             towerIdList.push_back( matriz[i][j]->getId() );
-            clientTowerIdList.push_back( matriz[i][j]->getId() );
+            //clientTowerIdList.push_back( matriz[i][j]->getId() );
         } else {
             n--;
         }
@@ -237,6 +237,6 @@ vector<int> Cuadricula::getTowerIdList() {
  * Getter de clientTowerIdList de Cuadricula.
  * @return lista de Towers
  */
-vector<int> Cuadricula::getClientTowerIdList() {
-    return towerIdList;
+vector<int> Cuadricula::getPosibleTowerIdList() {
+    return posibleTowerIdList;
 }

@@ -98,10 +98,11 @@ void Juego::reasignarTorres() {
     getCuadricula()->generateTowers();
     doAStar();
     doBacktracking();
-    if(getAStarAlgorithm()->isFoundGoal() == false ){
+    if(!getAStarAlgorithm()->isFoundGoal()){
         cout << "Recalcular torres" << endl;
+        return;
     }
-    else if(getBacktrackingAlgorithm()->isFoundGoal() == false ){
+    if(!getBacktrackingAlgorithm()->isFoundGoal()){
         cout << "Recalcular torres" << endl;
     }
     else{
