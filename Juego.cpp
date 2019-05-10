@@ -1,6 +1,7 @@
 
 #include "Juego.h"
 
+
 /**
  * Representa el Juego
  *
@@ -14,14 +15,10 @@
 Juego::Juego() {
 
     cuadricula = new Cuadricula();
-
-    nodoInicio = cuadricula->getNode(0,0);
-    nodoFinal = cuadricula->getNode(cuadricula->getSize() - 1, cuadricula->getSize() - 1);
-
+    nodoInicio = cuadricula->getNodoInicial();
+    nodoFinal = cuadricula->getNodoFinal();
     aStarAlgorithm = new AStar(cuadricula);
-
     backtrackingAlgorithm = new Backtracking(cuadricula);
-
 
 }
 
@@ -33,12 +30,64 @@ Juego::Juego() {
  * Inicia el algoritmo A*
  */
 void Juego::doAStar() {
-    aStarAlgorithm->n_findPath(nodoInicio, nodoFinal);
+    aStarAlgorithm->findPath(nodoInicio, nodoFinal);
 }
 
+/**
+ * Inicia el algoritmo Backtracking
+ */
 void Juego::doBacktracking() {
     backtrackingAlgorithm->findPath(nodoInicio,nodoFinal);
-    cout << "Backtracking completed: " << backtrackingAlgorithm->isFoundGoal() << "\n" << endl;
+}
+
+/**
+ * Inicia ambos algoritmos y previamente establece todas sus condiciones de inicio
+ */
+void Juego::doAlgorithms() {
+
+    cout << "Doing Algorithms\n" << endl;
+
+    ///Genera las Torres
+    cuadricula->generateTowers();
+    ///Calcula el Heuristico para el A*
+    //cuadricula->calculateHeuristic();
+
+    ///Imprime solo las torres
+    cuadricula->printTorres();
+
+    ///Repone los booleans del A*
+    aStarAlgorithm->setInitializedStartGoal(false);
+    aStarAlgorithm->setFoundGoal(false);
+
+    ///Repone los booleans del Backtracking
+    backtrackingAlgorithm->setInitializedStartGoal(false);
+    backtrackingAlgorithm->setFoundGoal(false);
+
+    ///Hace el algortimo A*
+    doAStar();
+
+    ///Hace el algoritmo Backtracking
+    doBacktracking();
+
+    ///Verificacion de si el algortimo A* ha sido completado
+    if ( aStarAlgorithm->isFoundGoal() ) {
+        cout << "A* Completed" << endl;
+    } else {
+        cout << "A* Failed" << endl;
+    }
+
+    ///Verificacion de si el algortimo Backtracking ha sido completado
+    if (backtrackingAlgorithm->isFoundGoal()) {
+        cout << "Backtracking Completed" << endl;
+    } else {
+        cout << "Backtracking Failed" << endl;
+    }
+
+    ///Imprime los caminos
+    cuadricula->printTorres();
+
+    return;
+
 }
 
 
@@ -92,5 +141,3 @@ Backtracking* Juego::getBacktrackingAlgorithm() {
 void Juego::setBacktrackingAlgorithm(Backtracking* _backtrackingAlgorithm) {
     backtrackingAlgorithm = _backtrackingAlgorithm;
 }
-
-

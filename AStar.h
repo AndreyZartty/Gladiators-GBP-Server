@@ -14,21 +14,23 @@ using namespace std;
 
 /**
  * Representa al Algortimo Pathfinding A*
+ *
+ * @since 01/05/19
  */
 
 
 class AStar {
 
 private:
+
     Cuadricula* cuadricula;
     bool initializedStartGoal;
     bool foundGoal;
-    vector<int> n_openList;
+    vector<int> openList;
     vector<int> closedList;
-    vector<int> n_pathToGoal;
+    vector<int> pathToGoal;
     Node* startNode;
     Node* goalNode;
-    vector<int> towerIdList;
 
 public:
 
@@ -36,15 +38,16 @@ public:
 
     AStar(Cuadricula* _cuadricula);
 
+
     ///Métodos
 
-    void n_findPath(Node* currentPosition, Node* targetPosition);
-    void n_setStartAndGoal(Node* start, Node* goal);
-    void n_continuePath(Node* currentNode);
-    void n_pathOpened(int fila, int columna, float newGCost, Node* parent);
-    Node* n_getNextNode();
+    void findPath(Node *currentPosition, Node *targetPosition);
+    void setStartAndGoal(Node *start, Node *goal);
+    void continuePath(Node *currentNode);
+    void pathOpened(int fila, int columna, float newGCost, Node *parent);
+    Node* getNextNode();
     void printVector(string list);
-    void showPath();
+    vector<int> showPath();
 
 
     ///Getters & Setters

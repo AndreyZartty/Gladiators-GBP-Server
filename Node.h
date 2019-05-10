@@ -24,51 +24,33 @@ private:
     float gCost;
     float hCost;
     float fCost;
-
     Torre* torre;
-    Gladiador* gladiador1;
-    Gladiador* gladiador2;
     bool inAStarPath;
     bool inBacktrackingPath;
-
     int zoneSize;
     int xCoord;
     int yCoord;
-
-
-
-
-
+    Gladiador* gladiador1;
+    Gladiador* gladiador2;
 
 
 public:
+
     ///Constructores
     Node();
     Node(int _fila, int _columna, int _zoneSize);
-    //Node(int _fila, int _columna, Node* _parent);
-
 
     ///Métodos
     float ManhattanDistance(Node* endNode);
     float obtainF();
 
     ///Getters & Setters
-
     Torre* getTorre();
     void setTorre(Torre* _torre);
-
-    //glad1
-    //glad2
-    //libre
-
-
     int getFila();
     void setFila(int _fila);
     int getColumna();
     void setColumna(int _columna);
-
-
-
     int getId();
     void setId(int _id);
     Node* getParent();
@@ -79,21 +61,16 @@ public:
     void setHCost(float _hCost);
     float getFCost();
     void setFCost(float _fCost);
-
     bool isInAStarPath();
     void setInAStarPath(bool _inAStarPath);
-    bool isInBacktrakingPath();
-    void setInBacktrakingPath(bool _inBacktrackingPath);
-
+    bool isInBacktrackingPath();
+    void setInBacktrackingPath(bool _inBacktrackingPath);
     int getZoneSize();
     void setZoneSize(int _zoneSize);
-
     int getXCoord();
     void setXCoord(int _xCoord);
     int getYCoord();
     void setYCoord(int _yCoord);
-
-
 
 };
 

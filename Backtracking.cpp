@@ -9,9 +9,13 @@
  */
 
 
-///Métodos
+///Constructor
 
 
+/**
+ * Constructor de Backtracking.
+ * @param _cuadricula
+ */
 Backtracking::Backtracking(Cuadricula*_cuadricula) {
 
     cuadricula = _cuadricula;
@@ -22,16 +26,15 @@ Backtracking::Backtracking(Cuadricula*_cuadricula) {
 }
 
 
+///Métodos
 
 
+/**
+ * Buscará el camino entre dos Nodes por medio del algoritmo Backtracking.
+ * @param currentPosition
+ * @param targetPosition
+ */
 void Backtracking::findPath(Node* currentPosition, Node* targetPosition) {
-
-    string current = "[" + to_string( currentPosition->getFila() ) + "," + to_string( currentPosition->getColumna() ) + "]";
-    string target = "[" + to_string( targetPosition->getFila() ) + "," + to_string( targetPosition->getColumna() ) + "]";
-
-    cout << "\nA path will be found between: " + current + " & " + target;
-
-
 
     ///En la primera iteracion
     if (!initializedStartGoal) {
@@ -39,24 +42,24 @@ void Backtracking::findPath(Node* currentPosition, Node* targetPosition) {
         ///Limpia pathToGoal
         pathToGoal.clear();
 
+        ///Limpia fullPath
+        fullPath.clear();
 
         ///Instancia el nodo start y el goal
         startNode = currentPosition;
         goalNode = targetPosition;
 
-
         ///Agregar el primer nodo al Path
-        //pathToGoal.push_back(currentPosition->getId());
+        pathToGoal.push_back(currentPosition->getId());
 
-
+        ///Hace el boolean true para saber que ya comenzó
         setInitializedStartGoal(true);
 
     }
 
+    ///Para continuar el algoritmo
     if (initializedStartGoal)  {
-        if (continuePath(currentPosition) == true) {
-            printVector("pathToGoal");
-            printVector("fullPath");
+        if ( continuePath(currentPosition) ) {
             return;
         }
 
@@ -64,18 +67,20 @@ void Backtracking::findPath(Node* currentPosition, Node* targetPosition) {
 
 }
 
-
-
+/**
+ * Continua el paso del algoritmo
+ * @param currentPosition
+ * @return
+ */
 bool Backtracking::continuePath(Node* currentPosition) {
-
-    cout << "\ncontinuePath: " << currentPosition->getId() << endl;
 
     fullPath.push_back(currentPosition->getId());
 
+    ///Cuando llega al deseado
     if (currentPosition->getId() == goalNode->getId()) {
 
         pathToGoal.push_back(currentPosition->getId());
-        currentPosition->setInBacktrakingPath(true);
+        currentPosition->setInBacktrackingPath(true);
 
         setFoundGoal(true);
         return true;
@@ -86,18 +91,18 @@ bool Backtracking::continuePath(Node* currentPosition) {
     if ( currentPosition->getId() < ( (cuadricula->getSize())*(cuadricula->getSize()) + (cuadricula->getSize()) )
         && currentPosition->getTorre() == nullptr) {
 
-        cout << "In zone" << endl;
-
         if (currentPosition->getFila() + 1 < cuadricula->getSize()) {
 
             Node* nextNodeFila = cuadricula->getNode(currentPosition->getFila() + 1, currentPosition->getColumna());
 
-            if (continuePath(nextNodeFila) == true) {
+            if ( continuePath(nextNodeFila) ) {
+
                 pathToGoal.push_back(currentPosition->getId());
-                currentPosition->setInBacktrakingPath(true);
+                currentPosition->setInBacktrackingPath(true);
 
                 setFoundGoal(true);
                 return true;
+
             }
 
         }
@@ -106,12 +111,14 @@ bool Backtracking::continuePath(Node* currentPosition) {
 
             Node* nextNodeColumna = cuadricula->getNode(currentPosition->getFila(), currentPosition->getColumna() + 1 );
 
-            if (continuePath(nextNodeColumna) == true) {
+            if ( continuePath(nextNodeColumna) ) {
+
                 pathToGoal.push_back(currentPosition->getId());
-                currentPosition->setInBacktrakingPath(true);
+                currentPosition->setInBacktrackingPath(true);
 
                 setFoundGoal(true);
                 return true;
+
             }
 
             fullPath.push_back(currentPosition->getId());
@@ -124,12 +131,13 @@ bool Backtracking::continuePath(Node* currentPosition) {
     setFoundGoal(false);
     return false;
 
-
-
 }
 
 
-
+/**
+ * Imprime el vector deseado
+ * @param list
+ */
 void Backtracking::printVector(string list) {
 
     cout << "\n" << list << endl;
@@ -145,14 +153,23 @@ void Backtracking::printVector(string list) {
     if (list == "fullPath") {
         for (int i = 0; i < fullPath.size(); i++) {
 
-            cout << fullPath[i] << endl;
+            cout << fullPath[i] << " ";
 
         }
     }
 
     cout << "\n" << endl;
 
+}
 
+
+/**
+ * Muestra y retorna el path de Backtracking.
+ * @return path
+ */
+vector<int> Backtracking::showPath() {
+    printVector("pathToGoal");
+    return pathToGoal;
 }
 
 
@@ -176,7 +193,7 @@ vector<int> Backtracking::getPathToGoal() {
 }
 
 /**
- *
+ * Getter del fullPath de Backtracking.
  * @return
  */
 vector<int> Backtracking::getFullPath() {
@@ -184,17 +201,25 @@ vector<int> Backtracking::getFullPath() {
 }
 
 /**
- *
- * @return
+ * Getter de foundGoal de Backtracking.
+ * @return bool
  */
 bool Backtracking::isFoundGoal() {
     return foundGoal;
 }
 
 /**
- *
+ * Setter de foundGoal de Backtracking.
  * @param _foundGoal
  */
 void Backtracking::setFoundGoal(bool _foundGoal) {
     foundGoal = _foundGoal;
+}
+
+/**
+ * Setter de la cuadricula de Backtracking.
+ * @param _cuadricula
+ */
+void Backtracking::setCuadricula(Cuadricula *_cuadricula) {
+    cuadricula = _cuadricula;
 }

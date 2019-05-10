@@ -235,7 +235,7 @@ void Node::setInAStarPath(bool _inAStarPath) {
  *
  * @return
  */
-bool Node::isInBacktrakingPath() {
+bool Node::isInBacktrackingPath() {
     return inBacktrackingPath;
 }
 
@@ -243,7 +243,7 @@ bool Node::isInBacktrakingPath() {
  *
  * @param _inBacktrackingPath
  */
-void Node::setInBacktrakingPath(bool _inBacktrackingPath) {
+void Node::setInBacktrackingPath(bool _inBacktrackingPath) {
     inBacktrackingPath = _inBacktrackingPath;
 }
 

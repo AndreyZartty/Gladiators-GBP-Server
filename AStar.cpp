@@ -19,8 +19,6 @@
 AStar::AStar(Cuadricula* _cuadricula) {
 
     cuadricula = _cuadricula;
-    towerIdList = cuadricula->getTowerIdList();
-
     initializedStartGoal = false;
     foundGoal = false;
 
@@ -35,37 +33,32 @@ AStar::AStar(Cuadricula* _cuadricula) {
  * @param currentPosition
  * @param targetPosition
  */
-void AStar::n_findPath(Node* currentPosition, Node* targetPosition) {
-
-    string current = "[" + to_string( currentPosition->getFila() ) + "," + to_string( currentPosition->getColumna() ) + "]";
-    string target = "[" + to_string( targetPosition->getFila() ) + "," + to_string( targetPosition->getColumna() ) + "]";
-
-    cout << "\nA path will be found between: " + current + " & " + target << endl;
+void AStar::findPath(Node *currentPosition, Node *targetPosition) {
 
     ///En la primera iteracion
     if (!initializedStartGoal) {
 
-
         ///Limpia openList
-        n_openList.clear();
+        openList.clear();
 
         ///Limpia visitedList
         closedList.clear();
 
         ///Limpia pathToGoal
-        n_pathToGoal.clear();
+        pathToGoal.clear();
 
         ///Calcula el Heuristicos de la zona
         cuadricula->calculateHeuristic();
 
-
-        n_setStartAndGoal(currentPosition, targetPosition);
+        ///Modifica los nodos inicial y final
+        setStartAndGoal(currentPosition, targetPosition);
         setInitializedStartGoal(true);
 
     }
 
+    ///Continua el algoritmo si no es la primera vez
     if (initializedStartGoal)  {
-        n_continuePath(currentPosition);
+        continuePath(currentPosition);
     }
 
 }
@@ -76,9 +69,7 @@ void AStar::n_findPath(Node* currentPosition, Node* targetPosition) {
  * @param start
  * @param goal
  */
-void AStar::n_setStartAndGoal(Node* start, Node* goal) {
-
-    cout << "\nsetStartAndGoal" << endl;
+void AStar::setStartAndGoal(Node *start, Node *goal) {
 
     ///Instancia el nodo start y el goal
     startNode = start;
@@ -86,10 +77,9 @@ void AStar::n_setStartAndGoal(Node* start, Node* goal) {
 
     ///Calcula la Distancia Manhattan del nodo de inicio, configura su G y su padre
     startNode->setGCost(0);
-    //startNode->setParent(nullptr);
 
     ///Ingresa el startNode al openList
-    n_openList.push_back(startNode->getId());
+    openList.push_back(startNode->getId());
 
 }
 
@@ -98,15 +88,9 @@ void AStar::n_setStartAndGoal(Node* start, Node* goal) {
  * Comienza a calcular los costos de los caminos al rededor del actual
  * @param currentNode
  */
-void AStar::n_continuePath(Node* currentNode){
+void AStar::continuePath(Node *currentNode){
 
-    cout << "\ncontinuePath" << endl;
-
-    if (startNode->getParent() == nullptr) {
-        cout << "NULL PARENT" << endl;
-    }
-
-    if (n_openList.empty()) {
+    if (openList.empty()) {
         return;
     }
 
@@ -119,11 +103,9 @@ void AStar::n_continuePath(Node* currentNode){
 
         Node* getPath;
 
-        cout << "\nCOMPLETE" << endl;
-
         for (getPath = goalNode; getPath != nullptr; getPath = getPath->getParent()) {
 
-            n_pathToGoal.push_back( getPath->getId() );
+            pathToGoal.push_back( getPath->getId() );
 
             getPath->setInAStarPath(true);
 
@@ -131,11 +113,7 @@ void AStar::n_continuePath(Node* currentNode){
 
         setFoundGoal(true);
 
-        showPath();
-
-        cout << "COMPLETEx2\n" << endl;
-
-        cuadricula->printTorres();
+        //showPath();
 
         return;
 
@@ -146,43 +124,37 @@ void AStar::n_continuePath(Node* currentNode){
         ///Si el camino debe continuar, se recalcularán los costos de este
 
         ///RightNode
-        n_pathOpened(currentNode->getFila() + 1, currentNode->getColumna(), currentNode->getGCost() + 10, currentNode);
+        pathOpened(currentNode->getFila() + 1, currentNode->getColumna(), currentNode->getGCost() + 10, currentNode);
         ///LeftNode
-        n_pathOpened(currentNode->getFila() - 1, currentNode->getColumna(), currentNode->getGCost() + 10, currentNode);
+        pathOpened(currentNode->getFila() - 1, currentNode->getColumna(), currentNode->getGCost() + 10, currentNode);
         ///TopNode
-        n_pathOpened(currentNode->getFila(), currentNode->getColumna() + 1, currentNode->getGCost() + 10, currentNode);
+        pathOpened(currentNode->getFila(), currentNode->getColumna() + 1, currentNode->getGCost() + 10, currentNode);
         ///BottomNode
-        n_pathOpened(currentNode->getFila(), currentNode->getColumna() - 1, currentNode->getGCost() + 10, currentNode);
+        pathOpened(currentNode->getFila(), currentNode->getColumna() - 1, currentNode->getGCost() + 10, currentNode);
         ///TopLeftNode (Diagonal)
-        n_pathOpened(currentNode->getFila() - 1, currentNode->getColumna() + 1, currentNode->getGCost() + 14,
-                     currentNode);
+        pathOpened(currentNode->getFila() - 1, currentNode->getColumna() + 1, currentNode->getGCost() + 14, currentNode);
         ///TopRightNode (Diagonal)
-        n_pathOpened(currentNode->getFila() + 1, currentNode->getColumna() + 1, currentNode->getGCost() + 14,
-                     currentNode);
+        pathOpened(currentNode->getFila() + 1, currentNode->getColumna() + 1, currentNode->getGCost() + 14, currentNode);
         ///BottomRightNode (Diagonal)
-        n_pathOpened(currentNode->getFila() - 1, currentNode->getColumna() - 1, currentNode->getGCost() + 14,
-                     currentNode);
+        pathOpened(currentNode->getFila() - 1, currentNode->getColumna() - 1, currentNode->getGCost() + 14, currentNode);
         ///BottomRightNode (Diagonal)
-        n_pathOpened(currentNode->getFila() + 1, currentNode->getColumna() - 1, currentNode->getGCost() + 14,
-                     currentNode);
+        pathOpened(currentNode->getFila() + 1, currentNode->getColumna() - 1, currentNode->getGCost() + 14, currentNode);
 
 
         ///Saca del open list al revisado, si se encuentra ahi
-        for (int i = 0; i < n_openList.size(); i++) {
+        for (int i = 0; i < openList.size(); i++) {
 
-            if (currentNode->getId() == n_openList[i]) {
+            if (currentNode->getId() == openList[i]) {
 
-                n_openList.erase(n_openList.begin() + i);
+                openList.erase(openList.begin() + i);
                 closedList.push_back(currentNode->getId());
 
             }
         }
 
-        Node* nextNode = n_getNextNode();
+        Node* nextNode = getNextNode();
 
-        cuadricula->print();
-
-        n_findPath(nextNode,goalNode);
+        findPath(nextNode, goalNode);
 
     }
 
@@ -197,13 +169,7 @@ void AStar::n_continuePath(Node* currentNode){
  * @param newGCost
  * @param parent
  */
-void AStar::n_pathOpened(int fila, int columna, float newGCost, Node* parent){
-
-    cout << "\npathOpened" << endl;
-
-    if (startNode->getParent() == nullptr) {
-        cout << "NULL PARENT" << endl;
-    }
+void AStar::pathOpened(int fila, int columna, float newGCost, Node *parent){
 
     ///Si se sale de la cuadricula
     if (fila < 0 || columna < 0 || fila > ZONE_SIZE - 1 || columna > ZONE_SIZE - 1) {
@@ -222,16 +188,14 @@ void AStar::n_pathOpened(int fila, int columna, float newGCost, Node* parent){
     }
 
     ///Revisa en towerIdList si estas x y y pertenecen a una de las torres por medio de su id
-    for (int i = 0; i < towerIdList.size(); i++) {
+    for (int i = 0; i < cuadricula->getTowerIdList().size(); i++) {
 
-        if ( id == towerIdList[i] ) {
+        if ( id == cuadricula->getTowerIdList()[i] ) {
             return;
         }
     }
 
-
     Node* child = cuadricula->getNode(fila, columna);
-
 
     ///Si no está en el open list
     if (child->getGCost() == 0) {
@@ -240,10 +204,7 @@ void AStar::n_pathOpened(int fila, int columna, float newGCost, Node* parent){
         child->setParent(parent);
         child->obtainF();
         ///Se agrega al openList
-        n_openList.push_back(child->getId());
-
-        printVector("openList");
-        printVector("closedList");
+        openList.push_back(child->getId());
 
     }
     ///Si el G es mayor que el nuevo, su padre cambiara
@@ -262,23 +223,16 @@ void AStar::n_pathOpened(int fila, int columna, float newGCost, Node* parent){
  * Busca cual será el siguiente Node.
  * @return nextNode
  */
-Node* AStar::n_getNextNode() {
-
-    cout << "getNextNode" << endl;
-
-    if (startNode->getParent() == nullptr) {
-        cout << "NULL PARENT" << endl;
-    }
+Node* AStar::getNextNode() {
 
     Node* next;
 
     int lowest = 99999999;
 
     ///Se recorre openList para encontrar el Node con el F mas pequeño
-    for (int i = 0; i < n_openList.size(); i++) {
+    for (int i = 0; i < openList.size(); i++) {
 
-
-        Node* temp = cuadricula->getNode(n_openList[i]);
+        Node* temp = cuadricula->getNode(openList[i]);
 
         ///Modifica el F mas pequeño para ser comparado
         if ( temp->getFCost() < lowest) {
@@ -301,9 +255,9 @@ void AStar::printVector(string list) {
     cout << list << endl;
 
     if (list == "openList") {
-        for (int i = 0; i < n_openList.size(); i++) {
+        for (int i = 0; i < openList.size(); i++) {
 
-            cout << n_openList[i] << endl;
+            cout << openList[i] << endl;
 
         }
     }
@@ -315,9 +269,9 @@ void AStar::printVector(string list) {
         }
     }
     else if (list == "pathToGoal") {
-        for (int i = 0; i < n_pathToGoal.size(); i++) {
+        for (int i = 0; i < pathToGoal.size(); i++) {
 
-            cout << n_pathToGoal[i] << endl;
+            cout << pathToGoal[i] << endl;
 
         }
     }
@@ -328,10 +282,12 @@ void AStar::printVector(string list) {
 
 
 /**
- * Muestra el path de AStar.
+ * Muestra y retorna el path de AStar.
+ * @return path
  */
-void AStar::showPath() {
+vector<int> AStar::showPath() {
     printVector("pathToGoal");
+    return pathToGoal;
 }
 
 

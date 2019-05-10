@@ -1,6 +1,7 @@
 
 #include "Cuadricula.h"
 
+
 /**
  * Representa la cuadricula
  *
@@ -12,14 +13,13 @@
  * Constructor de Cuadricula
  */
 Cuadricula::Cuadricula() {
+
+    ///Se genera la matriz
     buildZone(ZONE_SIZE);
 
-    nodoInicio = matriz[0][0];
+    ///Nodos inicial y final
+    nodoInicial = matriz[0][0];
     nodoFinal = matriz[ZONE_SIZE - 1][ZONE_SIZE - 1];
-
-    generateTowers();
-
-
 
 }
 
@@ -51,11 +51,10 @@ void Cuadricula::buildZone(int n) {
             matriz[i][j]->setXCoord( x + dxy * j );
             matriz[i][j]->setYCoord( y + dxy * i );
 
-            //cout << "["<< i << "," << j <<"]" ;
         }
-        //cout << "" << endl;
+
     }
-    cout << "\nMatriz de cuadricula lista" << endl;
+
 }
 
 
@@ -64,11 +63,11 @@ void Cuadricula::generateTowers() {
     ///Genera un valor diferente cada vez que se llame a la funcion dependiendo de la hora y fecha.
     srand (time(NULL));
 
-    for (int n = 0; n < 19; n++) {
+    for (int n = 0; n < 10; n++) {
 
         ///Obtiene un int aleatorio
-        int i = rand() % (ZONE_SIZE ) ;
-        int j = rand() % (ZONE_SIZE ) ;
+        int i = rand() % (ZONE_SIZE) ;
+        int j = rand() % (ZONE_SIZE) ;
 
         ///Si no posee ya una torre
         if (matriz[i][j]->getTorre() == nullptr && matriz[i][j]->getId() != 0 && matriz[i][j]->getId() != ( (ZONE_SIZE-1)*(ZONE_SIZE) + (ZONE_SIZE-1) ) ) {
@@ -82,13 +81,14 @@ void Cuadricula::generateTowers() {
     }
 
     ///IMPRIMIR VECTOR
+    cout << "Tower Id's: ";
     for (int i = 0; i < towerIdList.size(); i++) {
 
         if (i == 0) {
             cout << "[" << towerIdList[i] << ", ";
         }
         else if (i == towerIdList.size() - 1) {
-            cout << towerIdList[i] << "]" << endl;
+            cout << towerIdList[i] << "]\n" << endl;
         }
         else {
             cout << towerIdList[i] << ", ";
@@ -119,13 +119,22 @@ void Cuadricula::calculateHeuristic() {
 
 }
 
-
+/**
+ * Obtiene un nodo por medio de su fila y su columna
+ * @param i - fila
+ * @param j - columna
+ * @return Node
+ */
 Node* Cuadricula::getNode(int i, int j) {
     return matriz[i][j];
 }
 
+/**
+ * Obtiene un nodo por medio de su id
+ * @param id - id
+ * @return Node
+ */
 Node* Cuadricula::getNode(int id) {
-
 
     for (int i = 0 ; i < size ; i++) {
         for (int j = 0 ; j < size ; j++) {
@@ -137,13 +146,16 @@ Node* Cuadricula::getNode(int id) {
             }
 
         }
+
     }
 
     return nullptr;
 
 }
 
-
+/**
+ * Imprime toda la matriz con las caracteristicas de cada nodo.
+ */
 void Cuadricula::print() {
     for (int i = 0 ; i < size ; i++) {
         for (int j = 0 ; j < size ; j++) {
@@ -159,7 +171,6 @@ void Cuadricula::print() {
                 parent = printee->getParent()->getId();
             }
 
-
             if (printee->getTorre() != nullptr) {
                 hayTorre = 1;
             }
@@ -173,11 +184,14 @@ void Cuadricula::print() {
         }
         cout << "\n" << endl;
     }
-    cout << "\nMatriz de cuadricula lista" << endl;
+    cout << "Matriz de cuadricula lista\n\n" << endl;
 }
 
-
+/**
+ * Imprime la matriz con las torres, y los caminos de ambos algoritmos.
+ */
 void Cuadricula::printTorres() {
+    cout << "" << endl;
     for (int i = 0 ; i < size ; i++) {
         for (int j = 0 ; j < size ; j++) {
 
@@ -191,11 +205,11 @@ void Cuadricula::printTorres() {
                 place = "0";
             }
 
-            if (matriz[i][j]->isInBacktrakingPath()) {
+            if (matriz[i][j]->isInBacktrackingPath()) {
                 place = "X";
             }
 
-            if (matriz[i][j]->isInAStarPath() && matriz[i][j]->isInBacktrakingPath()) {
+            if (matriz[i][j]->isInAStarPath() && matriz[i][j]->isInBacktrackingPath()) {
                 place = "#";
             }
 
@@ -204,12 +218,8 @@ void Cuadricula::printTorres() {
         }
         cout << "" << endl;
     }
-    cout << "\nMatriz de cuadricula lista" << endl;
+    cout << "\n" << endl;
 }
-
-
-
-
 
 
 ///Getters & Setters
@@ -239,4 +249,20 @@ vector<int> Cuadricula::getTowerIdList() {
  */
 vector<int> Cuadricula::getClientTowerIdList() {
     return towerIdList;
+}
+
+/**
+ * Getter del NodoInicial de Cuadricula.
+ * @return Node
+ */
+Node *Cuadricula::getNodoInicial() {
+    return nodoInicial;
+}
+
+/**
+ * Getter del NodoFinal de Cuadricula.
+ * @return Node
+ */
+Node* Cuadricula::getNodoFinal() {
+    return nodoFinal;
 }
