@@ -35,6 +35,7 @@ AStar::AStar(Cuadricula* _cuadricula) {
  */
 void AStar::findPath(Node *currentPosition, Node *targetPosition) {
 
+
     ///En la primera iteracion
     if (!initializedStartGoal) {
 

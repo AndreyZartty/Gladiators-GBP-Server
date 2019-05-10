@@ -37,6 +37,8 @@ public:
     void setAStarAlgorithm(AStar* _aStarAlgorithm);
     Backtracking* getBacktrackingAlgorithm();
     void setBacktrackingAlgorithm(Backtracking* _backtrackingAlgorithm);
+    void reasignarTorres();
+
 
 };
 
