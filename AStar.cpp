@@ -328,10 +328,12 @@ void AStar::printVector(string list) {
 
 
 /**
- * Muestra el path de AStar.
+ * Muestra y retorna el path de AStar.
+ * @return path
  */
-void AStar::showPath() {
+vector<int> AStar::showPath() {
     printVector("pathToGoal");
+    return n_pathToGoal;
 }
 
 

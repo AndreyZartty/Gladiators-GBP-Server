@@ -44,7 +44,7 @@ public:
     void n_pathOpened(int fila, int columna, float newGCost, Node* parent);
     Node* n_getNextNode();
     void printVector(string list);
-    void showPath();
+    vector<int> showPath();
 
 
     ///Getters & Setters

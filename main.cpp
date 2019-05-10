@@ -139,12 +139,6 @@ string sendCoordTorre(string coord, string i) {
     }
 
 
-
-
-
-
-
-
     if ( coord == "x") {
 
         coordToSendTorre = -1;
@@ -175,6 +169,194 @@ string sendCoordTorre(string coord, string i) {
 
         return json_object_to_json_string(jobjYCoordTorre);
 
+    }
+
+}
+
+
+string sendCoordGladiador(string poblacion, string coord, string i) {
+
+    int index = stoi(i);
+
+    int vectorSize;
+
+    int coordToSendGladiator;
+
+    ///Guarda el tamaño del vector dependiendo de su poblacion
+    if (poblacion == "1") {
+        vectorSize = (int) juego->getAStarAlgorithm()->showPath().size();
+    }
+    else if (poblacion == "2") {
+        vectorSize = (int) juego->getBacktrackingAlgorithm()->showPath().size();
+    }
+
+
+    ///Cuando continua dentro del vector
+    if (index < vectorSize) {
+
+        if (poblacion == "1") {
+
+            int id = juego->getAStarAlgorithm()->showPath()[index];
+
+            if ( coord == "x") {
+
+                coordToSendGladiator = juego->getCuadricula()->getNode( id )->getXCoord();
+
+                cout<<"\nxCoordGladiador: " << coordToSendGladiator << endl;
+
+                json_object *jobjXCoordGladiador = json_object_new_object();
+
+                json_object *jstringXCoordGladiador = json_object_new_string(to_string(coordToSendGladiator).c_str());
+
+                json_object_object_add(jobjXCoordGladiador,"XCOORDGP1", jstringXCoordGladiador);
+
+                return json_object_to_json_string(jobjXCoordGladiador);
+
+            }
+            else if (coord == "y") {
+
+                coordToSendGladiator = juego->getCuadricula()->getNode( id )->getYCoord();
+
+                cout<<"\nyCoordGladiador: " << coordToSendGladiator << endl;
+
+                json_object *jobjYCoordGladiador = json_object_new_object();
+
+                json_object *jstringYCoordGladiador = json_object_new_string(to_string(coordToSendGladiator).c_str());
+
+                json_object_object_add(jobjYCoordGladiador,"YCOORDGP1", jstringYCoordGladiador);
+
+                return json_object_to_json_string(jobjYCoordGladiador);
+
+            }
+            else {
+
+                coordToSendGladiator = -1;
+
+            }
+
+
+        } else if (poblacion == "2") {
+
+            int id = juego->getBacktrackingAlgorithm()->showPath()[index];
+
+            if ( coord == "x") {
+
+                coordToSendGladiator = juego->getCuadricula()->getNode( id )->getXCoord();
+
+                cout<<"\nxCoordGladiador: " << coordToSendGladiator << endl;
+
+                json_object *jobjXCoordGladiador = json_object_new_object();
+
+                json_object *jstringXCoordGladiador = json_object_new_string(to_string(coordToSendGladiator).c_str());
+
+                json_object_object_add(jobjXCoordGladiador,"XCOORDGP2", jstringXCoordGladiador);
+
+                return json_object_to_json_string(jobjXCoordGladiador);
+
+            }
+            else if (coord == "y") {
+
+                coordToSendGladiator = juego->getCuadricula()->getNode( id )->getYCoord();
+
+                cout<<"\nyCoordGladiador: " << coordToSendGladiator << endl;
+
+                json_object *jobjYCoordGladiador = json_object_new_object();
+
+                json_object *jstringYCoordGladiador = json_object_new_string(to_string(coordToSendGladiator).c_str());
+
+                json_object_object_add(jobjYCoordGladiador,"YCOORDGP2", jstringYCoordGladiador);
+
+                return json_object_to_json_string(jobjYCoordGladiador);
+
+            }
+            else {
+
+                coordToSendGladiator = -1;
+
+            }
+
+        } else {
+            cout << "No existe esta poblacion." << endl;
+        }
+
+    }
+
+    ///Cuando ya ha terminado el vector
+    else {
+
+
+        if (poblacion == "1") {
+
+
+            if (coord == "x") {
+
+                coordToSendGladiator = -1;
+
+                cout << "\nxCoordGladiador: " << coordToSendGladiator << endl;
+
+                json_object *jobjXCoordGP1 = json_object_new_object();
+
+                json_object *jstringXCoordGladiadorGP1 = json_object_new_string(
+                        to_string(coordToSendGladiator).c_str());
+
+                json_object_object_add(jobjXCoordGP1, "XCOORDGP1", jstringXCoordGladiadorGP1);
+
+                return json_object_to_json_string(jobjXCoordGP1);
+
+            } else if (coord == "y") {
+
+                coordToSendGladiator = -1;
+
+                cout << "\nyCoordGladiador: " << coordToSendGladiator << endl;
+
+                json_object *jobjYCoordGP1 = json_object_new_object();
+
+                json_object *jstringYCoordGladiadorGP1 = json_object_new_string(
+                        to_string(coordToSendGladiator).c_str());
+
+                json_object_object_add(jobjYCoordGP1, "YCOORDGP1", jstringYCoordGladiadorGP1);
+
+                return json_object_to_json_string(jobjYCoordGP1);
+
+            }
+
+        } else if (poblacion == "2") {
+
+
+            if (coord == "x") {
+
+                coordToSendGladiator = -1;
+
+                cout << "\nxCoordGladiador: " << coordToSendGladiator << endl;
+
+                json_object *jobjXCoordGP2 = json_object_new_object();
+
+                json_object *jstringXCoordGladiadorGP2 = json_object_new_string(
+                        to_string(coordToSendGladiator).c_str());
+
+                json_object_object_add(jobjXCoordGP2, "XCOORDGP2", jstringXCoordGladiadorGP2);
+
+                return json_object_to_json_string(jobjXCoordGP2);
+
+            } else if (coord == "y") {
+
+                coordToSendGladiator = -1;
+
+                cout << "\nyCoordGladiador: " << coordToSendGladiator << endl;
+
+                json_object *jobjYCoordGP2 = json_object_new_object();
+
+                json_object *jstringYCoordGladiadorGP2 = json_object_new_string(
+                        to_string(coordToSendGladiator).c_str());
+
+                json_object_object_add(jobjYCoordGP2, "YCOORDGP2", jstringYCoordGladiadorGP2);
+
+                return json_object_to_json_string(jobjYCoordGP2);
+
+            }
+
+
+        }
 
     }
 
@@ -182,6 +364,11 @@ string sendCoordTorre(string coord, string i) {
 }
 
 
+
+/**
+ * Corre el servidor
+ * @return int
+ */
 int runServer() {
 
     int fd, fd2;
@@ -297,14 +484,12 @@ int runServer() {
             json_object *parsed_jsonXCoordGP1 = json_tokener_parse(buff);
             json_object_object_get_ex(parsed_jsonXCoordGP1, "XCOORDGP1", &tempXCoordGP1);
 
-
             ///KEY: YCOORDGP1
             ///Obtiene la coordenada y del gladiador de la poblacion 1
             struct json_object *tempYCoordGP1;
             cout<<"YCoordGP1"<<endl;
             json_object *parsed_jsonYCoordGP1 = json_tokener_parse(buff);
             json_object_object_get_ex(parsed_jsonYCoordGP1, "YCOORDGP1", &tempYCoordGP1);
-
 
             ///KEY: XCOORDGP2
             ///Obtiene la coordenada x del gladiador de la poblacion 2
@@ -313,7 +498,6 @@ int runServer() {
             json_object *parsed_jsonXCoordGP2 = json_tokener_parse(buff);
             json_object_object_get_ex(parsed_jsonXCoordGP2, "XCOORDGP2", &tempXCoordGP2);
 
-
             ///KEY: YCOORDGP2
             ///Obtiene la coordenada y del gladiador de la poblacion 2
             struct json_object *tempYCoordGP2;
@@ -321,14 +505,12 @@ int runServer() {
             json_object *parsed_jsonYCoordGP2 = json_tokener_parse(buff);
             json_object_object_get_ex(parsed_jsonYCoordGP2, "YCOORDGP2", &tempYCoordGP2);
 
-
             ///KEY: ASTAR
             ///Genera la ejecucion del algoritmo AStar (A*)
             struct json_object *tempAStar;
             cout<<"AStar"<<endl;
             json_object *parsed_jsonAStar = json_tokener_parse(buff);
             json_object_object_get_ex(parsed_jsonAStar, "ASTAR", &tempAStar);
-
 
             ///KEY: BACKTRACKING
             ///Genera la ejecucion del algoritmo Backtracking
@@ -370,7 +552,6 @@ int runServer() {
                 send(fd2, yCoord.c_str(), MAXDATASIZE, 0);
             }
 
-
             ///Obtendra un request para obtener la coordenada x de la torre deseada
             ///Verifica que reciba los KEYS: XCOORDTORRE
             if (json_object_get_string(tempXCoordTorre) != 0 ) {
@@ -388,6 +569,70 @@ int runServer() {
                 ///Envio al cliente
                 send(fd2, yCoordTorre.c_str(), MAXDATASIZE, 0);
             }
+
+
+
+
+
+
+            ///Obtendra un request para obtener
+            ///Verifica que reciba los KEYS: XCOORDGP1
+            if (json_object_get_string(tempXCoordGP1) != 0 ) {
+                ///JSON saliente del servidor
+                string xCoordGP1 = sendCoordGladiador("1","x",json_object_get_string(tempXCoordGP1));
+                ///Envio al cliente
+                send(fd2, xCoordGP1.c_str(), MAXDATASIZE, 0);
+            }
+
+            ///Obtendra un request para obtener
+            ///Verifica que reciba los KEYS: YCOORDGP1
+            if (json_object_get_string(tempYCoordGP1) != 0 ) {
+                ///JSON saliente del servidor
+                string yCoordGP1 = sendCoordGladiador("1","y",json_object_get_string(tempYCoordGP1));
+                ///Envio al cliente
+                send(fd2, yCoordGP1.c_str(), MAXDATASIZE, 0);
+            }
+
+            ///Obtendra un request para obtener
+            ///Verifica que reciba los KEYS: XCOORDGP2
+            if (json_object_get_string(tempXCoordGP2) != 0 ) {
+                ///JSON saliente del servidor
+                string xCoordGP2 = sendCoordGladiador("2","x",json_object_get_string(tempXCoordGP2));
+                ///Envio al cliente
+                send(fd2, xCoordGP2.c_str(), MAXDATASIZE, 0);
+            }
+
+            ///Obtendra un request para obtener
+            ///Verifica que reciba los KEYS: YCOORDGP2
+            if (json_object_get_string(tempYCoordGP2) != 0 ) {
+                ///JSON saliente del servidor
+                string yCoordGP2 = sendCoordGladiador("2","y",json_object_get_string(tempYCoordGP2));
+                ///Envio al cliente
+                send(fd2, yCoordGP2.c_str(), MAXDATASIZE, 0);
+            }
+
+
+
+
+
+/*
+            ///Obtendra un request para obtener
+            ///Verifica que reciba los KEYS: ASTAR
+            if (json_object_get_string(tempAStar) != 0 ) {
+                ///JSON saliente del servidor
+                string aStar = sendAStar("",json_object_get_string(tempAStar));
+                ///Envio al cliente
+                send(fd2, aStar.c_str(), MAXDATASIZE, 0);
+            }
+
+            ///Obtendra un request para obtener
+            ///Verifica que reciba los KEYS: BACKTRACKING
+            if (json_object_get_string(tempBacktracking) != 0 ) {
+                ///JSON saliente del servidor
+                string backtracking = sendBacktracking("",json_object_get_string(tempBacktracking));
+                ///Envio al cliente
+                send(fd2, backtracking.c_str(), MAXDATASIZE, 0);
+            }*/
 
         }
 
@@ -425,61 +670,21 @@ int main() {
 
     juego->getCuadricula()->print();
 
-    //juego->doAStar();
-
-    juego->doBacktracking();
-
-    juego->getCuadricula()->printTorres();
-
-
-    runServer();
-
-
-
-
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-
-    cout << "Testing\n" << endl;
-
-    Juego* juego = new Juego();
-
-    juego->getCuadricula()->printTorres();
-
-    juego->getCuadricula()->print();
-
     juego->doAStar();
 
     juego->doBacktracking();
 
     juego->getCuadricula()->printTorres();
 
-    return 0;
+    cout << "\n\n\n\n\n" << endl;
 
-*/
-//}
+    juego->getAStarAlgorithm()->showPath();
+
+    juego->getBacktrackingAlgorithm()->showPath();
+
+
+    ///Corre el servidor
+    runServer();
+
+
+}

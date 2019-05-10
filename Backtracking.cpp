@@ -156,6 +156,16 @@ void Backtracking::printVector(string list) {
 }
 
 
+/**
+ * Muestra y retorna el path de Backtracking.
+ * @return path
+ */
+vector<int> Backtracking::showPath() {
+    printVector("pathToGoal");
+    return pathToGoal;
+}
+
+
 ///Getters & Setters
 
 
