@@ -6,7 +6,7 @@
 #include <iostream>
 #include <vector>
 
-#define ZONE_SIZE 10
+#define ZONE_SIZE 6
 
 using namespace std;
 
@@ -23,15 +23,11 @@ class Cuadricula {
 private:
     int size = ZONE_SIZE;
     Node* matriz [ZONE_SIZE][ZONE_SIZE];
-
-    Node* nodoInicio;
+    Node* nodoInicial;
     Node* nodoFinal;
-
     vector<int> towerIdList;
     vector<int> clientTowerIdList;
 
-    int cantTorres;
-    bool recorrible;
 
 public:
     ///Constructor
@@ -43,14 +39,13 @@ public:
     void calculateHeuristic();
     Node* getNode(int i, int j);
     Node* getNode(int id);
-
     void print();
     void printTorres();
 
-
     ///Getters & Setters
     int getSize();
-
+    Node* getNodoInicial();
+    Node* getNodoFinal();
     vector<int> getTowerIdList();
     vector<int> getClientTowerIdList();
 

@@ -16,43 +16,37 @@
 class Backtracking {
 
 private:
-    Cuadricula* cuadricula;
 
+    Cuadricula* cuadricula;
     bool initializedStartGoal;
     bool foundGoal;
-
     vector<int> towerIdList;
     vector<int> pathToGoal;
     vector<int> fullPath;
-
     Node* startNode;
     Node* goalNode;
+
 
 public:
 
     ///Constructor
     explicit Backtracking(Cuadricula* _cuadricula);
 
+
     ///Métodos
     void findPath(Node* currentPosition, Node* targetPosition);
-    void setStartAndGoal(Node* start, Node* goal);
     bool continuePath(Node* currentPosition);
-
     void printVector(string list);
     vector<int> showPath();
 
 
-
     ///Getters & Setters
-
+    void setCuadricula(Cuadricula* _cuadricula);
     void setInitializedStartGoal(bool _initializedStartGoal);
-
     bool isFoundGoal();
     void setFoundGoal(bool _foundGoal);
-
     vector<int> getPathToGoal();
     vector<int> getFullPath();
-
 
 };
 

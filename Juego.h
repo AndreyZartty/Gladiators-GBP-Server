@@ -10,27 +10,25 @@
 
 class Juego {
 private:
+
     Cuadricula* cuadricula;
     AStar* aStarAlgorithm;
     Backtracking* backtrackingAlgorithm;
-
-
+    Node* nodoInicio;
+    Node* nodoFinal;
     Gladiador* gladiador1;
     Gladiador* gladiador2;
 
-    Node* nodoInicio;
-    Node* nodoFinal;
-
-
-
 
 public:
+
     ///Constructor
     Juego();
 
     ///Metodos
     void doAStar();
     void doBacktracking();
+    void doAlgorithms();
 
     ///Getters & Setters
     Cuadricula* getCuadricula();

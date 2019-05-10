@@ -13,20 +13,23 @@
 #define BACKLOG 4
 #define MAXDATASIZE 1000
 
-
 #include <iostream>
 #include "Juego.h"
 
 
+/**
+ * Main del programa
+ * @since 30/04/19
+ */
+
+
+///Instancia estatica del juego
 static Juego* juego = new Juego();
 
 
-
-
-
 /**
- * Retorna al cliente el tamaño de la Zona de Intimidación
- * @return
+ * Retorna al cliente el tamaño de la Zona de Intimidación.
+ * @return JSON
  */
 string sendZoneSize() {
 
@@ -44,8 +47,12 @@ string sendZoneSize() {
 
 }
 
-
-
+/**
+ * Retora la coordenada del Nodo deseada.
+ * @param coord
+ * @param id
+ * @return JSON
+ */
 string sendCoord(string coord, string id) {
 
     int coordToSend;
@@ -86,6 +93,12 @@ string sendCoord(string coord, string id) {
 
 }
 
+/**
+ * Retorna la coordenada de la Torre deseada.
+ * @param coord
+ * @param i
+ * @return JSON
+ */
 string sendCoordTorre(string coord, string i) {
 
     int index = stoi(i);
@@ -134,10 +147,7 @@ string sendCoordTorre(string coord, string i) {
 
         }
 
-
-
     }
-
 
     if ( coord == "x") {
 
@@ -173,7 +183,13 @@ string sendCoordTorre(string coord, string i) {
 
 }
 
-
+/**
+ * Retorna la coordenada para el Gladiador deseado.
+ * @param poblacion
+ * @param coord
+ * @param i
+ * @return JSON
+ */
 string sendCoordGladiador(string poblacion, string coord, string i) {
 
     int index = stoi(i);
@@ -189,7 +205,6 @@ string sendCoordGladiador(string poblacion, string coord, string i) {
     else if (poblacion == "2") {
         vectorSize = (int) juego->getBacktrackingAlgorithm()->showPath().size();
     }
-
 
     ///Cuando continua dentro del vector
     if (index < vectorSize) {
@@ -228,12 +243,12 @@ string sendCoordGladiador(string poblacion, string coord, string i) {
                 return json_object_to_json_string(jobjYCoordGladiador);
 
             }
+
             else {
 
                 coordToSendGladiator = -1;
 
             }
-
 
         } else if (poblacion == "2") {
 
@@ -254,6 +269,7 @@ string sendCoordGladiador(string poblacion, string coord, string i) {
                 return json_object_to_json_string(jobjXCoordGladiador);
 
             }
+
             else if (coord == "y") {
 
                 coordToSendGladiator = juego->getCuadricula()->getNode( id )->getYCoord();
@@ -276,7 +292,9 @@ string sendCoordGladiador(string poblacion, string coord, string i) {
             }
 
         } else {
+
             cout << "No existe esta poblacion." << endl;
+
         }
 
     }
@@ -355,15 +373,11 @@ string sendCoordGladiador(string poblacion, string coord, string i) {
 
             }
 
-
         }
 
     }
 
-
 }
-
-
 
 /**
  * Corre el servidor
@@ -570,11 +584,6 @@ int runServer() {
                 send(fd2, yCoordTorre.c_str(), MAXDATASIZE, 0);
             }
 
-
-
-
-
-
             ///Obtendra un request para obtener
             ///Verifica que reciba los KEYS: XCOORDGP1
             if (json_object_get_string(tempXCoordGP1) != 0 ) {
@@ -612,10 +621,7 @@ int runServer() {
             }
 
 
-
-
-
-/*
+            /*
             ///Obtendra un request para obtener
             ///Verifica que reciba los KEYS: ASTAR
             if (json_object_get_string(tempAStar) != 0 ) {
@@ -634,18 +640,16 @@ int runServer() {
                 send(fd2, backtracking.c_str(), MAXDATASIZE, 0);
             }*/
 
-        }
 
+        }
 
         ///Reestablece el buffer
         memset(buff, 0, MAXDATASIZE);
-
 
         cout <<
              "\n\n--------------------------------------------------------------------------------"
              "END--------------------------------------------------------------------------------\n"
              << endl;
-
 
     }
 
@@ -654,37 +658,17 @@ int runServer() {
 }
 
 
-
-
 /**
  * Main del programa
- * @since 30/04/19
  */
 int main() {
 
-    cout << "Testing\n" << endl;
+    ///Corre los algoritmos
+    juego->doAlgorithms();
 
-
-
-    juego->getCuadricula()->printTorres();
-
-    juego->getCuadricula()->print();
-
-    juego->doAStar();
-
-    juego->doBacktracking();
-
-    juego->getCuadricula()->printTorres();
-
-    cout << "\n\n\n\n\n" << endl;
-
-    juego->getAStarAlgorithm()->showPath();
-
-    juego->getBacktrackingAlgorithm()->showPath();
-
+    cout << "No va a correr gay" << endl;
 
     ///Corre el servidor
     runServer();
-
 
 }
