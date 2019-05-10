@@ -303,7 +303,7 @@ int runServer() {
             struct json_object *tempYCoordGP1;
             cout<<"YCoordGP1"<<endl;
             json_object *parsed_jsonYCoordGP1 = json_tokener_parse(buff);
-            json_object_object_get_ex(parsed_jsonYCoordGP1, "YCoordGP1", &tempYCoordGP1);
+            json_object_object_get_ex(parsed_jsonYCoordGP1, "YCOORDGP1", &tempYCoordGP1);
 
 
             ///KEY: XCOORDGP2
@@ -311,7 +311,7 @@ int runServer() {
             struct json_object *tempXCoordGP2;
             cout<<"XCoordGP2"<<endl;
             json_object *parsed_jsonXCoordGP2 = json_tokener_parse(buff);
-            json_object_object_get_ex(parsed_jsonXCoordGP2, "XCoordGP2", &tempXCoordGP2);
+            json_object_object_get_ex(parsed_jsonXCoordGP2, "XCOORDGP2", &tempXCoordGP2);
 
 
             ///KEY: YCOORDGP2
@@ -319,7 +319,7 @@ int runServer() {
             struct json_object *tempYCoordGP2;
             cout<<"YCoordGP2"<<endl;
             json_object *parsed_jsonYCoordGP2 = json_tokener_parse(buff);
-            json_object_object_get_ex(parsed_jsonYCoordGP2, "YCoordGP2", &tempYCoordGP2);
+            json_object_object_get_ex(parsed_jsonYCoordGP2, "YCOORDGP2", &tempYCoordGP2);
 
 
             ///KEY: ASTAR
@@ -327,7 +327,7 @@ int runServer() {
             struct json_object *tempAStar;
             cout<<"AStar"<<endl;
             json_object *parsed_jsonAStar = json_tokener_parse(buff);
-            json_object_object_get_ex(parsed_jsonAStar, "AStar", &tempAStar);
+            json_object_object_get_ex(parsed_jsonAStar, "ASTAR", &tempAStar);
 
 
             ///KEY: BACKTRACKING
@@ -335,7 +335,7 @@ int runServer() {
             struct json_object *tempBacktracking;
             cout<<"Backtracking"<<endl;
             json_object *parsed_jsonBacktracking = json_tokener_parse(buff);
-            json_object_object_get_ex(parsed_jsonBacktracking, "Backtracking", &tempBacktracking);
+            json_object_object_get_ex(parsed_jsonBacktracking, "BACKTRACKING", &tempBacktracking);
 
 
 
