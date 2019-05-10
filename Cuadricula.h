@@ -6,7 +6,7 @@
 #include <iostream>
 #include <vector>
 
-#define ZONE_SIZE 6
+#define ZONE_SIZE 10
 
 using namespace std;
 
@@ -25,8 +25,11 @@ private:
     Node* matriz [ZONE_SIZE][ZONE_SIZE];
     Node* nodoInicial;
     Node* nodoFinal;
+    vector<int> verfifiedNotTowersIdList;
+
+private:
     vector<int> towerIdList;
-    vector<int> clientTowerIdList;
+    vector<int> posibleTowerIdList;
 
 
 public:
@@ -41,13 +44,15 @@ public:
     Node* getNode(int id);
     void print();
     void printTorres();
+    void addPosibleTowerIdList();
 
     ///Getters & Setters
     int getSize();
     Node* getNodoInicial();
     Node* getNodoFinal();
     vector<int> getTowerIdList();
-    vector<int> getClientTowerIdList();
+    vector<int> getPosibleTowerIdList();
+    vector<int> getVerfifiedNotTowersIdList();
 
 };
 
