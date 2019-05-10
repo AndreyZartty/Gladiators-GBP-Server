@@ -90,7 +90,7 @@ string sendCoordTorre(string coord, string i) {
 
     int index = stoi(i);
 
-    int vectorSize = (int) juego->getCuadricula()->getClientTowerIdList().size();
+    int vectorSize = (int) juego->getCuadricula()->getPosibleTowerIdList().size();
 
     int coordToSendTorre;
 
@@ -142,13 +142,7 @@ string sendCoordTorre(string coord, string i) {
 
 
 
-    //juego->doBacktracking();
 
-    //juego->doAStar();
-
-    //juego->reasignarTorres();
-
-    //juego->reasignarTorres();
 
 
     if ( coord == "x") {

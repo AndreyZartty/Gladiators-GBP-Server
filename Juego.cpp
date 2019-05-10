@@ -34,7 +34,7 @@ Juego::Juego() {
  */
 void Juego::doAStar() {
     aStarAlgorithm->n_findPath(nodoInicio, nodoFinal);
-    cout << " A* Encontro ruta(0 7= NO / 1 = SI) =" << aStarAlgorithm->isFoundGoal()<< endl;
+    cout << " A* Encontro ruta(0 = NO / 1 = SI) =" << aStarAlgorithm->isFoundGoal()<< endl;
 }
 
 void Juego::doBacktracking() {
@@ -99,11 +99,10 @@ void Juego::reasignarTorres() {
     doAStar();
     doBacktracking();
     if(!getAStarAlgorithm()->isFoundGoal()){
-        cout << "Recalcular torres" << endl;
-        return;
+        cout << "Recalcular torres A*" << endl;
     }
     if(!getBacktrackingAlgorithm()->isFoundGoal()){
-        cout << "Recalcular torres" << endl;
+        cout << "Recalcular torres B" << endl;
     }
     else{
         cout << "Si puede seguir" << endl;
