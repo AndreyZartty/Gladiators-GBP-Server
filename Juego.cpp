@@ -15,10 +15,12 @@
 Juego::Juego() {
 
     cuadricula = new Cuadricula();
+    cuadricula->addPosibleTowerIdList();
     nodoInicio = cuadricula->getNodoInicial();
     nodoFinal = cuadricula->getNodoFinal();
     aStarAlgorithm = new AStar(cuadricula);
     backtrackingAlgorithm = new Backtracking(cuadricula);
+    cuadricula->generateFirstTowers();
 
 }
 
@@ -30,6 +32,8 @@ Juego::Juego() {
  * Inicia el algoritmo A*
  */
 void Juego::doAStar() {
+    //aStarAlgorithm->setInitializedStartGoal(false);
+    //aStarAlgorithm->setFoundGoal(false);
     aStarAlgorithm->findPath(nodoInicio, nodoFinal);
 }
 
@@ -37,6 +41,8 @@ void Juego::doAStar() {
  * Inicia el algoritmo Backtracking
  */
 void Juego::doBacktracking() {
+    backtrackingAlgorithm->setInitializedStartGoal(false);
+    backtrackingAlgorithm->setFoundGoal(false);
     backtrackingAlgorithm->findPath(nodoInicio,nodoFinal);
 }
 
@@ -47,46 +53,105 @@ void Juego::doAlgorithms() {
 
     cout << "Doing Algorithms\n" << endl;
 
-    ///Genera las Torres
-    cuadricula->generateTowers();
-    ///Calcula el Heuristico para el A*
-    //cuadricula->calculateHeuristic();
+    ///Se crea un contador
+    int c = 0;
 
-    ///Imprime solo las torres
-    cuadricula->printTorres();
+    while (c < 3) {
+        ///Genera las Torres
+        int evaluatingTower = cuadricula->newTower();
 
-    ///Repone los booleans del A*
-    aStarAlgorithm->setInitializedStartGoal(false);
-    aStarAlgorithm->setFoundGoal(false);
+        ///Se evalua si hay mas posibilidades para colocar torres
+        if (evaluatingTower == 0) {
+            cout << "No se pueden asignar mas torres" << endl;
+            c=3;
+        }
+        else {
+            ///Calcula el Heuristico para el A*
+            //cuadricula->calculateHeuristic();
 
-    ///Repone los booleans del Backtracking
-    backtrackingAlgorithm->setInitializedStartGoal(false);
-    backtrackingAlgorithm->setFoundGoal(false);
+            ///Imprime solo las torres
+            cuadricula->printTorres();
 
-    ///Hace el algortimo A*
-    doAStar();
+            ///Repone los booleans del A*
+            //aStarAlgorithm->setInitializedStartGoal(false);
+            //aStarAlgorithm->setFoundGoal(false);
 
-    ///Hace el algoritmo Backtracking
-    doBacktracking();
+            ///Repone los booleans del Backtracking
+            //backtrackingAlgorithm->setInitializedStartGoal(false);
+            //backtrackingAlgorithm->setFoundGoal(false);
 
-    ///Verificacion de si el algortimo A* ha sido completado
-    if ( aStarAlgorithm->isFoundGoal() ) {
-        cout << "A* Completed" << endl;
-    } else {
-        cout << "A* Failed" << endl;
+            ///Hace el algortimo A*
+            doAStar();
+
+            ///Hace el algoritmo Backtracking
+            doBacktracking();
+
+            ///Verificacion de si el algortimo A* ha sido completado
+            if (aStarAlgorithm->isFoundGoal()) {
+                if (backtrackingAlgorithm->isFoundGoal()) {
+                    cout << "Backtracking Completed" << endl;
+                    c++;
+                } else {
+
+                    ///Rechaza la torre evaluada
+                    cout << "Backtracking Failed" << endl;
+                    cout << "La torre de id "<< evaluatingTower << " bloquea el camino" << endl;
+                    cuadricula->addToVerifiedNot(evaluatingTower);
+                    cuadricula->deleteTower(evaluatingTower);
+
+                }
+                cout << "A* Completed" << endl;
+            } else {
+                ///Rechaza la torre evaluada
+                cout << "A* Failed" << endl;
+                cout << "La torre de id "<< evaluatingTower << " bloquea el camino" << endl;
+                cuadricula->addToVerifiedNot(evaluatingTower);
+                cuadricula->deleteTower(evaluatingTower);
+            }
+
+            ///Verificacion de si el algortimo Backtracking ha sido completado
+
+
+
+
+            ///Imprime los caminos
+            cuadricula->printTorres();
+
+        }
+
     }
 
-    ///Verificacion de si el algortimo Backtracking ha sido completado
-    if (backtrackingAlgorithm->isFoundGoal()) {
-        cout << "Backtracking Completed" << endl;
-    } else {
-        cout << "Backtracking Failed" << endl;
+    cuadricula->resetVerifiedNot();
+
+    ///IMPRIMIR VECTOR DE TORRES
+    cout << "Tower Id's: ";
+    for (int i = 0; i < cuadricula->getTowerIdList().size(); i++) {
+
+        if (i == 0) {
+            cout << "[" << cuadricula->getTowerIdList()[i] << ", ";
+        } else if (i == cuadricula->getTowerIdList().size() - 1) {
+            cout << cuadricula->getTowerIdList()[i] << "]\n" << endl;
+        } else {
+            cout << cuadricula->getTowerIdList()[i] << ", ";
+        }
+
     }
 
-    ///Imprime los caminos
-    cuadricula->printTorres();
+    ///IMPRIMIR VECTOR DE POSIBLES TORRES
 
-    return;
+    cout << "PosibleTower Id's: ";
+    for (int i = 0; i < cuadricula->getPosibleTowerIdList().size(); i++) {
+
+        if (i == 0) {
+            cout << "[" << cuadricula->getPosibleTowerIdList()[i] << ", ";
+        } else if (i == cuadricula->getPosibleTowerIdList().size() - 1) {
+            cout << cuadricula->getPosibleTowerIdList()[i] << "]\n" << endl;
+        } else {
+            cout << cuadricula->getPosibleTowerIdList()[i] << ", ";
+        }
+
+    }
+
 
 }
 

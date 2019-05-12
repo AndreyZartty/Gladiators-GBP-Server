@@ -103,7 +103,7 @@ string sendCoordTorre(string coord, string i) {
 
     int index = stoi(i);
 
-    int vectorSize = (int) juego->getCuadricula()->getClientTowerIdList().size();
+    int vectorSize = (int) juego->getCuadricula()->getPosibleTowerIdList().size();
 
     int coordToSendTorre;
 
@@ -662,6 +662,10 @@ int runServer() {
  * Main del programa
  */
 int main() {
+
+    ///Realiza el primer A* y el primer Backtracking
+    juego->doBacktracking();
+    juego->doAStar();
 
     ///Corre los algoritmos
     juego->doAlgorithms();
