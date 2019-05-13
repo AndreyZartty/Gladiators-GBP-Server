@@ -1,7 +1,8 @@
 
 #include "Cuadricula.h"
+#include <iostream>
 
-
+using namespace std;
 /**
  * Representa la cuadricula
  *
@@ -20,7 +21,6 @@ Cuadricula::Cuadricula() {
     ///Nodos inicial y final
     nodoInicial = matriz[0][0];
     nodoFinal = matriz[ZONE_SIZE - 1][ZONE_SIZE - 1];
-
 }
 
 
@@ -58,28 +58,32 @@ void Cuadricula::buildZone(int n) {
 }
 
 
-void Cuadricula::generateTowers() {
+void Cuadricula::generateFirstTowers() {
 
     ///Genera un valor diferente cada vez que se llame a la funcion dependiendo de la hora y fecha.
     srand (time(NULL));
 
-    for (int n = 0; n < 1; n++) {
+    for (int n = 0; n < 3; n++) {
 
         ///Obtiene un int aleatorio
-        int i = rand() % (ZONE_SIZE) ;
-        int j = rand() % (ZONE_SIZE) ;
+        int i = rand() % (posibleTowerIdList.size()) ;
+        //int j = rand() % (ZONE_SIZE) ;
 
         ///Si no posee ya una torre
-        if (matriz[i][j]->getTorre() == nullptr && matriz[i][j]->getId() != 0 && matriz[i][j]->getId() != ( (ZONE_SIZE-1)*(ZONE_SIZE) + (ZONE_SIZE-1) ) ) {
-            matriz[i][j]->setTorre( new Torre() );
-            towerIdList.push_back( matriz[i][j]->getId() );
+        if (getNode(posibleTowerIdList[i])->getTorre() == nullptr && posibleTowerIdList[i] != 0 && posibleTowerIdList[i] != ( (ZONE_SIZE-1)*(ZONE_SIZE) + (ZONE_SIZE-1) ) ) {
+            getNode(posibleTowerIdList[i])->setTorre( new Torre() );
+            towerIdList.push_back( posibleTowerIdList[i] );
+            std::vector<int>::iterator buscador = find(posibleTowerIdList.begin(), posibleTowerIdList.end(), posibleTowerIdList[i]);
+            int posTorre = std::distance(posibleTowerIdList.begin(), buscador);
+            cout << posTorre << endl;
+            posibleTowerIdList.erase(posibleTowerIdList.begin()+posTorre);
         } else {
             n--;
         }
 
     }
 
-    ///IMPRIMIR VECTOR
+    ///IMPRIMIR VECTOR DE TORRES
     cout << "Tower Id's: ";
     for (int i = 0; i < towerIdList.size(); i++) {
 
@@ -95,8 +99,87 @@ void Cuadricula::generateTowers() {
 
     }
 
+    ///IMPRIMIR VECTOR DE POSIBLES TORRES
+
+    cout << "PosibleTower Id's: ";
+    for (int i = 0; i < posibleTowerIdList.size(); i++) {
+
+        if (i == 0) {
+            cout << "[" << posibleTowerIdList[i] << ", ";
+        }
+        else if (i == posibleTowerIdList.size() - 1) {
+            cout << posibleTowerIdList[i] << "]\n" << endl;
+        }
+        else {
+            cout << posibleTowerIdList[i] << ", ";
+        }
+
+    }
+
 }
 
+int Cuadricula::newTower() {
+
+    if (posibleTowerIdList.size() == 0){
+        return -1;
+    }
+    else {
+        ///Genera un valor diferente cada vez que se llame a la funcion dependiendo de la hora y fecha.
+        srand(time(NULL));
+
+        for (int n = 0; n < 1; n++) {
+
+            ///Obtiene un int aleatorio
+            int i = rand() % (posibleTowerIdList.size());
+
+            ///Si no posee ya una torre
+            if (getNode(posibleTowerIdList[i])->getTorre() == nullptr && posibleTowerIdList[i] != 0 &&
+                    posibleTowerIdList[i] != ((ZONE_SIZE - 1) * (ZONE_SIZE) + (ZONE_SIZE - 1))) {
+
+                getNode(posibleTowerIdList[i])->setTorre(new Torre());
+                int send = posibleTowerIdList[i];
+                towerIdList.push_back(posibleTowerIdList[i]);
+                std::vector<int>::iterator buscador = find(posibleTowerIdList.begin(), posibleTowerIdList.end(), posibleTowerIdList[i]);
+                int posTorre = std::distance(posibleTowerIdList.begin(), buscador);
+                posibleTowerIdList.erase(posibleTowerIdList.begin() + posTorre);
+                return send;
+
+            } else {
+                n--;
+            }
+
+        }
+
+        ///IMPRIMIR VECTOR DE TORRES
+        cout << "Tower Id's: ";
+        for (int i = 0; i < towerIdList.size(); i++) {
+
+            if (i == 0) {
+                cout << "[" << towerIdList[i] << ", ";
+            } else if (i == towerIdList.size() - 1) {
+                cout << towerIdList[i] << "]\n" << endl;
+            } else {
+                cout << towerIdList[i] << ", ";
+            }
+
+        }
+
+        ///IMPRIMIR VECTOR DE POSIBLES TORRES
+
+        cout << "PosibleTower Id's: ";
+        for (int i = 0; i < posibleTowerIdList.size(); i++) {
+
+            if (i == 0) {
+                cout << "[" << posibleTowerIdList[i] << ", ";
+            } else if (i == posibleTowerIdList.size() - 1) {
+                cout << posibleTowerIdList[i] << "]\n" << endl;
+            } else {
+                cout << posibleTowerIdList[i] << ", ";
+            }
+
+        }
+    }
+}
 
 /**
  * Calcular el valor de Heuristico
@@ -212,6 +295,14 @@ void Cuadricula::printTorres() {
                 place = "#";
             }
 
+            if (matriz[i][j]->getTorre() != nullptr && matriz[i][j]->isInBacktrackingPath()) {
+                place = "1";
+            }
+
+            if (matriz[i][j]->getTorre() != nullptr && matriz[i][j]->isInAStarPath()) {
+                place = "2";
+            }
+
             cout << "["<< place <<"]" ;
 
         }
@@ -276,6 +367,40 @@ void Cuadricula::addPosibleTowerIdList() {
                 posibleTowerIdList.push_back( matriz[i][j]->getId() );
             }
         }
+    }
+}
+
+void Cuadricula::addToVerifiedNot(int evaluatingTower) {
+    verfifiedNotTowersIdList.push_back(evaluatingTower);
+
+}
+
+void Cuadricula::deleteTower(int evaluatingTower) {
+    std::vector<int>::iterator buscador = find(towerIdList.begin(), towerIdList.end(), evaluatingTower);
+    int posTorre = std::distance(towerIdList.begin(), buscador);
+    towerIdList.erase(towerIdList.begin() + posTorre);
+    getNode(evaluatingTower)->setTorre(nullptr);
+}
+
+void Cuadricula::resetVerifiedNot() {
+    while(verfifiedNotTowersIdList.size() != 0){
+
+        ///Imprime las opciones descartadas
+        cout << "VerifiedNot Id's: ";
+        for (int i = 0; i < verfifiedNotTowersIdList.size(); i++) {
+
+            if (i == 0) {
+                cout << "[" << verfifiedNotTowersIdList[i] << ", ";
+            } else if (i == verfifiedNotTowersIdList.size() - 1) {
+                cout << verfifiedNotTowersIdList[i] << "]\n" << endl;
+            } else {
+                cout << verfifiedNotTowersIdList[i] << ", ";
+            }
+
+        }
+        posibleTowerIdList.push_back(verfifiedNotTowersIdList[verfifiedNotTowersIdList.size()-1]);
+        verfifiedNotTowersIdList.pop_back();
+
     }
 }
 

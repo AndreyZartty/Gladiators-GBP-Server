@@ -39,11 +39,25 @@ void Backtracking::findPath(Node* currentPosition, Node* targetPosition) {
     ///En la primera iteracion
     if (!initializedStartGoal) {
 
+        cout << " [Starting Backtracking]";
+
         ///Limpia pathToGoal
         pathToGoal.clear();
 
         ///Limpia fullPath
         fullPath.clear();
+
+        ///Ingresa cero como estado inicial a las variables de TODOS los Nodes
+        for (int i = 0 ; i < cuadricula->getSize() ; i++) {
+            for (int j = 0 ; j < cuadricula->getSize() ; j++) {
+
+                int id = ((i) * (cuadricula->getSize()) + (j));
+
+                cuadricula->getNode(id)->setInBacktrackingPath(false);
+
+            }
+
+        }
 
         ///Instancia el nodo start y el goal
         startNode = currentPosition;

@@ -5,6 +5,7 @@
 #include "Node.h"
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 #define ZONE_SIZE 10
 
@@ -26,8 +27,6 @@ private:
     Node* nodoInicial;
     Node* nodoFinal;
     vector<int> verfifiedNotTowersIdList;
-
-private:
     vector<int> towerIdList;
     vector<int> posibleTowerIdList;
 
@@ -38,13 +37,18 @@ public:
 
     ///Metodos
     void buildZone(int n);
-    void generateTowers();
+    void generateFirstTowers();
     void calculateHeuristic();
     Node* getNode(int i, int j);
     Node* getNode(int id);
     void print();
     void printTorres();
     void addPosibleTowerIdList();
+    void addToVerifiedNot(int evaluatingTower);
+    void deleteTower(int evaluatingTower);
+    void resetVerifiedNot();
+    int newTower();
+
 
     ///Getters & Setters
     int getSize();

@@ -35,9 +35,10 @@ AStar::AStar(Cuadricula* _cuadricula) {
  */
 void AStar::findPath(Node *currentPosition, Node *targetPosition) {
 
-
     ///En la primera iteracion
     if (!initializedStartGoal) {
+
+        cout << " [Starting A*]";
 
         ///Limpia openList
         openList.clear();
@@ -48,17 +49,40 @@ void AStar::findPath(Node *currentPosition, Node *targetPosition) {
         ///Limpia pathToGoal
         pathToGoal.clear();
 
+
+        ///Ingresa cero como estado inicial a las variables de TODOS los Nodes
+        for (int i = 0 ; i < cuadricula->getSize() ; i++) {
+            for (int j = 0 ; j < cuadricula->getSize() ; j++) {
+
+                int id = ((i) * (cuadricula->getSize()) + (j));
+
+                cuadricula->getNode(id)->setInAStarPath(false);
+                cuadricula->getNode(id)->setGCost(0);
+                cuadricula->getNode(id)->setFCost(0);
+                cuadricula->getNode(id)->setHCost(0);
+
+            }
+
+        }
+
         ///Calcula el Heuristicos de la zona
         cuadricula->calculateHeuristic();
 
         ///Modifica los nodos inicial y final
         setStartAndGoal(currentPosition, targetPosition);
         setInitializedStartGoal(true);
-
     }
 
+
+/*
+    cout << "   Openlist size: " << openList.size();
+    cout << "   PathToGoal size: " << pathToGoal.size();
+    cout << "   InPath: " << currentPosition->isInAStarPath();
+    cout << "   TEST: " << currentPosition->test << "\n" << endl;*/
+
+
     ///Continua el algoritmo si no es la primera vez
-    if (initializedStartGoal)  {
+    if (initializedStartGoal)  {;
         continuePath(currentPosition);
     }
 
@@ -92,6 +116,7 @@ void AStar::setStartAndGoal(Node *start, Node *goal) {
 void AStar::continuePath(Node *currentNode){
 
     if (openList.empty()) {
+        cout << "OpenList empty" << endl;
         return;
     }
 
@@ -112,9 +137,9 @@ void AStar::continuePath(Node *currentNode){
 
         }
 
-        setFoundGoal(true);
+        setInitializedStartGoal(false);
 
-        //showPath();
+        setFoundGoal(true);
 
         return;
 
@@ -198,6 +223,8 @@ void AStar::pathOpened(int fila, int columna, float newGCost, Node *parent){
 
     Node* child = cuadricula->getNode(fila, columna);
 
+
+
     ///Si no está en el open list
     if (child->getGCost() == 0) {
 
@@ -237,10 +264,13 @@ Node* AStar::getNextNode() {
 
         ///Modifica el F mas pequeño para ser comparado
         if ( temp->getFCost() < lowest) {
+
             lowest = temp->getFCost();
             next = temp;
         }
     }
+
+    next->setInAStarPath(false);
 
     return next;
 
