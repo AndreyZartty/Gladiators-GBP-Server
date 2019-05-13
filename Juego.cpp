@@ -20,6 +20,11 @@ Juego::Juego() {
     nodoFinal = cuadricula->getNodoFinal();
     aStarAlgorithm = new AStar(cuadricula);
     backtrackingAlgorithm = new Backtracking(cuadricula);
+
+    ///Poblaciones
+    //poblacion1 = new Poblacion("Lannister");
+    //poblacion2 = new Poblacion("Stark");
+
     //cuadricula->generateFirstTowers();
 
 }

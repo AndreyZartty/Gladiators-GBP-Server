@@ -9,6 +9,10 @@
 #include <cstring>
 #include <json-c/json.h>
 
+#include "Gladiador.h"
+#include "poblacion.h"
+#include "list.h"
+
 #define PORT 3550
 #define BACKLOG 4
 #define MAXDATASIZE 1000
@@ -533,6 +537,20 @@ int runServer() {
             json_object *parsed_jsonBacktracking = json_tokener_parse(buff);
             json_object_object_get_ex(parsed_jsonBacktracking, "BACKTRACKING", &tempBacktracking);
 
+            ///KEY: LIFEG1
+            ///Obtiene la resistencia del gladiador 1
+            struct json_object *tempLIFEG1;
+            cout<<"YCoordGP1"<<endl;
+            json_object *parsed_jsonLIFEG1 = json_tokener_parse(buff);
+            json_object_object_get_ex(parsed_jsonLIFEG1, "LIFEG1", &tempLIFEG1);
+
+            ///KEY: LIFEG2
+            ///Obtiene la resistencia del gladiador 2
+            struct json_object *tempLIFEG2;
+            cout<<"YCoordGP1"<<endl;
+            json_object *parsed_jsonLIFEG2 = json_tokener_parse(buff);
+            json_object_object_get_ex(parsed_jsonLIFEG2, "LIFEG2", &tempLIFEG2);
+
 
 
             ///JSON Writes
@@ -663,19 +681,41 @@ int runServer() {
  */
 int main() {
 
+
+    srand (time(NULL));
+    Poblacion *poblacion = new Poblacion("Lannister");
+    poblacion->getMejor();
+
+    poblacion->nuevageneracion();
+    poblacion->nuevageneracion();
+    poblacion->nuevageneracion();
+    poblacion->nuevageneracion();
+    poblacion->nuevageneracion();
+    poblacion->nuevageneracion();
+
+
+
+
+
+
+
+
+
+
+
     ///Realiza el primer A* y el primer Backtracking
     //juego->doBacktracking();
     //juego->doAStar();
 
     ///Corre los algoritmos
-    juego->doAlgorithms();
+    //juego->doAlgorithms();
 
-    cout << "No va a correr gay" << endl;
+    //cout << "No va a correr gay" << endl;
 
-    juego->getAStarAlgorithm()->showPath();
+    //juego->getAStarAlgorithm()->showPath();
     
 
-    juego->getBacktrackingAlgorithm()->showPath();
+    //juego->getBacktrackingAlgorithm()->showPath();
 
 
 
