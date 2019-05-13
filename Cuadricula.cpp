@@ -121,7 +121,7 @@ void Cuadricula::generateFirstTowers() {
 int Cuadricula::newTower() {
 
     if (posibleTowerIdList.size() == 0){
-        return 0;
+        return -1;
     }
     else {
         ///Genera un valor diferente cada vez que se llame a la funcion dependiendo de la hora y fecha.
@@ -134,7 +134,8 @@ int Cuadricula::newTower() {
 
             ///Si no posee ya una torre
             if (getNode(posibleTowerIdList[i])->getTorre() == nullptr && posibleTowerIdList[i] != 0 &&
-                posibleTowerIdList[i] != ((ZONE_SIZE - 1) * (ZONE_SIZE) + (ZONE_SIZE - 1))) {
+                    posibleTowerIdList[i] != ((ZONE_SIZE - 1) * (ZONE_SIZE) + (ZONE_SIZE - 1))) {
+
                 getNode(posibleTowerIdList[i])->setTorre(new Torre());
                 int send = posibleTowerIdList[i];
                 towerIdList.push_back(posibleTowerIdList[i]);
@@ -142,6 +143,7 @@ int Cuadricula::newTower() {
                 int posTorre = std::distance(posibleTowerIdList.begin(), buscador);
                 posibleTowerIdList.erase(posibleTowerIdList.begin() + posTorre);
                 return send;
+
             } else {
                 n--;
             }
@@ -291,6 +293,14 @@ void Cuadricula::printTorres() {
 
             if (matriz[i][j]->isInAStarPath() && matriz[i][j]->isInBacktrackingPath()) {
                 place = "#";
+            }
+
+            if (matriz[i][j]->getTorre() != nullptr && matriz[i][j]->isInBacktrackingPath()) {
+                place = "1";
+            }
+
+            if (matriz[i][j]->getTorre() != nullptr && matriz[i][j]->isInAStarPath()) {
+                place = "2";
             }
 
             cout << "["<< place <<"]" ;

@@ -664,8 +664,8 @@ int runServer() {
 int main() {
 
     ///Realiza el primer A* y el primer Backtracking
-    juego->doBacktracking();
-    juego->doAStar();
+    //juego->doBacktracking();
+    //juego->doAStar();
 
     ///Corre los algoritmos
     juego->doAlgorithms();
