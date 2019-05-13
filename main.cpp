@@ -672,6 +672,13 @@ int main() {
 
     cout << "No va a correr gay" << endl;
 
+    juego->getAStarAlgorithm()->showPath();
+    
+
+    juego->getBacktrackingAlgorithm()->showPath();
+
+
+
     ///Corre el servidor
     //runServer();
 

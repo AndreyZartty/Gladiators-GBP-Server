@@ -44,6 +44,7 @@ void Juego::doBacktracking() {
     //backtrackingAlgorithm->setInitializedStartGoal(false);
     //backtrackingAlgorithm->setFoundGoal(false);
     backtrackingAlgorithm->findPath(nodoInicio,nodoFinal);
+
 }
 
 /**
