@@ -43,6 +43,7 @@ public:
     void setFuerzaSuperior(int FS);
     void setFuerzaInferior(int FI);
     void setResistencia();
+    void setResistencia(int id);
     void morir();
     int getEdad();
     int getProbabilidadSupervivencia();

@@ -272,6 +272,12 @@ int Gladiador::getResistencia()
 {
     return resistencia;
 }
+
+void Gladiador::setResistencia(int id)
+{
+    resistencia-=id;
+}
+
 int Gladiador::SendJson()
 {
     /*char* str;

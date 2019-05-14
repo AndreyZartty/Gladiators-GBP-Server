@@ -22,8 +22,11 @@ Juego::Juego() {
     backtrackingAlgorithm = new Backtracking(cuadricula);
 
     ///Poblaciones
-    //poblacion1 = new Poblacion("Lannister");
-    //poblacion2 = new Poblacion("Stark");
+    poblacion1 = new Poblacion("Lannister");
+    poblacion2 = new Poblacion("Stark");
+
+    gladiador1 = poblacion1->getMejor();
+    gladiador2 = poblacion2->getMejor();
 
     //cuadricula->generateFirstTowers();
 
@@ -246,4 +249,20 @@ Backtracking* Juego::getBacktrackingAlgorithm() {
  */
 void Juego::setBacktrackingAlgorithm(Backtracking* _backtrackingAlgorithm) {
     backtrackingAlgorithm = _backtrackingAlgorithm;
+}
+
+/**
+ * Getter del Gladiador1 de Juego.
+ * @return _gladiador1
+ */
+Gladiador* Juego::getGladiador1() {}() {
+    return gladiador1;
+}
+
+/**
+ * Getter del Gladiador2 de Juego.
+ * @return _gladiador2
+ */
+Gladiador* Juego::getGladiador2() {}() {
+return gladiador2;
 }
