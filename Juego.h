@@ -4,6 +4,7 @@
 
 
 #include "Gladiador.h"
+#include "poblacion.h"
 #include "Cuadricula.h"
 #include "AStar.h"
 #include "Backtracking.h"
@@ -16,6 +17,10 @@ private:
     Backtracking* backtrackingAlgorithm;
     Node* nodoInicio;
     Node* nodoFinal;
+
+    Poblacion *poblacion1;
+    Poblacion *poblacion2;
+
     Gladiador* gladiador1;
     Gladiador* gladiador2;
 
@@ -37,6 +42,9 @@ public:
     void setAStarAlgorithm(AStar* _aStarAlgorithm);
     Backtracking* getBacktrackingAlgorithm();
     void setBacktrackingAlgorithm(Backtracking* _backtrackingAlgorithm);
+    Gladiador* getGladiador1();
+    Gladiador* getGladiador2();
+
 
 };
 
