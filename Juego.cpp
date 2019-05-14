@@ -28,8 +28,6 @@ Juego::Juego() {
     gladiador1 = poblacion1->getMejor();
     gladiador2 = poblacion2->getMejor();
 
-    //cuadricula->generateFirstTowers();
-
 }
 
 
@@ -37,30 +35,54 @@ Juego::Juego() {
 
 
 /**
- * Inicia el algoritmo A*
+ * Inicia el algoritmo A*.
  */
 void Juego::doAStar() {
-    //aStarAlgorithm->setInitializedStartGoal(false);
-    //aStarAlgorithm->setFoundGoal(false);
+
+    ///Repone sus booleans
+    aStarAlgorithm->setInitializedStartGoal(false);
+    aStarAlgorithm->setFoundGoal(false);
+
+    ///Busca el camino
     aStarAlgorithm->findPath(nodoInicio, nodoFinal);
+
+
+    ///Se rota el path
+    aStarAlgorithm->rotatePath();
+    ///Ingresa el path a su respectivo gladiador
+    gladiador1->setPathToGoal(aStarAlgorithm->getPathToGoal());
+    ///Se generara una matriz con los hits que le hacen las torres y sus respectivos tipos
+    gladiador1->generateHits();
+
 }
 
 /**
- * Inicia el algoritmo Backtracking
+ * Inicia el algoritmo Backtracking.
  */
 void Juego::doBacktracking() {
-    //backtrackingAlgorithm->setInitializedStartGoal(false);
-    //backtrackingAlgorithm->setFoundGoal(false);
+
+    ///Repone sus booleans
+    backtrackingAlgorithm->setInitializedStartGoal(false);
+    backtrackingAlgorithm->setFoundGoal(false);
+
+    ///Busca el camino
     backtrackingAlgorithm->findPath(nodoInicio,nodoFinal);
 
+
+    ///Se rota el path
+    backtrackingAlgorithm->rotatePath();
+    ///Ingresa el path a su respectivo gladiador
+    gladiador2->setPathToGoal(backtrackingAlgorithm->getPathToGoal());
+    ///Se generara una matriz con los hits que le hacen las torres y sus respectivos tipos
+    gladiador2->generateHits();
 }
 
 /**
  * Inicia ambos algoritmos y previamente establece todas sus condiciones de inicio
  */
-void Juego::doAlgorithms() {
+void Juego::generateTowers() {
 
-    cout << "Doing Algorithms\n" << endl;
+    cout << "Generating Towers\n" << endl;
 
     ///Se crea un contador
     int c = 0;
@@ -69,9 +91,6 @@ void Juego::doAlgorithms() {
     int ct = 50;
 
     while (c < ct) {
-
-        //aStarAlgorithm = new AStar(cuadricula);
-        //backtrackingAlgorithm = new Backtracking(cuadricula);
 
         ///Genera las Torres
         int evaluatingTower = cuadricula->newTower();
@@ -98,21 +117,13 @@ void Juego::doAlgorithms() {
 
             }
 
-            ///Repone los booleans del A*
-            aStarAlgorithm->setInitializedStartGoal(false);
-            aStarAlgorithm->setFoundGoal(false);
-
-            ///Repone los booleans del Backtracking
-            //backtrackingAlgorithm->setInitializedStartGoal(false);
-            //backtrackingAlgorithm->setFoundGoal(false);
-
             ///Hace el algortimo A*
             doAStar();
             aStarAlgorithm->showPath();
 
             ///Hace el algoritmo Backtracking
             doBacktracking();
-            //backtrackingAlgorithm->showPath();
+            backtrackingAlgorithm->showPath();
 
             ///Verificacion de si el algortimo A* ha sido completado
             if (aStarAlgorithm->isFoundGoal()) {
@@ -137,18 +148,7 @@ void Juego::doAlgorithms() {
                 cuadricula->deleteTower(evaluatingTower);
             }
 
-            ///Repone los booleans del A*
-            //aStarAlgorithm->setInitializedStartGoal(false);
-            //aStarAlgorithm->setFoundGoal(false);
-
-            ///Repone los booleans del Backtracking
-            //backtrackingAlgorithm->setInitializedStartGoal(false);
-            //backtrackingAlgorithm->setFoundGoal(false);
-
             ///Verificacion de si el algortimo Backtracking ha sido completado
-
-
-
 
         }
 
@@ -187,15 +187,6 @@ void Juego::doAlgorithms() {
         }
 
     }
-
-    if (ct == cuadricula->getTowerIdList().size()) {
-
-        cout << "Completed every tower";
-
-    } else {
-
-    }
-
 
 }
 
@@ -264,5 +255,5 @@ Gladiador* Juego::getGladiador1() {
  * @return _gladiador2
  */
 Gladiador* Juego::getGladiador2() {
-return gladiador2;
+    return gladiador2;
 }

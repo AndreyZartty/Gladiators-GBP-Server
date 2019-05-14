@@ -3,19 +3,15 @@
 #define GLADIATORS_GBP_GLADIADOR_H
 
 #include <iostream>
-#include "Vector2.h"
+#include <vector>
+
+#define ZONE_SIZE 10
 
 using namespace std;
 
 class Gladiador {
 
 private:
-
-    Vector2* current;
-    Vector2* target;
-
-    int fila;
-    int columna;
 
     string nombre;
     int edad;
@@ -27,13 +23,23 @@ private:
     int fuerzaInferior;
     int resistencia;
     bool muerto=false;
+    vector<int> pathToGoal;
+    int hits[ZONE_SIZE*ZONE_SIZE][16];
 
-    int SendJson();
 
 public:
-    Gladiador();
+
+    ///Constructores
     Gladiador(int generacion);
     Gladiador(int generacion, Gladiador *padre1, Gladiador *parte2);
+
+    ///Metodos
+    void morir();
+    void mutacion(string *gen);
+    void generateHits();
+
+
+    ///Getters & Setters
     void setNombre(string Nombre);
     void setEdad(int Edad);
     void setProbabilidadSupervivencia(int PS);
@@ -44,7 +50,8 @@ public:
     void setFuerzaInferior(int FI);
     void setResistencia();
     void setResistencia(int id);
-    void morir();
+    void setPathToGoal(vector<int> _pathToGoal);
+
     int getEdad();
     int getProbabilidadSupervivencia();
     int getExpectativaVida();
@@ -55,8 +62,7 @@ public:
     int getResistencia();
     string getNombre();
     bool getMuerto();
-    void mutacion(string *gen);
-
+    vector<int> getPathToGoal();
 
 };
 

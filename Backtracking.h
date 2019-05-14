@@ -38,6 +38,7 @@ public:
     bool continuePath(Node* currentPosition);
     void printVector(string list);
     vector<int> showPath();
+    void rotatePath();
 
 
     ///Getters & Setters

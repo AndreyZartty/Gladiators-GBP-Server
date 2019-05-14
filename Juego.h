@@ -33,7 +33,7 @@ public:
     ///Metodos
     void doAStar();
     void doBacktracking();
-    void doAlgorithms();
+    void generateTowers();
 
     ///Getters & Setters
     Cuadricula* getCuadricula();

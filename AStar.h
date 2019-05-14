@@ -48,6 +48,7 @@ public:
     Node* getNextNode();
     void printVector(string list);
     vector<int> showPath();
+    void rotatePath();
 
 
     ///Getters & Setters
@@ -62,6 +63,8 @@ public:
     void setStartNode(Node* _startNode);
     Node* getGoalNode();
     void setGoalNode(Node* _goalNode);
+
+    vector<int> getPathToGoal();
 
 };
 

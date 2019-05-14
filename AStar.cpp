@@ -321,6 +321,24 @@ vector<int> AStar::showPath() {
     return pathToGoal;
 }
 
+/**
+ * Rota de lugar el Path, ya que cuando se genera se encuentra al reves.
+ */
+void AStar::rotatePath() {
+
+    vector<int> auxPath;
+
+    for (int i = 0; i < pathToGoal.size(); i++) {
+
+        auxPath.push_back( pathToGoal[pathToGoal.size() - 1 - i] );
+
+    }
+
+    pathToGoal = auxPath;
+
+    showPath();
+}
+
 
 ///Getters y Setters
 
@@ -404,4 +422,12 @@ Node* AStar::getGoalNode() {
  */
 void AStar::setGoalNode(Node* _goalNode) {
     goalNode = _goalNode;
+}
+
+/**
+ * Getter de pathToGoal de AStar.
+ * @return pathToGoal
+ */
+vector<int> AStar::getPathToGoal() {
+    return pathToGoal;
 }

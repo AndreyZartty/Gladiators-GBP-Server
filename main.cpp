@@ -103,6 +103,7 @@ string sendCoord(string coord, string id) {
  * @param id
  * @return JSON
  */
+ /*
 string sendLife(string gladiador, string id) {
 
     int muertoSend;
@@ -145,7 +146,7 @@ string sendLife(string gladiador, string id) {
         muertoSend = -1;
     }
 
-}
+}*/
 
 /**
  * Retorna la coordenada de la Torre deseada.
@@ -434,6 +435,26 @@ string sendCoordGladiador(string poblacion, string coord, string i) {
 }
 
 /**
+ * Retorna un bool al cliente si este va a ser golpeado por una torre o no
+ * @param gladiador
+ * @param arrowIndex
+ * @return JSON
+ */
+string sendHit(string gladiador, string arrowIndex) {
+
+
+
+}
+
+
+string sendAType(string gladiador, string arrowIndex) {
+
+
+
+}
+
+
+/**
  * Corre el servidor
  * @return int
  */
@@ -573,33 +594,61 @@ int runServer() {
             json_object *parsed_jsonYCoordGP2 = json_tokener_parse(buff);
             json_object_object_get_ex(parsed_jsonYCoordGP2, "YCOORDGP2", &tempYCoordGP2);
 
-            ///KEY: ASTAR
+            ///KEY: HITG1
+            ///Obtiene un request para verificar si el Gladiador 1 será golpeado por una flecha
+            struct json_object *tempHitG1;
+            cout<<"HitG1"<<endl;
+            json_object *parsed_jsonHitG1 = json_tokener_parse(buff);
+            json_object_object_get_ex(parsed_jsonHitG1, "HITG1", &tempHitG1);
+
+            ///KEY: HITG2
+            ///Obtiene un request para verificar si el Gladiador 2 será golpeado por una flecha
+            struct json_object *tempHitG2;
+            cout<<"HitG2"<<endl;
+            json_object *parsed_jsonHitG2 = json_tokener_parse(buff);
+            json_object_object_get_ex(parsed_jsonHitG2, "HITG2", &tempHitG2);
+
+            ///KEY: ATYPEG1
+            ///Obtiene un request para verificar el tipo de flecha con la que ha sido golpeado el gladiador 1
+            struct json_object *tempATypeG1;
+            cout<<"ATypeG1"<<endl;
+            json_object *parsed_jsonATypeG1 = json_tokener_parse(buff);
+            json_object_object_get_ex(parsed_jsonATypeG1, "ATYPEG1", &tempATypeG1);
+
+            ///KEY: ATYPEG2
+            ///Obtiene un request para verificar el tipo de flecha con la que ha sido golpeado el gladiador 2
+            struct json_object *tempATypeG2;
+            cout<<"ATypeG2"<<endl;
+            json_object *parsed_jsonATypeG2 = json_tokener_parse(buff);
+            json_object_object_get_ex(parsed_jsonATypeG2, "ATYPEG2", &tempATypeG2);
+
+            /*///KEY: ASTAR
             ///Genera la ejecucion del algoritmo AStar (A*)
             struct json_object *tempAStar;
             cout<<"AStar"<<endl;
             json_object *parsed_jsonAStar = json_tokener_parse(buff);
-            json_object_object_get_ex(parsed_jsonAStar, "ASTAR", &tempAStar);
+            json_object_object_get_ex(parsed_jsonAStar, "ASTAR", &tempAStar);*/
 
-            ///KEY: BACKTRACKING
+            /*///KEY: BACKTRACKING
             ///Genera la ejecucion del algoritmo Backtracking
             struct json_object *tempBacktracking;
             cout<<"Backtracking"<<endl;
             json_object *parsed_jsonBacktracking = json_tokener_parse(buff);
-            json_object_object_get_ex(parsed_jsonBacktracking, "BACKTRACKING", &tempBacktracking);
+            json_object_object_get_ex(parsed_jsonBacktracking, "BACKTRACKING", &tempBacktracking);*/
 
-            ///KEY: LIFEG1
+            /*///KEY: LIFEG1
             ///Obtiene la resistencia del gladiador 1
             struct json_object *tempLIFEG1;
             cout<<"YCoordGP1"<<endl;
             json_object *parsed_jsonLIFEG1 = json_tokener_parse(buff);
-            json_object_object_get_ex(parsed_jsonLIFEG1, "LIFEG1", &tempLIFEG1);
+            json_object_object_get_ex(parsed_jsonLIFEG1, "LIFEG1", &tempLIFEG1);*/
 
-            ///KEY: LIFEG2
+            /*///KEY: LIFEG2
             ///Obtiene la resistencia del gladiador 2
             struct json_object *tempLIFEG2;
             cout<<"YCoordGP1"<<endl;
             json_object *parsed_jsonLIFEG2 = json_tokener_parse(buff);
-            json_object_object_get_ex(parsed_jsonLIFEG2, "LIFEG2", &tempLIFEG2);
+            json_object_object_get_ex(parsed_jsonLIFEG2, "LIFEG2", &tempLIFEG2);*/
 
 
 
@@ -688,24 +737,61 @@ int runServer() {
                 send(fd2, yCoordGP2.c_str(), MAXDATASIZE, 0);
             }
 
+
             ///Obtendra un request para obtener
+            ///Verifica que reciba los KEYS: HITG1
+            if (json_object_get_string(tempHitG1) != 0 ) {
+                ///JSON saliente del servidor
+                string hitG1 = sendHit("1",json_object_get_string(tempHitG1));
+                ///Envio al cliente
+                send(fd2, hitG1.c_str(), MAXDATASIZE, 0);
+            }
+
+            ///Obtendra un request para obtener
+            ///Verifica que reciba los KEYS: HITG2
+            if (json_object_get_string(tempHitG2) != 0 ) {
+                ///JSON saliente del servidor
+                string hitG2 = sendHit("2",json_object_get_string(tempHitG2));
+                ///Envio al cliente
+                send(fd2, hitG2.c_str(), MAXDATASIZE, 0);
+            }
+
+            ///Obtendra un request para obtener
+            ///Verifica que reciba los KEYS: ATYPEG1
+            if (json_object_get_string(tempATypeG1) != 0 ) {
+                ///JSON saliente del servidor
+                string aTypeG1 = sendAType("1",json_object_get_string(tempXCoordGP2));
+                ///Envio al cliente
+                send(fd2, aTypeG1.c_str(), MAXDATASIZE, 0);
+            }
+
+            ///Obtendra un request para obtener
+            ///Verifica que reciba los KEYS: ATYPEG2
+            if (json_object_get_string(tempATypeG2) != 0 ) {
+                ///JSON saliente del servidor
+                string aTypeG2 = sendAType("2",json_object_get_string(tempYCoordGP2));
+                ///Envio al cliente
+                send(fd2, aTypeG2.c_str(), MAXDATASIZE, 0);
+            }
+
+
+            /*///Obtendra un request para obtener
             ///Verifica que reciba los KEYS: LIFEG1
             if (json_object_get_string(tempLIFEG1) != 0 ) {
                 ///JSON saliente del servidor
                 string lifeG1 = sendLife("1",json_object_get_string(tempLIFEG1));
                 ///Envio al cliente
                 send(fd2, lifeG1.c_str(), MAXDATASIZE, 0);
-            }
+            }*/
 
-            ///Obtendra un request para obtener
+            /*///Obtendra un request para obtener
             ///Verifica que reciba los KEYS: LIFEG2
             if (json_object_get_string(tempLIFEG2) != 0 ) {
                 ///JSON saliente del servidor
                 string lifeG2 = sendLife("2",json_object_get_string(tempLIFEG2));
                 ///Envio al cliente
                 send(fd2, lifeG2.c_str(), MAXDATASIZE, 0);
-            }
-
+            }*/
 
             /*
             ///Obtendra un request para obtener
@@ -764,10 +850,15 @@ int main() {
 
 
     ///Corre los algoritmos
-    juego->doAlgorithms();
+    juego->generateTowers();
+
+    ///ANDREY
+    ///Verificar que no quede ningun camino en los algoritmos cuando se generan las torres
 
     juego->doBacktracking();
+    //juego->getBacktrackingAlgorithm()->showPath();
     juego->doAStar();
+    //juego->getAStarAlgorithm()->showPath();
 
 
     ///Corre el servidor

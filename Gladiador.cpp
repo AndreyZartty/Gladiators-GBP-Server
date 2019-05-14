@@ -24,6 +24,50 @@
 
 using namespace std;
 
+
+/**
+ * Representa un Gladiador
+ *
+ * @since 30/04/19
+ */
+
+
+/**
+ * Constructor de Gladiador.
+ * @param generacion
+ */
+Gladiador::Gladiador(int generacion)
+{
+    if (generacion == 1){
+
+        //srand (time(NULL));
+        int random = 15 + rand() % (61 - 15);
+        setEdad(random);
+        random = 1 + rand() % (5 - 1);
+
+        setInteligencia(random);
+        random = 1 + rand() % (5 - 1);
+
+        setCondicionFisica(random);
+        random = 1 + rand() % (5 - 1);
+
+        setFuerzaSuperior(random);
+        random = 1 + rand() % (5 - 1);
+
+        setFuerzaInferior(random);
+        setResistencia();
+        setExpectativaVida(getResistencia()/10);
+        setProbabilidadSupervivencia(getResistencia()-4);
+    }
+    else {
+        cout << "Introduzca los padres si no es la primera generacion" << endl;
+    }
+}
+
+
+///Conversiones
+
+
 string decToBinary(int n)
 {
     // Size of an integer is assumed to be 32 bits
@@ -60,64 +104,11 @@ int binToDec(int binario)
 }
 
 /**
- * Representa un Gladiador
- *
- * @since 30/04/19
+ * Constructor de Gladiador.
+ * @param generacion
+ * @param padre1
+ * @param padre2
  */
-
-
-Gladiador::Gladiador() {
-    current = new Vector2(0, 0);
-    target = new Vector2(9,9);
-}
-
-Gladiador::Gladiador(int generacion)
-{
-    if (generacion == 1){
-        //srand (time(NULL));
-        int random = 15 + rand() % (61 - 15);
-        setEdad(random);
-        random = 1 + rand() % (5 - 1);
-
-        setInteligencia(random);
-        random = 1 + rand() % (5 - 1);
-
-        setCondicionFisica(random);
-        random = 1 + rand() % (5 - 1);
-
-        setFuerzaSuperior(random);
-        random = 1 + rand() % (5 - 1);
-
-        setFuerzaInferior(random);
-        setResistencia();
-        setExpectativaVida(getResistencia()/10);
-        setProbabilidadSupervivencia(getResistencia()-4);
-        SendJson();
-    }
-    else {
-        cout << "Introduzca los padres si no es la primera generacion" << endl;
-    }
-}
-
-void Gladiador::mutacion(string *gen){
-    cout<<"mutacion de gen: "<<*gen;
-    int random = rand() % 2;
-    if (random==1){
-        if(gen->substr(0,1)=="1"){
-            *gen="0"+gen->substr(1,2);
-        }else {
-            *gen="1"+gen->substr(1,2);
-        }
-    }else {
-        if(gen->substr(1,2)=="1"){
-            *gen=gen->substr(0,1)+"0";
-        }else {
-            *gen=gen->substr(0,1)+"1";
-        }
-    }
-    cout<<" a: "<<*gen<<endl;
-}
-
 Gladiador::Gladiador(int generacion, Gladiador *padre1, Gladiador *padre2)
 {
     int random1 = 1 + rand() % (100-1);
@@ -148,9 +139,51 @@ Gladiador::Gladiador(int generacion, Gladiador *padre1, Gladiador *padre2)
         setResistencia();
         setExpectativaVida(getResistencia()/10);
         setProbabilidadSupervivencia(getResistencia()-4);
-        SendJson();
     }
 }
+
+
+///Metodos
+
+
+void Gladiador::mutacion(string *gen){
+    cout<<"mutacion de gen: "<<*gen;
+    int random = rand() % 2;
+    if (random==1){
+        if(gen->substr(0,1)=="1"){
+            *gen="0"+gen->substr(1,2);
+        }else {
+            *gen="1"+gen->substr(1,2);
+        }
+    }else {
+        if(gen->substr(1,2)=="1"){
+            *gen=gen->substr(0,1)+"0";
+        }else {
+            *gen=gen->substr(0,1)+"1";
+        }
+    }
+    cout<<" a: "<<*gen<<endl;
+}
+
+/**
+ * Empieza a llenar la matriz "hits" con los valores de la de las torres que lo lastiman por el camino
+ * y sus respectivas flechas.
+ */
+void Gladiador::generateHits() {
+
+    for(int i = 0; i < pathToGoal.size(); i++) {
+        hits[i][0] = pathToGoal[i];
+
+
+
+        }
+}
+
+
+
+
+///Getters & Setters
+
 
 void Gladiador::setNombre(string Nombre)
 {
@@ -278,122 +311,10 @@ void Gladiador::setResistencia(int id)
     resistencia-=id;
 }
 
-int Gladiador::SendJson()
-{
-    /*char* str;
-    int fd, numbytes;
-    struct sockaddr_in client;
+vector<int> Gladiador::getPathToGoal() {
+    return pathToGoal;
+}
 
-    fd = socket(AF_INET, SOCK_STREAM, 0);
-
-    char buf[MAXDATASIZE];
-
-    struct hostent *he;
-
-    if (fd < 0)
-    {
-        printf("Error : Could not create socket\n");
-        return 1;
-    }
-    else
-    {
-        client.sin_family = AF_INET;
-        client.sin_port = htons(PORT);
-        client.sin_addr.s_addr = inet_addr("192.168.100.28");
-        memset(client.sin_zero, '\0', sizeof(client.sin_zero));
-    }
-
-    if (::connect(fd, (const struct sockaddr *)&client, sizeof(client)) < 0)
-    {
-        printf("ERROR connecting to server\n");
-        return 1;
-    }
-
-    json_object *jobj = json_object_new_object();
-
-    string auxNombre = nombre;
-    int n = auxNombre.length();
-    char nombreJson[n + 1];
-    strcpy(nombreJson, auxNombre.c_str());
-
-    string auxEdad= to_string(edad);
-    n = auxEdad.length();
-    char edadJson[n + 1];
-    strcpy(edadJson, auxEdad.c_str());
-
-    string auxPS = to_string(probabilidadSupervivencia);
-    n = auxPS.length();
-    char PSJson[n + 1];
-    strcpy(PSJson, auxPS.c_str());
-
-    string auxEV = to_string(expectativaVida);
-    n = auxEV.length();
-    char EVJson[n + 1];
-    strcpy(EVJson, auxEV.c_str());
-
-    string auxIntelig = to_string(inteligencia);
-    n = auxIntelig.length();
-    char inteligJson[n + 1];
-    strcpy(inteligJson, auxIntelig.c_str());
-
-    string auxCF = to_string(condicionFisica);
-    n = auxCF.length();
-    char CFJson[n + 1];
-    strcpy(CFJson, auxCF.c_str());
-
-    string auxFS = to_string(fuerzaSuperior);
-    n = auxFS.length();
-    char FSJson[n + 1];
-    strcpy(FSJson, auxFS.c_str());
-
-    string auxFI = to_string(fuerzaInferior);
-    n = auxFI.length();
-    char FIJson[n + 1];
-    strcpy(FIJson, auxFI.c_str());
-
-    string auxResist = to_string(resistencia);
-    n = auxResist.length();
-    char resistJson[n + 1];
-    strcpy(resistJson, auxResist.c_str());
-    for (int i = 0; i < n; i++)
-        cout << nombreJson[i];
-
-    json_object *jstring = json_object_new_string(nombreJson);
-    json_object *jstring2 = json_object_new_string(edadJson);
-    json_object *jstring3 = json_object_new_string(PSJson);
-    json_object *jstring4 = json_object_new_string(EVJson);
-    json_object *jstring5 = json_object_new_string(inteligJson);
-    json_object *jstring6 = json_object_new_string(CFJson);
-    json_object *jstring7 = json_object_new_string(FSJson);
-    json_object *jstring8 = json_object_new_string(FIJson);
-    json_object *jstring9 = json_object_new_string(resistJson);
-
-    json_object_object_add(jobj,"Nombre", jstring);
-    json_object_object_add(jobj,"Edad", jstring2);
-    json_object_object_add(jobj,"ProbabilidadSupervivencia", jstring3);
-    json_object_object_add(jobj,"ExpectativaVida", jstring4);
-    json_object_object_add(jobj,"Inteligencia", jstring5);
-    json_object_object_add(jobj,"CondicionFisica", jstring6);
-    json_object_object_add(jobj,"FuerzaSuperior", jstring7);
-    json_object_object_add(jobj,"FuerzaInferior", jstring8);
-    json_object_object_add(jobj,"Resistencia", jstring9);
-
-
-
-    if (strcpy(buf, json_object_to_json_string(jobj)) == NULL) {
-        printf("ERROR strcpy()");
-        exit(-1);
-    }
-
-    if (write(fd, buf, strlen(buf)) == -1)
-    {
-        printf("ERROR write()");
-        exit(-1);
-    }
-
-    printf("Written data\n");
-
-    memset(buf, 0, MAXDATASIZE);
-
-    ::close(fd);*/
+void Gladiador::setPathToGoal(vector<int> _pathToGoal) {
+    pathToGoal = _pathToGoal;
 }

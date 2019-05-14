@@ -112,6 +112,7 @@ bool Backtracking::continuePath(Node* currentPosition) {
             if ( continuePath(nextNodeFila) ) {
 
                 pathToGoal.push_back(currentPosition->getId());
+
                 currentPosition->setInBacktrackingPath(true);
 
                 setFoundGoal(true);
@@ -184,6 +185,23 @@ void Backtracking::printVector(string list) {
 vector<int> Backtracking::showPath() {
     printVector("pathToGoal");
     return pathToGoal;
+}
+
+/**
+ * Rota de lugar el Path, ya que cuando se genera se encuentra al reves.
+ */
+void Backtracking::rotatePath() {
+
+    vector<int> auxPath;
+
+    for (int i = 0; i < pathToGoal.size() - 1; i++) {
+
+        auxPath.push_back( pathToGoal[pathToGoal.size() - 1 - i] );
+
+    }
+
+    pathToGoal = auxPath;
+
 }
 
 
