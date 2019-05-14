@@ -255,7 +255,7 @@ void Juego::setBacktrackingAlgorithm(Backtracking* _backtrackingAlgorithm) {
  * Getter del Gladiador1 de Juego.
  * @return _gladiador1
  */
-Gladiador* Juego::getGladiador1() {}() {
+Gladiador* Juego::getGladiador1() {
     return gladiador1;
 }
 
@@ -263,6 +263,6 @@ Gladiador* Juego::getGladiador1() {}() {
  * Getter del Gladiador2 de Juego.
  * @return _gladiador2
  */
-Gladiador* Juego::getGladiador2() {}() {
+Gladiador* Juego::getGladiador2() {
 return gladiador2;
 }

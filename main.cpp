@@ -98,7 +98,7 @@ string sendCoord(string coord, string id) {
 }
 
 /**
- * Retora la resistencia del Gladiador deseado.
+ * Retorna la resistencia del Gladiador deseado.
  * @param gladiador
  * @param id
  * @return JSON
@@ -763,31 +763,14 @@ int main() {
     */
 
 
-
-
-
-
-
-
-
-
-    ///Realiza el primer A* y el primer Backtracking
-    //juego->doBacktracking();
-    //juego->doAStar();
-
     ///Corre los algoritmos
-    //juego->doAlgorithms();
+    juego->doAlgorithms();
 
-    //cout << "No va a correr gay" << endl;
-
-    //juego->getAStarAlgorithm()->showPath();
-    
-
-    //juego->getBacktrackingAlgorithm()->showPath();
-
+    juego->doBacktracking();
+    juego->doAStar();
 
 
     ///Corre el servidor
-    //runServer();
+    runServer();
 
 }
