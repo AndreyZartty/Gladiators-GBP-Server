@@ -41,8 +41,6 @@ string sendZoneSize() {
 
     int zoneSize = juego->getCuadricula()->getSize();
 
-    cout<<"\nZoneSize: " << zoneSize << endl;
-
     json_object *jobjZoneSize = json_object_new_object();
 
     json_object *jstringZoneSize = json_object_new_string(to_string(zoneSize).c_str());
@@ -67,7 +65,7 @@ string sendCoord(string coord, string id) {
 
         coordToSend = juego->getCuadricula()->getNode( stoi(id) )->getXCoord();
 
-        cout<<"\nxCoord: " << coordToSend << endl;
+        ///cout<<"\nxCoord: " << coordToSend << endl;
 
         json_object *jobjXCoord = json_object_new_object();
 
@@ -82,7 +80,7 @@ string sendCoord(string coord, string id) {
 
         coordToSend = juego->getCuadricula()->getNode( stoi(id) )->getYCoord();
 
-        cout<<"\nyCoord: " << coordToSend << endl;
+        //cout<<"\nyCoord: " << coordToSend << endl;
 
         json_object *jobjYCoord = json_object_new_object();
 
@@ -160,7 +158,7 @@ string sendCoordTorre(string coord, string i) {
 
     int index = stoi(i);
 
-    int vectorSize = (int) juego->getCuadricula()->getPosibleTowerIdList().size();
+    int vectorSize = (int) juego->getCuadricula()->getTowerIdList().size();
 
     int coordToSendTorre;
 
@@ -170,9 +168,16 @@ string sendCoordTorre(string coord, string i) {
 
         if ( coord == "x") {
 
-            coordToSendTorre = juego->getCuadricula()->getNode( id )->getXCoord();
+            Node* nodeToGetCoord = juego->getCuadricula()->getNode( id );
 
-            cout<<"\nxCoordTorre: " << coordToSendTorre << endl;
+            if (nodeToGetCoord != nullptr) {
+                coordToSendTorre = nodeToGetCoord->getXCoord();
+            }
+            else {
+                coordToSendTorre = -1;
+            }
+
+            //cout<<"\nxCoordTorre: " << coordToSendTorre << endl;
 
             json_object *jobjXCoordTorre = json_object_new_object();
 
@@ -185,9 +190,16 @@ string sendCoordTorre(string coord, string i) {
         }
         else if (coord == "y") {
 
-            coordToSendTorre = juego->getCuadricula()->getNode( id )->getYCoord();
+            Node* nodeToGetCoord = juego->getCuadricula()->getNode( id );
 
-            cout<<"\nyCoordTorre: " << coordToSendTorre << endl;
+            if (nodeToGetCoord != nullptr) {
+                coordToSendTorre = nodeToGetCoord->getYCoord();
+            }
+            else {
+                coordToSendTorre = -1;
+            }
+
+            //cout<<"\nyCoordTorre: " << coordToSendTorre << endl;
 
             json_object *jobjYCoordTorre = json_object_new_object();
 
@@ -210,7 +222,7 @@ string sendCoordTorre(string coord, string i) {
 
         coordToSendTorre = -1;
 
-        cout<<"\nCoordTorre: " << coordToSendTorre << endl;
+        //cout<<"\nCoordTorre: " << coordToSendTorre << endl;
 
         json_object *jobjXCoordTorre = json_object_new_object();
 
@@ -226,7 +238,7 @@ string sendCoordTorre(string coord, string i) {
 
         coordToSendTorre = -1;
 
-        cout<<"\nCoordTorre: " << coordToSendTorre << endl;
+        //cout<<"\nCoordTorre: " << coordToSendTorre << endl;
 
         json_object *jobjYCoordTorre = json_object_new_object();
 
@@ -274,7 +286,7 @@ string sendCoordGladiador(string poblacion, string coord, string i) {
 
                 coordToSendGladiator = juego->getCuadricula()->getNode( id )->getXCoord();
 
-                cout<<"\nxCoordGladiador: " << coordToSendGladiator << endl;
+                //cout<<"\nxCoordGladiador: " << coordToSendGladiator << endl;
 
                 json_object *jobjXCoordGladiador = json_object_new_object();
 
@@ -289,7 +301,7 @@ string sendCoordGladiador(string poblacion, string coord, string i) {
 
                 coordToSendGladiator = juego->getCuadricula()->getNode( id )->getYCoord();
 
-                cout<<"\nyCoordGladiador: " << coordToSendGladiator << endl;
+                //cout<<"\nyCoordGladiador: " << coordToSendGladiator << endl;
 
                 json_object *jobjYCoordGladiador = json_object_new_object();
 
@@ -315,7 +327,7 @@ string sendCoordGladiador(string poblacion, string coord, string i) {
 
                 coordToSendGladiator = juego->getCuadricula()->getNode( id )->getXCoord();
 
-                cout<<"\nxCoordGladiador: " << coordToSendGladiator << endl;
+                //cout<<"\nxCoordGladiador: " << coordToSendGladiator << endl;
 
                 json_object *jobjXCoordGladiador = json_object_new_object();
 
@@ -331,7 +343,7 @@ string sendCoordGladiador(string poblacion, string coord, string i) {
 
                 coordToSendGladiator = juego->getCuadricula()->getNode( id )->getYCoord();
 
-                cout<<"\nyCoordGladiador: " << coordToSendGladiator << endl;
+                //cout<<"\nyCoordGladiador: " << coordToSendGladiator << endl;
 
                 json_object *jobjYCoordGladiador = json_object_new_object();
 
@@ -367,7 +379,7 @@ string sendCoordGladiador(string poblacion, string coord, string i) {
 
                 coordToSendGladiator = -1;
 
-                cout << "\nxCoordGladiador: " << coordToSendGladiator << endl;
+                //cout << "\nxCoordGladiador: " << coordToSendGladiator << endl;
 
                 json_object *jobjXCoordGP1 = json_object_new_object();
 
@@ -382,7 +394,7 @@ string sendCoordGladiador(string poblacion, string coord, string i) {
 
                 coordToSendGladiator = -1;
 
-                cout << "\nyCoordGladiador: " << coordToSendGladiator << endl;
+                //cout << "\nyCoordGladiador: " << coordToSendGladiator << endl;
 
                 json_object *jobjYCoordGP1 = json_object_new_object();
 
@@ -402,7 +414,7 @@ string sendCoordGladiador(string poblacion, string coord, string i) {
 
                 coordToSendGladiator = -1;
 
-                cout << "\nxCoordGladiador: " << coordToSendGladiator << endl;
+                //cout << "\nxCoordGladiador: " << coordToSendGladiator << endl;
 
                 json_object *jobjXCoordGP2 = json_object_new_object();
 
@@ -417,7 +429,7 @@ string sendCoordGladiador(string poblacion, string coord, string i) {
 
                 coordToSendGladiator = -1;
 
-                cout << "\nyCoordGladiador: " << coordToSendGladiator << endl;
+                //cout << "\nyCoordGladiador: " << coordToSendGladiator << endl;
 
                 json_object *jobjYCoordGP2 = json_object_new_object();
 
@@ -497,12 +509,16 @@ string sendCoordFlecha(string gladiador, string coord, string arrowIndex) {
 
         if ( coord == "x") {
 
+            int coordToSend = gladInstance1->getHitTower(pathIndexG1,indexFlecha);
 
+            int xCoord = juego->getCuadricula()->getNode(coordToSend)->getXCoord();
 
         }
         else if (coord == "y") {
 
+            int coordToSend = gladInstance1->getHitTower(pathIndexG1,indexFlecha);
 
+            int yCoord = juego->getCuadricula()->getNode(coordToSend)->getYCoord();
 
         }
 
@@ -546,13 +562,169 @@ string sendCoordFlecha(string gladiador, string coord, string arrowIndex) {
 
 string sendAType(string gladiador, string arrowIndex) {
 
+    int indexFlecha = stoi(arrowIndex);
 
+    if (gladiador == "1") {
+
+        Gladiador* gladInstance1 = juego->getGladiador1();
+
+        int towerId = gladInstance1->getHitTower(pathIndexG1,indexFlecha);
+
+        Node* towerNode = juego->getCuadricula()->getNode(towerId);
+
+        int aTypeToSend1 = -1;
+
+        if (towerNode != nullptr) {
+            cout << "sendAType: " << towerNode->getTorre()->getTipo() << endl;
+            aTypeToSend1 = towerNode->getTorre()->getTipo() * 10;
+        } else {
+            aTypeToSend1 = -1;
+        }
+
+        json_object *jobjATypeToSend1 = json_object_new_object();
+
+        json_object *jstringATypeToSend1 = json_object_new_string( to_string(aTypeToSend1).c_str());
+
+        json_object_object_add(jobjATypeToSend1, "ATYPEG1", jstringATypeToSend1);
+
+        return json_object_to_json_string(jobjATypeToSend1);
+
+
+    } else if (gladiador == "2") {
+
+        Gladiador* gladInstance2 = juego->getGladiador2();
+
+        int towerId = gladInstance2->getHitTower(pathIndexG2,indexFlecha);
+
+        Node* towerNode = juego->getCuadricula()->getNode(towerId);
+
+        int aTypeToSend2 = 10;
+
+        if (towerNode != nullptr) {
+            cout << "sendAType: " << towerNode->getTorre()->getTipo() << endl;
+            aTypeToSend2 = towerNode->getTorre()->getTipo() * 10;
+        } else {
+            aTypeToSend2 = -1;
+        }
+
+        json_object *jobjATypeToSend2 = json_object_new_object();
+
+        json_object *jstringATypeToSend2 = json_object_new_string( to_string(aTypeToSend2).c_str());
+
+        json_object_object_add(jobjATypeToSend2, "ATYPEG2", jstringATypeToSend2);
+
+        return json_object_to_json_string(jobjATypeToSend2);
+
+
+    } else {
+
+        cout << "sendAType: failed" << endl;
+
+    }
+
+}
+
+
+string changePathIndex(string gladiador, string modificacion) {
+
+    int mod = stoi(modificacion);
+
+    if (gladiador == "1") {
+
+        pathIndexG1++;
+
+        if (mod == 1) {
+            pathIndexG1 = 0;
+        }
+
+    } else if (gladiador == "2") {
+
+        pathIndexG2++;
+
+        if (mod == 1) {
+            pathIndexG2 = 0;
+        }
+
+    } else {
+        cout << " changePathIndex: failed " << endl;
+    }
 
 }
 
 
 string sendResistencia(string gladiador) {
 
+    if (gladiador == "1") {
+
+        Gladiador* gladInstance1 = juego->getGladiador1();
+
+        gladInstance1->restarResistencia(pathIndexG1);
+
+        int resistencia1 = gladInstance1->getResistencia();
+
+        json_object *jobjResistencia1 = json_object_new_object();
+
+        json_object *jstringResistencia1 = json_object_new_string( to_string(resistencia1).c_str());
+
+        json_object_object_add(jobjResistencia1, "RESISTENCIAG1", jstringResistencia1);
+
+        return json_object_to_json_string(jobjResistencia1);
+
+    }
+    else if (gladiador == "2") {
+
+        Gladiador* gladInstance2 = juego->getGladiador2();
+
+        gladInstance2->restarResistencia(pathIndexG2);
+
+        int resistencia2 = gladInstance2->getResistencia();
+
+        json_object *jobjResistencia2 = json_object_new_object();
+
+        json_object *jstringResistencia2 = json_object_new_string( to_string(resistencia2).c_str());
+
+        json_object_object_add(jobjResistencia2, "RESISTENCIAG2", jstringResistencia2);
+
+        return json_object_to_json_string(jobjResistencia2);
+
+    }
+    else {
+        cout << "sendResistencia: failed" << endl;
+    }
+
+}
+
+void reiniciar(string tipo) {
+
+    if (tipo == "0") {
+
+        ///Nuevas generaciones de las poblaciones
+        juego->getPoblacion1()->nuevageneracion();
+        juego->getPoblacion2()->nuevageneracion();
+
+        ///Mejores gladiadores de cada poblacion
+        juego->setGladiador1(juego->getPoblacion1()->getMejor());
+        juego->setGladiador2(juego->getPoblacion2()->getMejor());
+
+        juego->getGladiador1()->setCuadricula(juego->getCuadricula());
+        juego->getGladiador2()->setCuadricula(juego->getCuadricula());
+
+        ///Genera las torres nuevamente
+        juego->generateTowers();
+
+        ///Genera el camino para ambos gladiadores por medio de su algoritmo
+        juego->doBacktracking();
+        juego->doAStar();
+
+    } else if (tipo == "1") {
+
+        ///Cada movimiento del gladiador
+
+    }
+
+
+
+    ///juego.
 }
 
 
@@ -631,140 +803,169 @@ int runServer() {
             ///KEY: COMENZAR
             ///Obtiene el flag para comenzar el juego
             struct json_object *tempComenzar;
-            cout<<"COMENZAR"<<endl;
+            //cout<<"COMENZAR"<<endl;
             json_object *parsed_jsonComenzar = json_tokener_parse(buff);
             json_object_object_get_ex(parsed_jsonComenzar, "COMENZAR", &tempComenzar);
-            printf("Por comenzar: %s\n", json_object_get_string(tempComenzar));
+            //printf("Por comenzar: %s\n", json_object_get_string(tempComenzar));
 
             ///KEY: XCOORD
             ///Obtiene la coordenada x del nodo deseado
             struct json_object *tempXCoord;
-            cout<<"XCoord"<<endl;
+            //cout<<"XCoord"<<endl;
             json_object *parsed_jsonXCoord = json_tokener_parse(buff);
             json_object_object_get_ex(parsed_jsonXCoord, "XCOORD", &tempXCoord);
-            printf("XCoord: %s\n", json_object_get_string(tempXCoord));
+            //printf("XCoord: %s\n", json_object_get_string(tempXCoord));
 
             ///KEY: YCOORD
             ///Obtiene la coordenada y del nodo deseado
             struct json_object *tempYCoord;
-            cout<<"YCoord"<<endl;
+            //cout<<"YCoord"<<endl;
             json_object *parsed_jsonYCoord = json_tokener_parse(buff);
             json_object_object_get_ex(parsed_jsonYCoord, "YCOORD", &tempYCoord);
-            printf("YCoord: %s\n", json_object_get_string(tempYCoord));
+            //printf("YCoord: %s\n", json_object_get_string(tempYCoord));
 
             ///KEY: XCOORDTORRE
             ///Obtiene la coordenada x de la torre deseada
             struct json_object *tempXCoordTorre;
-            cout<<"XCoordTorre"<<endl;
+            //cout<<"XCoordTorre"<<endl;
             json_object *parsed_jsonXCoordTorre = json_tokener_parse(buff);
             json_object_object_get_ex(parsed_jsonXCoordTorre, "XCOORDTORRE", &tempXCoordTorre);
-            printf("XCoordTorre: %s\n", json_object_get_string(tempXCoordTorre));
+            //printf("XCoordTorre: %s\n", json_object_get_string(tempXCoordTorre));
 
             ///KEY: YCOORDTORRE
             ///Obtiene la coordenada y de la torre deseada
             struct json_object *tempYCoordTorre;
-            cout<<"YCoordTorre"<<endl;
+            //cout<<"YCoordTorre"<<endl;
             json_object *parsed_jsonYCoordTorre = json_tokener_parse(buff);
             json_object_object_get_ex(parsed_jsonYCoordTorre, "YCOORDTORRE", &tempYCoordTorre);
-            printf("YCoordTorre: %s\n", json_object_get_string(tempYCoordTorre));
+            //printf("YCoordTorre: %s\n", json_object_get_string(tempYCoordTorre));
 
             ///KEY: XCOORDGP1
             ///Obtiene la coordenada x del gladiador de la poblacion 1
             struct json_object *tempXCoordGP1;
-            cout<<"XCoordGP1"<<endl;
+            //cout<<"XCoordGP1"<<endl;
             json_object *parsed_jsonXCoordGP1 = json_tokener_parse(buff);
             json_object_object_get_ex(parsed_jsonXCoordGP1, "XCOORDGP1", &tempXCoordGP1);
 
             ///KEY: YCOORDGP1
             ///Obtiene la coordenada y del gladiador de la poblacion 1
             struct json_object *tempYCoordGP1;
-            cout<<"YCoordGP1"<<endl;
+            //cout<<"YCoordGP1"<<endl;
             json_object *parsed_jsonYCoordGP1 = json_tokener_parse(buff);
             json_object_object_get_ex(parsed_jsonYCoordGP1, "YCOORDGP1", &tempYCoordGP1);
 
             ///KEY: XCOORDGP2
             ///Obtiene la coordenada x del gladiador de la poblacion 2
             struct json_object *tempXCoordGP2;
-            cout<<"XCoordGP2"<<endl;
+            //cout<<"XCoordGP2"<<endl;
             json_object *parsed_jsonXCoordGP2 = json_tokener_parse(buff);
             json_object_object_get_ex(parsed_jsonXCoordGP2, "XCOORDGP2", &tempXCoordGP2);
 
             ///KEY: YCOORDGP2
             ///Obtiene la coordenada y del gladiador de la poblacion 2
             struct json_object *tempYCoordGP2;
-            cout<<"YCoordGP2"<<endl;
+            //cout<<"YCoordGP2"<<endl;
             json_object *parsed_jsonYCoordGP2 = json_tokener_parse(buff);
             json_object_object_get_ex(parsed_jsonYCoordGP2, "YCOORDGP2", &tempYCoordGP2);
 
             ///KEY: HITG1
             ///Obtiene un request para verificar si el Gladiador 1 será golpeado por una flecha
             struct json_object *tempHitG1;
-            cout<<"HitG1"<<endl;
+            //cout<<"HitG1"<<endl;
             json_object *parsed_jsonHitG1 = json_tokener_parse(buff);
             json_object_object_get_ex(parsed_jsonHitG1, "HITG1", &tempHitG1);
 
             ///KEY: HITG2
             ///Obtiene un request para verificar si el Gladiador 2 será golpeado por una flecha
             struct json_object *tempHitG2;
-            cout<<"HitG2"<<endl;
+            //cout<<"HitG2"<<endl;
             json_object *parsed_jsonHitG2 = json_tokener_parse(buff);
             json_object_object_get_ex(parsed_jsonHitG2, "HITG2", &tempHitG2);
 
             ///KEY: ATYPEG1
             ///Obtiene un request para verificar el tipo de flecha con la que ha sido golpeado el gladiador 1
             struct json_object *tempATypeG1;
-            cout<<"ATypeG1"<<endl;
+            //cout<<"ATypeG1"<<endl;
             json_object *parsed_jsonATypeG1 = json_tokener_parse(buff);
             json_object_object_get_ex(parsed_jsonATypeG1, "ATYPEG1", &tempATypeG1);
 
             ///KEY: ATYPEG2
             ///Obtiene un request para verificar el tipo de flecha con la que ha sido golpeado el gladiador 2
             struct json_object *tempATypeG2;
-            cout<<"ATypeG2"<<endl;
+            //cout<<"ATypeG2"<<endl;
             json_object *parsed_jsonATypeG2 = json_tokener_parse(buff);
             json_object_object_get_ex(parsed_jsonATypeG2, "ATYPEG2", &tempATypeG2);
 
             ///KEY: XCOORDFLECHAG1
             ///Obtiene un request para obtener las coordenadas x de la flecha con la que ha sido golpeado el gladiador 1
             struct json_object *tempXCoordFlechaG1;
-            cout<<"XCoordFlechaG1"<<endl;
+            //cout<<"XCoordFlechaG1"<<endl;
             json_object *parsed_jsonXCoordFlechaG1 = json_tokener_parse(buff);
             json_object_object_get_ex(parsed_jsonXCoordFlechaG1, "XCOORDFLECHAG1", &tempXCoordFlechaG1);
 
             ///KEY: YCOORDFLECHAG1
             ///Obtiene un request para obtener las coordenadas y de la flecha con la que ha sido golpeado el gladiador 2
             struct json_object *tempYCoordFlechaG1;
-            cout<<"YCoordFlechaG1"<<endl;
+            //cout<<"YCoordFlechaG1"<<endl;
             json_object *parsed_jsonYCoordFlechaG1 = json_tokener_parse(buff);
             json_object_object_get_ex(parsed_jsonYCoordFlechaG1, "YCOORDFLECHAG1", &tempYCoordFlechaG1);
 
             ///KEY: XCOORDFLECHAG2
             ///Obtiene un request para obtener las coordenadas x de la flecha con la que ha sido golpeado el gladiador 1
             struct json_object *tempXCoordFlechaG2;
-            cout<<"XCoordFlechaG2"<<endl;
+            //cout<<"XCoordFlechaG2"<<endl;
             json_object *parsed_jsonXCoordFlechaG2 = json_tokener_parse(buff);
             json_object_object_get_ex(parsed_jsonXCoordFlechaG2, "XCOORDFLECHAG2", &tempXCoordFlechaG2);
 
             ///KEY: YCOORDFLECHAG2
             ///Obtiene un request para obtener las coordenadas y de la flecha con la que ha sido golpeado el gladiador 2
             struct json_object *tempYCoordFlechaG2;
-            cout<<"YCoordFlechaG2"<<endl;
+            //cout<<"YCoordFlechaG2"<<endl;
             json_object *parsed_jsonYCoordFlechaG2 = json_tokener_parse(buff);
             json_object_object_get_ex(parsed_jsonYCoordFlechaG2, "YCOORDFLECHAG2", &tempYCoordFlechaG2);
 
             ///KEY: RESISTENCIAG1
             ///Obtiene un request para obtener la resistencia del gladiador 1
             struct json_object *tempResistenciaG1;
-            cout<<"ResistenciaG1"<<endl;
+            //cout<<"ResistenciaG1"<<endl;
             json_object *parsed_jsonResistenciaG1 = json_tokener_parse(buff);
             json_object_object_get_ex(parsed_jsonResistenciaG1, "RESISTENCIAG1", &tempResistenciaG1);
 
             ///KEY: RESISTENCIAG2
             ///Obtiene un request para obtener la resistencia del gladiador 2
             struct json_object *tempResistenciaG2;
-            cout<<"ResistenciaG2"<<endl;
+            //cout<<"ResistenciaG2"<<endl;
             json_object *parsed_jsonResistenciaG2 = json_tokener_parse(buff);
             json_object_object_get_ex(parsed_jsonResistenciaG2, "RESISTENCIAG2", &tempResistenciaG2);
+
+            ///KEY: GMUERTO
+            ///Obtiene un request para obtener la resistencia del gladiador 2
+            struct json_object *tempGMUERTO;
+            //cout<<"GMUERTO"<<endl;
+            json_object *parsed_jsonGMUERTO = json_tokener_parse(buff);
+            json_object_object_get_ex(parsed_jsonGMUERTO, "GMUERTO", &tempGMUERTO);
+
+
+            ///KEY: NEXTPOSITIONG1
+            ///Obtiene un request para obtener el cambio de posicion del gladiador 1
+            struct json_object *tempNextPositionG1;
+            //cout<<"NextPositionG1"<<endl;
+            json_object *parsed_jsonPositionG1 = json_tokener_parse(buff);
+            json_object_object_get_ex(parsed_jsonPositionG1, "NEXTPOSITIONG1", &tempNextPositionG1);
+
+            ///KEY: NEXTPOSITIONG2
+            ///Obtiene un request para obtener el cambio de posicion del gladiador 2
+            struct json_object *tempNextPositionG2;
+            //cout<<"NextPositionG2"<<endl;
+            json_object *parsed_jsonPositionG2 = json_tokener_parse(buff);
+            json_object_object_get_ex(parsed_jsonPositionG2, "NEXTPOSITIONG2", &tempNextPositionG2);
+
+            ///KEY: REINICIAR
+            ///Obtiene un request para continuar el algoritmo genetico y volver a pasar la zona
+            struct json_object *tempReiniciar;
+            cout<<"Reiniciar"<<endl;
+            json_object *parsed_jsonReiniciar = json_tokener_parse(buff);
+            json_object_object_get_ex(parsed_jsonReiniciar, "REINICIAR", &tempReiniciar);
 
 
             /*///KEY: ASTAR
@@ -806,6 +1007,7 @@ int runServer() {
                 string zoneSize = sendZoneSize();
                 ///Envio al cliente
                 send(fd2, zoneSize.c_str(), MAXDATASIZE, 0);
+                printf("\nWRITE: %s\n", zoneSize.c_str());
             }
 
             ///Obtendra un request para obtener la coordenada x del nodo deseado.
@@ -815,6 +1017,7 @@ int runServer() {
                 string xCoord = sendCoord("x",json_object_get_string(tempXCoord));
                 ///Envio al cliente
                 send(fd2, xCoord.c_str(), MAXDATASIZE, 0);
+                printf("\nWRITE: %s\n", xCoord.c_str());
             }
 
             ///Obtendra un request para obtener la coordenada y del nodo deseado.
@@ -824,6 +1027,7 @@ int runServer() {
                 string yCoord = sendCoord("y",json_object_get_string(tempYCoord));
                 ///Envio al cliente
                 send(fd2, yCoord.c_str(), MAXDATASIZE, 0);
+                printf("\nWRITE: %s\n", yCoord.c_str());
             }
 
             ///Obtendra un request para obtener la coordenada x de la torre deseada
@@ -833,6 +1037,7 @@ int runServer() {
                 string xCoordTorre = sendCoordTorre("x",json_object_get_string(tempXCoordTorre));
                 ///Envio al cliente
                 send(fd2, xCoordTorre.c_str(), MAXDATASIZE, 0);
+                printf("\nWRITE: %s\n", xCoordTorre.c_str());
             }
 
             ///Obtendra un request para obtener la coordenada y de la torre deseada
@@ -842,6 +1047,7 @@ int runServer() {
                 string yCoordTorre = sendCoordTorre("y",json_object_get_string(tempYCoordTorre));
                 ///Envio al cliente
                 send(fd2, yCoordTorre.c_str(), MAXDATASIZE, 0);
+                printf("\nWRITE: %s\n", yCoordTorre.c_str());
             }
 
             ///Obtendra un request para obtener la coordenada x del gladiador 1
@@ -851,7 +1057,7 @@ int runServer() {
                 string xCoordGP1 = sendCoordGladiador("1","x",json_object_get_string(tempXCoordGP1));
                 ///Envio al cliente
                 send(fd2, xCoordGP1.c_str(), MAXDATASIZE, 0);
-                pathIndexG1++;
+                printf("\nWRITE: %s\n", xCoordGP1.c_str());
             }
 
             ///Obtendra un request para obtener la coordenada y del gladiador 1
@@ -861,6 +1067,7 @@ int runServer() {
                 string yCoordGP1 = sendCoordGladiador("1","y",json_object_get_string(tempYCoordGP1));
                 ///Envio al cliente
                 send(fd2, yCoordGP1.c_str(), MAXDATASIZE, 0);
+                printf("\nWRITE: %s\n", yCoordGP1.c_str());
             }
 
             ///Obtendra un request para obtener la coordenada x del gladiador 2
@@ -870,7 +1077,7 @@ int runServer() {
                 string xCoordGP2 = sendCoordGladiador("2","x",json_object_get_string(tempXCoordGP2));
                 ///Envio al cliente
                 send(fd2, xCoordGP2.c_str(), MAXDATASIZE, 0);
-                pathIndexG2++;
+                printf("\nWRITE: %s\n", xCoordGP2.c_str());
             }
 
             ///Obtendra un request para obtener la coordenada y del gladiador 2
@@ -880,6 +1087,7 @@ int runServer() {
                 string yCoordGP2 = sendCoordGladiador("2","y",json_object_get_string(tempYCoordGP2));
                 ///Envio al cliente
                 send(fd2, yCoordGP2.c_str(), MAXDATASIZE, 0);
+                printf("\nWRITE: %s\n", yCoordGP2.c_str());
             }
 
             ///Obtendra un request para obtener si el gladiador 1 le han pegado
@@ -889,6 +1097,7 @@ int runServer() {
                 string hitG1 = sendHit("1",json_object_get_string(tempHitG1));
                 ///Envio al cliente
                 send(fd2, hitG1.c_str(), MAXDATASIZE, 0);
+                printf("\nWRITE: %s\n", hitG1.c_str());
             }
 
             ///Obtendra un request para obtener si el gladiador 2 le han pegado
@@ -898,6 +1107,7 @@ int runServer() {
                 string hitG2 = sendHit("2",json_object_get_string(tempHitG2));
                 ///Envio al cliente
                 send(fd2, hitG2.c_str(), MAXDATASIZE, 0);
+                printf("\nWRITE: %s\n", hitG2.c_str());
             }
 
             ///Obtendra un request para obtener el tipo de flecha que ha impactado al gladiador 1
@@ -907,6 +1117,8 @@ int runServer() {
                 string aTypeG1 = sendAType("1",json_object_get_string(tempATypeG1));
                 ///Envio al cliente
                 send(fd2, aTypeG1.c_str(), MAXDATASIZE, 0);
+                printf("\nWRITE: %s\n", aTypeG1.c_str());
+
             }
 
             ///Obtendra un request para obtener el tipo de flecha que ha impactado al gladiador 2
@@ -916,6 +1128,7 @@ int runServer() {
                 string aTypeG2 = sendAType("2",json_object_get_string(tempATypeG2));
                 ///Envio al cliente
                 send(fd2, aTypeG2.c_str(), MAXDATASIZE, 0);
+                printf("\nWRITE: %s\n", aTypeG2.c_str());
             }
 
             ///Obtendra un request para obtener la coordenada x de la flecha que ha impactado al gladiador 1
@@ -925,6 +1138,7 @@ int runServer() {
                 string xCoordFlechaG1 = sendCoordFlecha("1", "x",json_object_get_string(tempXCoordFlechaG1));
                 ///Envio al cliente
                 send(fd2, xCoordFlechaG1.c_str(), MAXDATASIZE, 0);
+                printf("\nWRITE: %s\n", xCoordFlechaG1.c_str());
             }
 
             ///Obtendra un request para obtener la coordenada y de la flecha que ha impactado al gladiador 1
@@ -934,6 +1148,7 @@ int runServer() {
                 string yCoordFlechaG1 = sendCoordFlecha("1", "y",json_object_get_string(tempYCoordFlechaG1));
                 ///Envio al cliente
                 send(fd2, yCoordFlechaG1.c_str(), MAXDATASIZE, 0);
+                printf("\nWRITE: %s\n", yCoordFlechaG1.c_str());
             }
 
             ///Obtendra un request para obtener la coordenada x de la flecha que ha impactado al gladiador 2
@@ -943,6 +1158,7 @@ int runServer() {
                 string xCoordFlechaG2 = sendCoordFlecha("2", "x",json_object_get_string(tempXCoordFlechaG2));
                 ///Envio al cliente
                 send(fd2, xCoordFlechaG2.c_str(), MAXDATASIZE, 0);
+                printf("\nWRITE: %s\n", xCoordFlechaG2.c_str());
             }
 
             ///Obtendra un request para obtener la coordenada y de la flecha que ha impactado al gladiador 2
@@ -952,6 +1168,7 @@ int runServer() {
                 string yCoordFlechaG2 = sendCoordFlecha("2", "y",json_object_get_string(tempYCoordFlechaG2));
                 ///Envio al cliente
                 send(fd2, yCoordFlechaG2.c_str(), MAXDATASIZE, 0);
+                printf("\nWRITE: %s\n", yCoordFlechaG2.c_str());
             }
 
             ///Obtendra un request para obtener la resistencia del gladiador 1
@@ -961,6 +1178,7 @@ int runServer() {
                 string resistenciaG1 = sendResistencia("1");
                 ///Envio al cliente
                 send(fd2, resistenciaG1.c_str(), MAXDATASIZE, 0);
+                printf("\nWRITE: %s\n", resistenciaG1.c_str());
             }
 
             ///Obtendra un request para obtener la resistencia del gladiador 2
@@ -970,6 +1188,36 @@ int runServer() {
                 string resistenciaG2 = sendResistencia("2");
                 ///Envio al cliente
                 send(fd2, resistenciaG2.c_str(), MAXDATASIZE, 0);
+                printf("\nWRITE: %s\n", resistenciaG2.c_str());
+            }
+
+            ///Obtendra un request para obtener
+            ///Verifica que reciba los KEYS: NEXTPOSITIONG1
+            if (json_object_get_string(tempNextPositionG1) != nullptr ) {
+                ///JSON saliente del servidor
+                string nextPositionG1 = changePathIndex("1",json_object_get_string(tempNextPositionG1));
+                ///Envio al cliente
+                send(fd2, nextPositionG1.c_str(), MAXDATASIZE, 0);
+                printf("\nWRITE: %s\n", nextPositionG1.c_str());
+            }
+
+            ///Obtendra un request para obtener
+            ///Verifica que reciba los KEYS: NEXTPOSITIONG2
+            if (json_object_get_string(tempNextPositionG2) != nullptr ) {
+                ///JSON saliente del servidor
+                string nextPositionG2 = changePathIndex("2",json_object_get_string(tempNextPositionG2));
+                ///Envio al cliente
+                send(fd2, nextPositionG2.c_str(), MAXDATASIZE, 0);
+                printf("\nWRITE: %s\n", nextPositionG2.c_str());
+            }
+
+            ///Obtendra un request para obtener
+            ///Verifica que reciba los KEYS: REINICIAR
+            if (json_object_get_string(tempReiniciar) != nullptr ) {
+                ///JSON saliente del servidor
+                reiniciar(json_object_get_string(tempReiniciar));
+                ///Envio al cliente
+                send(fd2, "Reinicio", MAXDATASIZE, 0);
             }
 
             /*
@@ -1039,6 +1287,9 @@ int main() {
     juego->doBacktracking();
 
     juego->doAStar();
+
+    cout << "Resistencia Gladiador 1: " << juego->getGladiador1()->getResistencia() << endl;
+    cout << "Resistencia Gladiador 2: " << juego->getGladiador2()->getResistencia() << endl;
 
 
     ///Corre el servidor

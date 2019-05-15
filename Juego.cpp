@@ -91,7 +91,7 @@ void Juego::generateTowers() {
     int c = 0;
 
     ///Cantidad de Torres
-    int ct = 50;
+    int ct = 3;
 
     while (c < ct) {
 
@@ -259,4 +259,21 @@ Gladiador* Juego::getGladiador1() {
  */
 Gladiador* Juego::getGladiador2() {
     return gladiador2;
+}
+
+void Juego::setGladiador1(Gladiador* _gladiador1) {
+    gladiador1 = _gladiador1;
+}
+
+void Juego::setGladiador2(Gladiador* _gladiador2) {
+    gladiador2 = _gladiador2;
+}
+
+
+Poblacion* Juego::getPoblacion1() {
+    return poblacion1;
+}
+
+Poblacion* Juego::getPoblacion2() {
+    return poblacion2;
 }

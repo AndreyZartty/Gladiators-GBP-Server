@@ -255,6 +255,68 @@ bool Gladiador::isHit(int pathIndex, int arrowIndex) {
 
 
 
+
+int Gladiador::getHitTower(int pathIndex, int arrowIndex) {
+
+    int towerId = hits[pathIndex][arrowIndex];
+
+    if (towerId != 0) {
+        return towerId;
+    }
+    else {
+        return -1;
+    }
+
+}
+
+
+void Gladiador::restarResistencia(int pathIndex) {
+
+    for (int i = 1; i < 24; i++) {
+
+        int id = hits[pathIndex][i];
+
+        if (id != 0) {
+
+            int towerType = cuadricula->getNode(id)->getTorre()->getTipo();
+
+            cout << "TowerType @ restarResistencia: " << towerType << endl;
+
+            if ( towerType == 1 ) {
+
+                resistencia -= 1;
+
+            } else if ( towerType == 2 ) {
+
+                resistencia -= 2;
+
+            } else if ( towerType == 3 ) {
+
+                resistencia -= 3;
+
+            } else {
+
+                cout << "restarResistencia: failed" << endl;
+
+            }
+
+            if (resistencia < 0) {
+                resistencia = 0;
+                return;
+            }
+
+        } else {
+
+            cout << "restarResistencia: Id not correct " << endl;
+
+        }
+
+    }
+
+}
+
+
+
 ///Getters & Setters
 
 

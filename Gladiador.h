@@ -39,6 +39,7 @@ public:
     void morir();
     void mutacion(string *gen);
     void generateHits();
+    void restarResistencia(int valor);
 
 
     ///Getters & Setters
@@ -68,6 +69,7 @@ public:
     vector<int> getPathToGoal();
     Cuadricula* getCuadricula();
     bool isHit(int pathIndex, int arrowIndex);
+    int getHitTower(int pathIndex, int arrowIdex);
 
 
 };

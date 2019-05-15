@@ -44,6 +44,13 @@ public:
     void setBacktrackingAlgorithm(Backtracking* _backtrackingAlgorithm);
     Gladiador* getGladiador1();
     Gladiador* getGladiador2();
+    void setGladiador1(Gladiador* _gladiador1);
+    void setGladiador2(Gladiador* _gladiador2);
+
+    Poblacion* getPoblacion1();
+    Poblacion* getPoblacion2();
+
+
 
 
 };
