@@ -334,3 +334,11 @@ string Gladiador::getNombrePadre1() {
 string Gladiador::getNombrePadre2() {
     return nombrePadre2;
 }
+
+void Gladiador::setGeneracion(int _generacion) {
+    generacion = _generacion;
+}
+
+int Gladiador::getGeneracion() {
+    return generacion;
+}

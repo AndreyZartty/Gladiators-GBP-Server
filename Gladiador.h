@@ -29,6 +29,8 @@ private:
     string nombrePadre1;
     string nombrePadre2;
 
+    int generacion;
+
 
 public:
 
@@ -56,6 +58,7 @@ public:
     void setPathToGoal(vector<int> _pathToGoal);
     void setNombrePadre1(string _nombre);
     void setNombrePadre2(string _nombre);
+    void setGeneracion(int _generacion);
 
     int getEdad();
     int getProbabilidadSupervivencia();
@@ -70,6 +73,7 @@ public:
     vector<int> getPathToGoal();
     string getNombrePadre1();
     string getNombrePadre2();
+    int getGeneracion();
 
 };
 

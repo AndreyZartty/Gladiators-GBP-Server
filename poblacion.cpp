@@ -7,6 +7,7 @@
 
 Poblacion::Poblacion(string _nombrePoblacion)
 {
+    List *listagen = new List();
     nombrePoblacion = _nombrePoblacion;
     char vocales [] = {"aeiou"};
     char consonantes [] = {"bcdfghjlmnprstv"};
@@ -25,11 +26,14 @@ Poblacion::Poblacion(string _nombrePoblacion)
             nombre = nombre+s1+s2;
         }
         gladiador->setNombre(nombre);
+        gladiador->setGeneracion(generacion);
         insertarGladiador(gladiador);
         insertarCopia(gladiador);
+        listagen->insertLast(gladiador);
         cout<< "Se ha creado el gladiador: "<< gladiador->getNombre() <<" gen: "<<getGeneracion()<<" resistencia: "<<gladiador->getResistencia()<<endl;
     }
     setMejor();
+    generaciones.push_back(listagen);
 }
 
 int Poblacion::getGeneracion()
@@ -119,7 +123,7 @@ void Poblacion::nuevageneracion(){
     //cout<<generacion<<endl;
     setPadres();
 
-    List *generacion = new List();
+    List *listgeneracion = new List();
 
     Gladiador* temp;
     for (int i=0;i<gladiadores.getSize();i++) {
@@ -149,11 +153,12 @@ void Poblacion::nuevageneracion(){
             nombre = nombre+s1+s2;
         }
         gladiador->setNombre(nombre);
+        gladiador->setGeneracion(generacion);
         gladiador->setNombrePadre1(padres.recorrer(i)->getNombre());
         gladiador->setNombrePadre2(padres.recorrer(i+1)->getNombre());
         insertarGladiador(gladiador);
         insertarCopia(gladiador);
-        generacion->insertLast(gladiador);
+        listgeneracion->insertLast(gladiador);
         cout<< "Se ha creado el gladiador: "<< gladiador->getNombre() <<" gen: "<<getGeneracion()<<" resistencia: "<<gladiador->getResistencia()<<endl;
     }
 
@@ -170,14 +175,15 @@ void Poblacion::nuevageneracion(){
             nombre = nombre+s1+s2;
         }
         gladiador->setNombre(nombre);
+        gladiador->setGeneracion(generacion);
         gladiador->setNombrePadre1(padres.recorrer(i+1)->getNombre());
         gladiador->setNombrePadre2(padres.recorrer(i)->getNombre());
         insertarGladiador(gladiador);
         insertarCopia(gladiador);
-        generacion->insertLast(gladiador);
+        listgeneracion->insertLast(gladiador);
         cout<< "Se ha creado el gladiador: "<< gladiador->getNombre() <<" gen: "<<getGeneracion()<<" resistencia: "<<gladiador->getResistencia()<<endl;
     }
-    generaciones.push_back(generacion);
+    generaciones.push_back(listgeneracion);
     gladiadores.bubbleSort();
 }
 
