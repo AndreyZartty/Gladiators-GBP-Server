@@ -165,20 +165,93 @@ void Gladiador::mutacion(string *gen){
     cout<<" a: "<<*gen<<endl;
 }
 
+
 /**
  * Empieza a llenar la matriz "hits" con los valores de la de las torres que lo lastiman por el camino
  * y sus respectivas flechas.
  */
 void Gladiador::generateHits() {
 
+    cout << "Hits->Start\n" << endl;
+
+    int zoneSize = cuadricula->getSize();
+
     for(int i = 0; i < pathToGoal.size(); i++) {
-        hits[i][0] = pathToGoal[i];
 
+        ///Id de la poscion actual del path
+        int currentId = pathToGoal[i];
 
+        ///Cantidad de torres
+        int towerCount = 1;
+
+        ///Se ingresa la poscion del path a la matriz
+        hits[i][0] = currentId;
+
+        ///Atributos de la posicion para utilizarlos para obtener las torres
+        int idToCheck;
+        int filaToCheck = cuadricula->getNode(currentId)->getFila();
+        int columnaToCheck = cuadricula->getNode(currentId)->getColumna();
+
+        for (int fila = -2; fila <= 2; fila++) {
+
+            for (int columna = -2; columna <= 2; columna++) {
+
+                ///Verificara cada Nodo al rededor de la posicion si esta en la cuadricula y si tiene torre
+
+                if (cuadricula->getNode(filaToCheck + fila, columnaToCheck + columna) != nullptr) {
+
+                    if (cuadricula->getNode(filaToCheck + fila, columnaToCheck + columna)->getTorre() != nullptr) {
+
+                        hits[i][towerCount] = cuadricula->getNode(filaToCheck + fila, columnaToCheck + columna)->getId();
+
+                        towerCount++;
+
+                    }
+                    else {
+                      //  cout << "No existe" << endl;
+                    }
+                } else {
+                   // cout << "Out of bounds" << endl;
+                }
+
+            }
 
         }
+
+    }
+
+
+
+    for (int i = 0 ; i < pathToGoal.size() ; i++) {
+        for (int j = 0 ; j < 24 ; j++) {
+
+            int printee = hits[i][j];
+
+            cout << " ["<< printee << "] " ;
+
+        }
+        cout << "\n" << endl;
+    }
+    cout << "Hits->End\n\n" << endl;
+
 }
 
+/**
+ * Retorna si este gladiador ha sido golpeado
+ * @param pathIndex
+ * @param arrowIndex
+ * @return bool
+ */
+bool Gladiador::isHit(int pathIndex, int arrowIndex) {
+
+    if (hits[pathIndex][arrowIndex] != 0) {
+        return true;
+    }
+    else {
+        return false;
+    }
+
+}
 
 
 
@@ -341,4 +414,11 @@ void Gladiador::setGeneracion(int _generacion) {
 
 int Gladiador::getGeneracion() {
     return generacion;
+}
+Cuadricula* Gladiador::getCuadricula() {
+    return cuadricula;
+}
+
+void Gladiador::setCuadricula(Cuadricula* _cuadricula) {
+    cuadricula = _cuadricula;
 }

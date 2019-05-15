@@ -39,7 +39,7 @@ void Backtracking::findPath(Node* currentPosition, Node* targetPosition) {
     ///En la primera iteracion
     if (!initializedStartGoal) {
 
-        cout << " [Starting Backtracking]";
+        cout << "[Starting Backtracking]\n" << endl;
 
         ///Limpia pathToGoal
         pathToGoal.clear();

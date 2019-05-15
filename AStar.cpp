@@ -38,7 +38,7 @@ void AStar::findPath(Node *currentPosition, Node *targetPosition) {
     ///En la primera iteracion
     if (!initializedStartGoal) {
 
-        cout << " [Starting A*]";
+        cout << "[Starting A*]\n" << endl;
 
         ///Limpia openList
         openList.clear();
@@ -72,14 +72,6 @@ void AStar::findPath(Node *currentPosition, Node *targetPosition) {
         setStartAndGoal(currentPosition, targetPosition);
         setInitializedStartGoal(true);
     }
-
-
-/*
-    cout << "   Openlist size: " << openList.size();
-    cout << "   PathToGoal size: " << pathToGoal.size();
-    cout << "   InPath: " << currentPosition->isInAStarPath();
-    cout << "   TEST: " << currentPosition->test << "\n" << endl;*/
-
 
     ///Continua el algoritmo si no es la primera vez
     if (initializedStartGoal)  {;

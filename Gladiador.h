@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <vector>
+#include "Cuadricula.h"
 
 #define ZONE_SIZE 10
 
@@ -24,7 +25,8 @@ private:
     int resistencia;
     bool muerto=false;
     vector<int> pathToGoal;
-    int hits[ZONE_SIZE*ZONE_SIZE][16];
+    Cuadricula* cuadricula;
+    int hits[ZONE_SIZE*ZONE_SIZE][24];
 
     string nombrePadre1;
     string nombrePadre2;
@@ -59,6 +61,7 @@ public:
     void setNombrePadre1(string _nombre);
     void setNombrePadre2(string _nombre);
     void setGeneracion(int _generacion);
+    void setCuadricula(Cuadricula* _cuadricula);
 
     int getEdad();
     int getProbabilidadSupervivencia();
@@ -71,9 +74,12 @@ public:
     string getNombre();
     bool getMuerto();
     vector<int> getPathToGoal();
+    Cuadricula* getCuadricula();
+    bool isHit(int pathIndex, int arrowIndex);
     string getNombrePadre1();
     string getNombrePadre2();
     int getGeneracion();
+
 
 };
 

@@ -22,8 +22,6 @@ using namespace std;
 Node::Node(){
 
     torre = nullptr;
-    gladiador1 = nullptr;
-    gladiador2 = nullptr;
 
     zoneSize = -1;
 
@@ -49,8 +47,6 @@ Node::Node(){
  */
 Node::Node(int _fila, int _columna, int _zoneSize) {
     torre = nullptr;
-    gladiador1 = nullptr;
-    gladiador2 = nullptr;
 
     zoneSize = _zoneSize;
 

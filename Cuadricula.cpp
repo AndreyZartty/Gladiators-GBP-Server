@@ -34,7 +34,7 @@ void Cuadricula::buildZone(int n) {
 
     ///Posiciones graficas
     int x = 380;
-    int y = 100;
+    int y = 150;
 
     ///Espacio entre cada nodo graficamente
     int dxy = 450/ZONE_SIZE;
@@ -58,85 +58,27 @@ void Cuadricula::buildZone(int n) {
 }
 
 
-void Cuadricula::generateFirstTowers() {
-
-    ///Genera un valor diferente cada vez que se llame a la funcion dependiendo de la hora y fecha.
-    srand (time(NULL));
-
-    for (int n = 0; n < 3; n++) {
-
-        ///Obtiene un int aleatorio
-        int i = rand() % (posibleTowerIdList.size()) ;
-        //int j = rand() % (ZONE_SIZE) ;
-
-        ///Si no posee ya una torre
-        if (getNode(posibleTowerIdList[i])->getTorre() == nullptr && posibleTowerIdList[i] != 0 && posibleTowerIdList[i] != ( (ZONE_SIZE-1)*(ZONE_SIZE) + (ZONE_SIZE-1) ) ) {
-            getNode(posibleTowerIdList[i])->setTorre( new Torre() );
-            towerIdList.push_back( posibleTowerIdList[i] );
-            std::vector<int>::iterator buscador = find(posibleTowerIdList.begin(), posibleTowerIdList.end(), posibleTowerIdList[i]);
-            int posTorre = std::distance(posibleTowerIdList.begin(), buscador);
-            cout << posTorre << endl;
-            posibleTowerIdList.erase(posibleTowerIdList.begin()+posTorre);
-        } else {
-            n--;
-        }
-
-    }
-
-    ///IMPRIMIR VECTOR DE TORRES
-    cout << "Tower Id's: ";
-    for (int i = 0; i < towerIdList.size(); i++) {
-
-        if (i == 0) {
-            cout << "[" << towerIdList[i] << ", ";
-        }
-        else if (i == towerIdList.size() - 1) {
-            cout << towerIdList[i] << "]\n" << endl;
-        }
-        else {
-            cout << towerIdList[i] << ", ";
-        }
-
-    }
-
-    ///IMPRIMIR VECTOR DE POSIBLES TORRES
-
-    cout << "PosibleTower Id's: ";
-    for (int i = 0; i < posibleTowerIdList.size(); i++) {
-
-        if (i == 0) {
-            cout << "[" << posibleTowerIdList[i] << ", ";
-        }
-        else if (i == posibleTowerIdList.size() - 1) {
-            cout << posibleTowerIdList[i] << "]\n" << endl;
-        }
-        else {
-            cout << posibleTowerIdList[i] << ", ";
-        }
-
-    }
-
-}
-
 int Cuadricula::newTower() {
 
+    int randomTowerType ;
     if (posibleTowerIdList.size() == 0){
         return -1;
     }
     else {
-        ///Genera un valor diferente cada vez que se llame a la funcion dependiendo de la hora y fecha.
-        srand(time(NULL));
+
+        randomTowerType = 1 + rand() % 3;
+
+        ///Obtiene un int aleatorio
+        int i = rand() % (posibleTowerIdList.size());
 
         for (int n = 0; n < 1; n++) {
-
-            ///Obtiene un int aleatorio
-            int i = rand() % (posibleTowerIdList.size());
 
             ///Si no posee ya una torre
             if (getNode(posibleTowerIdList[i])->getTorre() == nullptr && posibleTowerIdList[i] != 0 &&
                     posibleTowerIdList[i] != ((ZONE_SIZE - 1) * (ZONE_SIZE) + (ZONE_SIZE - 1))) {
 
-                getNode(posibleTowerIdList[i])->setTorre(new Torre());
+                getNode(posibleTowerIdList[i])->setTorre(new Torre(randomTowerType));
+
                 int send = posibleTowerIdList[i];
                 towerIdList.push_back(posibleTowerIdList[i]);
                 std::vector<int>::iterator buscador = find(posibleTowerIdList.begin(), posibleTowerIdList.end(), posibleTowerIdList[i]);
@@ -208,7 +150,10 @@ void Cuadricula::calculateHeuristic() {
  * @return Node
  */
 Node* Cuadricula::getNode(int i, int j) {
-    return matriz[i][j];
+    if (i >= 0 && j >= 0 && i < size && j < size ) {
+        return matriz[i][j];
+    }
+    return nullptr;
 }
 
 /**
@@ -244,24 +189,22 @@ void Cuadricula::print() {
 
             Node* printee = matriz[i][j];
 
-            int hayTorre = 0;
-            int hCost = printee->getHCost();
+            string hayTorre = "0";
+            int towerType = 0;
             int id = printee->getId();
-            int parent = -1;
-
-            if (printee->getParent() != nullptr) {
-                parent = printee->getParent()->getId();
-            }
 
             if (printee->getTorre() != nullptr) {
-                hayTorre = 1;
+                hayTorre = "T";
+                towerType = printee->getTorre()->getTipo();
             }
+
+
 
             int x = printee->getXCoord();
             int y = printee->getYCoord();
 
             cout << " ["<< i << "," << j << "," << id << "," << hayTorre << ","
-                 << hCost << "," << parent << "," << x << "," << y << "] " ;
+                 << towerType << "," << x << "," << y << "] " ;
 
         }
         cout << "\n" << endl;
@@ -403,4 +346,6 @@ void Cuadricula::resetVerifiedNot() {
 
     }
 }
+
+
 

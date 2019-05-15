@@ -2,7 +2,6 @@
 #ifndef GLADIATORS_GBP_NODE_H
 #define GLADIATORS_GBP_NODE_H
 
-#include "Gladiador.h"
 #include "Torre.h"
 
 
@@ -30,8 +29,6 @@ private:
     int zoneSize;
     int xCoord;
     int yCoord;
-    Gladiador* gladiador1;
-    Gladiador* gladiador2;
 
 
 public:
@@ -72,7 +69,6 @@ public:
     int getYCoord();
     void setYCoord(int _yCoord);
 
-    int test = 69;
 
 };
 
