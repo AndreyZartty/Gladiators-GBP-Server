@@ -8,6 +8,11 @@
  * @since 02/05/19
  */
 
-Torre::Torre() {
+Torre::Torre(int _tipo) {
+    tipo = _tipo;
+}
 
+
+int Torre::getTipo() {
+    return tipo;
 }

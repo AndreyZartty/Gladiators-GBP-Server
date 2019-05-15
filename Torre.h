@@ -11,13 +11,16 @@
 
 
 class Torre {
-    bool flechaSencilla;
-    bool flechaFuego;
-    bool flechaExplosivo;
+    int tipo;
 
 
 public:
-    Torre();
+    Torre(int tipo);
+
+    ///Getters & Setters
+
+    int getTipo();
+
 
 };
 

@@ -28,6 +28,9 @@ Juego::Juego() {
     gladiador1 = poblacion1->getMejor();
     gladiador2 = poblacion2->getMejor();
 
+    gladiador1->setCuadricula(cuadricula);
+    gladiador2->setCuadricula(cuadricula);
+
 }
 
 

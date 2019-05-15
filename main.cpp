@@ -27,9 +27,11 @@
  */
 
 
+
 ///Instancia estatica del juego
 static Juego* juego = new Juego();
-
+static int pathIndexG1 = 0;
+static int pathIndexG2 = 0;
 
 /**
  * Retorna al cliente el tamaño de la Zona de Intimidación.
@@ -442,14 +444,114 @@ string sendCoordGladiador(string poblacion, string coord, string i) {
  */
 string sendHit(string gladiador, string arrowIndex) {
 
+    Gladiador* gladInstance;
+    int hit;
 
+    if ( gladiador == "1" ) {
+
+        gladInstance = juego->getGladiador1();
+
+        hit = gladInstance->isHit(pathIndexG1, stoi(arrowIndex) );
+
+        json_object *jobjHit = json_object_new_object();
+
+        json_object *jstringHit = json_object_new_string( to_string(hit).c_str());
+
+        json_object_object_add(jobjHit, "HITG1", jstringHit);
+
+        return json_object_to_json_string(jobjHit);
+
+
+
+    } else if (gladiador == "2") {
+
+        gladInstance = juego->getGladiador2();
+
+        hit = gladInstance->isHit(pathIndexG2, stoi(arrowIndex) );
+
+        json_object *jobjHit = json_object_new_object();
+
+        json_object *jstringHit = json_object_new_string( to_string(hit).c_str());
+
+        json_object_object_add(jobjHit, "HITG2", jstringHit);
+
+        return json_object_to_json_string(jobjHit);
+
+    }
+    else {
+        cout << "sendHit failed" << endl;
+    }
 
 }
+
+
+
+
+string sendCoordFlecha(string gladiador, string coord, string arrowIndex) {
+
+    int indexFlecha = stoi(arrowIndex);
+
+    if (gladiador == "1") {
+
+        Gladiador* gladInstance1 = juego->getGladiador1();
+
+        if ( coord == "x") {
+
+
+
+        }
+        else if (coord == "y") {
+
+
+
+        }
+
+        else {
+
+
+
+        }
+
+    } else if (gladiador == "2") {
+
+        Gladiador* gladInstance2 = juego->getGladiador2();
+
+        if ( coord == "x") {
+
+
+
+        }
+
+        else if (coord == "y") {
+
+
+
+        }
+        else {
+
+
+
+        }
+
+    } else {
+
+        cout << "sendCoordFlecha: gladiador failed" << endl;
+
+    }
+
+}
+
+
 
 
 string sendAType(string gladiador, string arrowIndex) {
 
 
+
+}
+
+
+string sendResistencia(string gladiador) {
 
 }
 
@@ -622,6 +724,49 @@ int runServer() {
             json_object *parsed_jsonATypeG2 = json_tokener_parse(buff);
             json_object_object_get_ex(parsed_jsonATypeG2, "ATYPEG2", &tempATypeG2);
 
+            ///KEY: XCOORDFLECHAG1
+            ///Obtiene un request para obtener las coordenadas x de la flecha con la que ha sido golpeado el gladiador 1
+            struct json_object *tempXCoordFlechaG1;
+            cout<<"XCoordFlechaG1"<<endl;
+            json_object *parsed_jsonXCoordFlechaG1 = json_tokener_parse(buff);
+            json_object_object_get_ex(parsed_jsonXCoordFlechaG1, "XCOORDFLECHAG1", &tempXCoordFlechaG1);
+
+            ///KEY: YCOORDFLECHAG1
+            ///Obtiene un request para obtener las coordenadas y de la flecha con la que ha sido golpeado el gladiador 2
+            struct json_object *tempYCoordFlechaG1;
+            cout<<"YCoordFlechaG1"<<endl;
+            json_object *parsed_jsonYCoordFlechaG1 = json_tokener_parse(buff);
+            json_object_object_get_ex(parsed_jsonYCoordFlechaG1, "YCOORDFLECHAG1", &tempYCoordFlechaG1);
+
+            ///KEY: XCOORDFLECHAG2
+            ///Obtiene un request para obtener las coordenadas x de la flecha con la que ha sido golpeado el gladiador 1
+            struct json_object *tempXCoordFlechaG2;
+            cout<<"XCoordFlechaG2"<<endl;
+            json_object *parsed_jsonXCoordFlechaG2 = json_tokener_parse(buff);
+            json_object_object_get_ex(parsed_jsonXCoordFlechaG2, "XCOORDFLECHAG2", &tempXCoordFlechaG2);
+
+            ///KEY: YCOORDFLECHAG2
+            ///Obtiene un request para obtener las coordenadas y de la flecha con la que ha sido golpeado el gladiador 2
+            struct json_object *tempYCoordFlechaG2;
+            cout<<"YCoordFlechaG2"<<endl;
+            json_object *parsed_jsonYCoordFlechaG2 = json_tokener_parse(buff);
+            json_object_object_get_ex(parsed_jsonYCoordFlechaG2, "YCOORDFLECHAG2", &tempYCoordFlechaG2);
+
+            ///KEY: RESISTENCIAG1
+            ///Obtiene un request para obtener la resistencia del gladiador 1
+            struct json_object *tempResistenciaG1;
+            cout<<"ResistenciaG1"<<endl;
+            json_object *parsed_jsonResistenciaG1 = json_tokener_parse(buff);
+            json_object_object_get_ex(parsed_jsonResistenciaG1, "RESISTENCIAG1", &tempResistenciaG1);
+
+            ///KEY: RESISTENCIAG2
+            ///Obtiene un request para obtener la resistencia del gladiador 2
+            struct json_object *tempResistenciaG2;
+            cout<<"ResistenciaG2"<<endl;
+            json_object *parsed_jsonResistenciaG2 = json_tokener_parse(buff);
+            json_object_object_get_ex(parsed_jsonResistenciaG2, "RESISTENCIAG2", &tempResistenciaG2);
+
+
             /*///KEY: ASTAR
             ///Genera la ejecucion del algoritmo AStar (A*)
             struct json_object *tempAStar;
@@ -636,19 +781,17 @@ int runServer() {
             json_object *parsed_jsonBacktracking = json_tokener_parse(buff);
             json_object_object_get_ex(parsed_jsonBacktracking, "BACKTRACKING", &tempBacktracking);*/
 
-            /*///KEY: LIFEG1
-            ///Obtiene la resistencia del gladiador 1
-            struct json_object *tempLIFEG1;
-            cout<<"YCoordGP1"<<endl;
-            json_object *parsed_jsonLIFEG1 = json_tokener_parse(buff);
-            json_object_object_get_ex(parsed_jsonLIFEG1, "LIFEG1", &tempLIFEG1);*/
 
-            /*///KEY: LIFEG2
-            ///Obtiene la resistencia del gladiador 2
-            struct json_object *tempLIFEG2;
-            cout<<"YCoordGP1"<<endl;
-            json_object *parsed_jsonLIFEG2 = json_tokener_parse(buff);
-            json_object_object_get_ex(parsed_jsonLIFEG2, "LIFEG2", &tempLIFEG2);*/
+
+
+            /*
+            ///KEY: TEMPLATE
+            ///Obtiene un request para
+            struct json_object *tempZZ;
+            cout<<"ZZ"<<endl;
+            json_object *parsed_jsonZZ = json_tokener_parse(buff);
+            json_object_object_get_ex(parsed_jsonZZ, "ZZ", &tempZZ);
+             */
 
 
 
@@ -658,7 +801,7 @@ int runServer() {
 
             ///Obtendra un request para comenzar el juego
             ///Verifica que reciba los KEYS: COMIENZO
-            if (json_object_get_string(tempComenzar) != 0 ) {
+            if (json_object_get_string(tempComenzar) != nullptr) {
                 ///JSON saliente del servidor
                 string zoneSize = sendZoneSize();
                 ///Envio al cliente
@@ -667,7 +810,7 @@ int runServer() {
 
             ///Obtendra un request para obtener la coordenada x del nodo deseado.
             ///Verifica que reciba los KEYS: XCOORD
-            if (json_object_get_string(tempXCoord) != 0 ) {
+            if (json_object_get_string(tempXCoord) != nullptr ) {
                 ///JSON saliente del servidor
                 string xCoord = sendCoord("x",json_object_get_string(tempXCoord));
                 ///Envio al cliente
@@ -676,7 +819,7 @@ int runServer() {
 
             ///Obtendra un request para obtener la coordenada y del nodo deseado.
             ///Verifica que reciba los KEYS: YCOORD
-            if (json_object_get_string(tempYCoord) != 0 ) {
+            if (json_object_get_string(tempYCoord) != nullptr ) {
                 ///JSON saliente del servidor
                 string yCoord = sendCoord("y",json_object_get_string(tempYCoord));
                 ///Envio al cliente
@@ -685,7 +828,7 @@ int runServer() {
 
             ///Obtendra un request para obtener la coordenada x de la torre deseada
             ///Verifica que reciba los KEYS: XCOORDTORRE
-            if (json_object_get_string(tempXCoordTorre) != 0 ) {
+            if (json_object_get_string(tempXCoordTorre) != nullptr ) {
                 ///JSON saliente del servidor
                 string xCoordTorre = sendCoordTorre("x",json_object_get_string(tempXCoordTorre));
                 ///Envio al cliente
@@ -694,113 +837,149 @@ int runServer() {
 
             ///Obtendra un request para obtener la coordenada y de la torre deseada
             ///Verifica que reciba los KEYS: YCOORDTORRE
-            if (json_object_get_string(tempYCoordTorre) != 0 ) {
+            if (json_object_get_string(tempYCoordTorre) != nullptr ) {
                 ///JSON saliente del servidor
                 string yCoordTorre = sendCoordTorre("y",json_object_get_string(tempYCoordTorre));
                 ///Envio al cliente
                 send(fd2, yCoordTorre.c_str(), MAXDATASIZE, 0);
             }
 
-            ///Obtendra un request para obtener
+            ///Obtendra un request para obtener la coordenada x del gladiador 1
             ///Verifica que reciba los KEYS: XCOORDGP1
-            if (json_object_get_string(tempXCoordGP1) != 0 ) {
+            if (json_object_get_string(tempXCoordGP1) != nullptr ) {
                 ///JSON saliente del servidor
                 string xCoordGP1 = sendCoordGladiador("1","x",json_object_get_string(tempXCoordGP1));
                 ///Envio al cliente
                 send(fd2, xCoordGP1.c_str(), MAXDATASIZE, 0);
+                pathIndexG1++;
             }
 
-            ///Obtendra un request para obtener
+            ///Obtendra un request para obtener la coordenada y del gladiador 1
             ///Verifica que reciba los KEYS: YCOORDGP1
-            if (json_object_get_string(tempYCoordGP1) != 0 ) {
+            if (json_object_get_string(tempYCoordGP1) != nullptr ) {
                 ///JSON saliente del servidor
                 string yCoordGP1 = sendCoordGladiador("1","y",json_object_get_string(tempYCoordGP1));
                 ///Envio al cliente
                 send(fd2, yCoordGP1.c_str(), MAXDATASIZE, 0);
             }
 
-            ///Obtendra un request para obtener
+            ///Obtendra un request para obtener la coordenada x del gladiador 2
             ///Verifica que reciba los KEYS: XCOORDGP2
-            if (json_object_get_string(tempXCoordGP2) != 0 ) {
+            if (json_object_get_string(tempXCoordGP2) != nullptr ) {
                 ///JSON saliente del servidor
                 string xCoordGP2 = sendCoordGladiador("2","x",json_object_get_string(tempXCoordGP2));
                 ///Envio al cliente
                 send(fd2, xCoordGP2.c_str(), MAXDATASIZE, 0);
+                pathIndexG2++;
             }
 
-            ///Obtendra un request para obtener
+            ///Obtendra un request para obtener la coordenada y del gladiador 2
             ///Verifica que reciba los KEYS: YCOORDGP2
-            if (json_object_get_string(tempYCoordGP2) != 0 ) {
+            if (json_object_get_string(tempYCoordGP2) != nullptr ) {
                 ///JSON saliente del servidor
                 string yCoordGP2 = sendCoordGladiador("2","y",json_object_get_string(tempYCoordGP2));
                 ///Envio al cliente
                 send(fd2, yCoordGP2.c_str(), MAXDATASIZE, 0);
             }
 
-
-            ///Obtendra un request para obtener
+            ///Obtendra un request para obtener si el gladiador 1 le han pegado
             ///Verifica que reciba los KEYS: HITG1
-            if (json_object_get_string(tempHitG1) != 0 ) {
+            if (json_object_get_string(tempHitG1) != nullptr ) {
                 ///JSON saliente del servidor
                 string hitG1 = sendHit("1",json_object_get_string(tempHitG1));
                 ///Envio al cliente
                 send(fd2, hitG1.c_str(), MAXDATASIZE, 0);
             }
 
-            ///Obtendra un request para obtener
+            ///Obtendra un request para obtener si el gladiador 2 le han pegado
             ///Verifica que reciba los KEYS: HITG2
-            if (json_object_get_string(tempHitG2) != 0 ) {
+            if (json_object_get_string(tempHitG2) != nullptr ) {
                 ///JSON saliente del servidor
                 string hitG2 = sendHit("2",json_object_get_string(tempHitG2));
                 ///Envio al cliente
                 send(fd2, hitG2.c_str(), MAXDATASIZE, 0);
             }
 
-            ///Obtendra un request para obtener
+            ///Obtendra un request para obtener el tipo de flecha que ha impactado al gladiador 1
             ///Verifica que reciba los KEYS: ATYPEG1
-            if (json_object_get_string(tempATypeG1) != 0 ) {
+            if (json_object_get_string(tempATypeG1) != nullptr ) {
                 ///JSON saliente del servidor
-                string aTypeG1 = sendAType("1",json_object_get_string(tempXCoordGP2));
+                string aTypeG1 = sendAType("1",json_object_get_string(tempATypeG1));
                 ///Envio al cliente
                 send(fd2, aTypeG1.c_str(), MAXDATASIZE, 0);
             }
 
-            ///Obtendra un request para obtener
+            ///Obtendra un request para obtener el tipo de flecha que ha impactado al gladiador 2
             ///Verifica que reciba los KEYS: ATYPEG2
-            if (json_object_get_string(tempATypeG2) != 0 ) {
+            if (json_object_get_string(tempATypeG2) != nullptr ) {
                 ///JSON saliente del servidor
-                string aTypeG2 = sendAType("2",json_object_get_string(tempYCoordGP2));
+                string aTypeG2 = sendAType("2",json_object_get_string(tempATypeG2));
                 ///Envio al cliente
                 send(fd2, aTypeG2.c_str(), MAXDATASIZE, 0);
             }
 
-
-            /*///Obtendra un request para obtener
-            ///Verifica que reciba los KEYS: LIFEG1
-            if (json_object_get_string(tempLIFEG1) != 0 ) {
+            ///Obtendra un request para obtener la coordenada x de la flecha que ha impactado al gladiador 1
+            ///Verifica que reciba los KEYS: XCOORDFLECHAG1
+            if (json_object_get_string(tempXCoordFlechaG1) != nullptr ) {
                 ///JSON saliente del servidor
-                string lifeG1 = sendLife("1",json_object_get_string(tempLIFEG1));
+                string xCoordFlechaG1 = sendCoordFlecha("1", "x",json_object_get_string(tempXCoordFlechaG1));
                 ///Envio al cliente
-                send(fd2, lifeG1.c_str(), MAXDATASIZE, 0);
-            }*/
+                send(fd2, xCoordFlechaG1.c_str(), MAXDATASIZE, 0);
+            }
 
-            /*///Obtendra un request para obtener
-            ///Verifica que reciba los KEYS: LIFEG2
-            if (json_object_get_string(tempLIFEG2) != 0 ) {
+            ///Obtendra un request para obtener la coordenada y de la flecha que ha impactado al gladiador 1
+            ///Verifica que reciba los KEYS: YCOORDFLECHAG1
+            if (json_object_get_string(tempYCoordFlechaG1) != nullptr ) {
                 ///JSON saliente del servidor
-                string lifeG2 = sendLife("2",json_object_get_string(tempLIFEG2));
+                string yCoordFlechaG1 = sendCoordFlecha("1", "y",json_object_get_string(tempYCoordFlechaG1));
                 ///Envio al cliente
-                send(fd2, lifeG2.c_str(), MAXDATASIZE, 0);
-            }*/
+                send(fd2, yCoordFlechaG1.c_str(), MAXDATASIZE, 0);
+            }
+
+            ///Obtendra un request para obtener la coordenada x de la flecha que ha impactado al gladiador 2
+            ///Verifica que reciba los KEYS: XCOORDFLECHAG2
+            if (json_object_get_string(tempXCoordFlechaG2) != nullptr ) {
+                ///JSON saliente del servidor
+                string xCoordFlechaG2 = sendCoordFlecha("2", "x",json_object_get_string(tempXCoordFlechaG2));
+                ///Envio al cliente
+                send(fd2, xCoordFlechaG2.c_str(), MAXDATASIZE, 0);
+            }
+
+            ///Obtendra un request para obtener la coordenada y de la flecha que ha impactado al gladiador 2
+            ///Verifica que reciba los KEYS: YCOORDFLECHAG2
+            if (json_object_get_string(tempYCoordFlechaG2) != nullptr ) {
+                ///JSON saliente del servidor
+                string yCoordFlechaG2 = sendCoordFlecha("2", "y",json_object_get_string(tempYCoordFlechaG2));
+                ///Envio al cliente
+                send(fd2, yCoordFlechaG2.c_str(), MAXDATASIZE, 0);
+            }
+
+            ///Obtendra un request para obtener la resistencia del gladiador 1
+            ///Verifica que reciba los KEYS: RESISTENCIAG1
+            if (json_object_get_string(tempResistenciaG1) != nullptr ) {
+                ///JSON saliente del servidor
+                string resistenciaG1 = sendResistencia("1");
+                ///Envio al cliente
+                send(fd2, resistenciaG1.c_str(), MAXDATASIZE, 0);
+            }
+
+            ///Obtendra un request para obtener la resistencia del gladiador 2
+            ///Verifica que reciba los KEYS: RESISTENCIA G2
+            if (json_object_get_string(tempResistenciaG2) != nullptr ) {
+                ///JSON saliente del servidor
+                string resistenciaG2 = sendResistencia("2");
+                ///Envio al cliente
+                send(fd2, resistenciaG2.c_str(), MAXDATASIZE, 0);
+            }
 
             /*
             ///Obtendra un request para obtener
             ///Verifica que reciba los KEYS: ASTAR
-            if (json_object_get_string(tempAStar) != 0 ) {
+            if (json_object_get_string(tempAStar) != nullptr ) {
                 ///JSON saliente del servidor
                 string aStar = sendAStar("",json_object_get_string(tempAStar));
                 ///Envio al cliente
-                send(fd2, aStar.c_str(), MAXDATASIZE, 0);
+                send(fd2, aStar.c_str(), MAXDATASIZE, nullptr);
             }
 
             ///Obtendra un request para obtener
@@ -811,6 +990,20 @@ int runServer() {
                 ///Envio al cliente
                 send(fd2, backtracking.c_str(), MAXDATASIZE, 0);
             }*/
+
+
+
+
+            /*
+            ///Obtendra un request para obtener
+            ///Verifica que reciba los KEYS: TEMPLATE
+            if (json_object_get_string(tempZZ) != nullptr ) {
+                ///JSON saliente del servidor
+                string aTypeZZ = sendAType("ZZ",json_object_get_string(tempZZ));
+                ///Envio al cliente
+                send(fd2, aTypeZZ.c_str(), MAXDATASIZE, 0);
+            }
+             */
 
 
         }
@@ -835,33 +1028,21 @@ int runServer() {
  */
 int main() {
 
-/*
-    srand (time(NULL));
-    Poblacion *poblacion = new Poblacion("Lannister");
-    poblacion->getMejor();
+    srand(time(NULL));
 
-    poblacion->nuevageneracion();
-    poblacion->nuevageneracion();
-    poblacion->nuevageneracion();
-    poblacion->nuevageneracion();
-    poblacion->nuevageneracion();
-    poblacion->nuevageneracion();
-    */
-
-
-    ///Corre los algoritmos
+    ///Genera las torres
     juego->generateTowers();
 
     ///ANDREY
     ///Verificar que no quede ningun camino en los algoritmos cuando se generan las torres
 
     juego->doBacktracking();
-    //juego->getBacktrackingAlgorithm()->showPath();
+
     juego->doAStar();
-    //juego->getAStarAlgorithm()->showPath();
 
 
     ///Corre el servidor
     runServer();
+
 
 }
