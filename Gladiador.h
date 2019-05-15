@@ -26,6 +26,9 @@ private:
     vector<int> pathToGoal;
     int hits[ZONE_SIZE*ZONE_SIZE][16];
 
+    string nombrePadre1;
+    string nombrePadre2;
+
 
 public:
 
@@ -51,6 +54,8 @@ public:
     void setResistencia();
     void setResistencia(int id);
     void setPathToGoal(vector<int> _pathToGoal);
+    void setNombrePadre1(string _nombre);
+    void setNombrePadre2(string _nombre);
 
     int getEdad();
     int getProbabilidadSupervivencia();
@@ -63,6 +68,8 @@ public:
     string getNombre();
     bool getMuerto();
     vector<int> getPathToGoal();
+    string getNombrePadre1();
+    string getNombrePadre2();
 
 };
 

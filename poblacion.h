@@ -7,6 +7,8 @@
 
 #include "Gladiador.h"
 #include "list.h"
+#include <vector>
+
 
 class Poblacion
 {
@@ -24,6 +26,8 @@ public:
     Gladiador* getMejor();
     string getNombrePoblacion();
     void nuevageneracion();
+    vector <List*> getGeneraciones();
+
 
 
 private:
@@ -33,6 +37,7 @@ private:
     List padres;
     int generacion=1;
     Gladiador* mejor;
+    vector <List*> generaciones;
 };
 
 

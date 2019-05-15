@@ -850,18 +850,18 @@ int main() {
 
 
     ///Corre los algoritmos
-    juego->generateTowers();
+    //juego->generateTowers();
 
     ///ANDREY
     ///Verificar que no quede ningun camino en los algoritmos cuando se generan las torres
 
-    juego->doBacktracking();
+    //juego->doBacktracking();
     //juego->getBacktrackingAlgorithm()->showPath();
-    juego->doAStar();
+    //juego->doAStar();
     //juego->getAStarAlgorithm()->showPath();
 
 
     ///Corre el servidor
-    runServer();
+    //runServer();
 
 }
