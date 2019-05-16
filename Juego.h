@@ -9,6 +9,16 @@
 #include "AStar.h"
 #include "Backtracking.h"
 
+
+/**
+ * Header de Juego
+ *
+ * @since 30/04/17
+ */
+
+/**
+ * Constructor de Juego;;
+ */
 class Juego {
 private:
 
@@ -17,10 +27,8 @@ private:
     Backtracking* backtrackingAlgorithm;
     Node* nodoInicio;
     Node* nodoFinal;
-
     Poblacion *poblacion1;
     Poblacion *poblacion2;
-
     Gladiador* gladiador1;
     Gladiador* gladiador2;
 
@@ -46,7 +54,6 @@ public:
     Gladiador* getGladiador2();
     void setGladiador1(Gladiador* _gladiador1);
     void setGladiador2(Gladiador* _gladiador2);
-
     Poblacion* getPoblacion1();
     Poblacion* getPoblacion2();
 

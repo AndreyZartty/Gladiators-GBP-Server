@@ -69,7 +69,6 @@ public:
     int getYCoord();
     void setYCoord(int _yCoord);
 
-
 };
 
 

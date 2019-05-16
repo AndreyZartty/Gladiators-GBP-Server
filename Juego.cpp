@@ -49,7 +49,6 @@ void Juego::doAStar() {
     ///Busca el camino
     aStarAlgorithm->findPath(nodoInicio, nodoFinal);
 
-
     ///Se rota el path
     aStarAlgorithm->rotatePath();
     ///Ingresa el path a su respectivo gladiador
@@ -71,13 +70,13 @@ void Juego::doBacktracking() {
     ///Busca el camino
     backtrackingAlgorithm->findPath(nodoInicio,nodoFinal);
 
-
     ///Se rota el path
     backtrackingAlgorithm->rotatePath();
     ///Ingresa el path a su respectivo gladiador
     gladiador2->setPathToGoal(backtrackingAlgorithm->getPathToGoal());
     ///Se generara una matriz con los hits que le hacen las torres y sus respectivos tipos
     gladiador2->generateHits();
+
 }
 
 /**
@@ -261,19 +260,34 @@ Gladiador* Juego::getGladiador2() {
     return gladiador2;
 }
 
+/**
+ * Setter del Gladiador1 de Juego.
+ * @param _gladiador1
+ */
 void Juego::setGladiador1(Gladiador* _gladiador1) {
     gladiador1 = _gladiador1;
 }
 
+/**
+ * Setter del Gladiador1 de Juego.
+ * @param _gladiador1
+ */
 void Juego::setGladiador2(Gladiador* _gladiador2) {
     gladiador2 = _gladiador2;
 }
 
-
+/**
+ * Getter de poblacion1 de Juego.
+ * @return poblacion1
+ */
 Poblacion* Juego::getPoblacion1() {
     return poblacion1;
 }
 
+/**
+ * Getter de poblacion2 de Jugador
+ * @return poblacion2
+ */
 Poblacion* Juego::getPoblacion2() {
     return poblacion2;
 }

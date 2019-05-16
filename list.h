@@ -24,6 +24,7 @@ public:
     void swap(Gladiador *xp, Gladiador *yp);
     void bubbleSort();
     void vaciar();
+
 private:
 
     NodeG* pointerHead= nullptr;

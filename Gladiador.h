@@ -46,7 +46,7 @@ public:
     void generateHits();
     void restarResistencia(int valor);
     int getArrowDirection(int pathIndex, int towerIndex);
-
+    int getHitTower(int pathIndex, int arrowIdex);
 
     ///Getters & Setters
     void setNombre(string Nombre);
@@ -81,7 +81,7 @@ public:
     string getNombrePadre1();
     string getNombrePadre2();
     int getGeneracion();
-    int getHitTower(int pathIndex, int arrowIdex);
+
 
 
 };
