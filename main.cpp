@@ -36,6 +36,10 @@ static Juego* juego;
 static int pathIndexG1 = 0;
 static int pathIndexG2 = 0;
 
+static int indiceGen = 0;
+static int indiceGlad = 0;
+static int indicePob = 0;
+
 /**
  * Retorna al cliente el tamaño de la Zona de Intimidación.
  * @return JSON
@@ -481,76 +485,169 @@ string sendCoordFlecha(string gladiador, string coord, string arrowIndex) {
 
 }
 
-/**
- * Envia un JSON con el tipo de flecha y su dirección para ser graficado.
- * @param gladiador
- * @param arrowIndex
- * @return
- */
 string sendAType(string gladiador, string arrowIndex) {
 
     int indexFlecha = stoi(arrowIndex);
 
     if (gladiador == "1") {
 
-        Gladiador* gladInstance1 = juego->getGladiador1();
+}
 
         int towerId = gladInstance1->getHitTower(pathIndexG1,indexFlecha);
 
-        Node* towerNode = juego->getCuadricula()->getNode(towerId);
+string sendGladiador() {
 
-        int aTypeToSend1 = -1;
+    ///Gladiador temporal
+    Gladiador *gtmp;
 
-        if (towerNode != nullptr) {
-            cout << "sendAType: " << towerNode->getTorre()->getTipo() << endl;
-            aTypeToSend1 = towerNode->getTorre()->getTipo() * 10;
-            aTypeToSend1 += juego->getGladiador1()->getArrowDirection(pathIndexG1,indexFlecha);
-        } else {
-            aTypeToSend1 = -1;
+    ///Atributos temporales por mandar
+    string nombretmp;
+    string edadtmp;
+    string probsuptmp;
+    string expecttmp;
+    string inteltmp;
+    string condfistmp;
+    string frzsuptmp;
+    string frzinftmp;
+    string resisttmp;
+    string muertotmp;
+    string gentmp;
+    string pad1tmp;
+    string pad2tmp;
+
+    json_object *jobjGlad = json_object_new_object();
+
+    if (indiceGlad>=juego->getPoblacion1()->getGeneracion()){
+        if(indicePob==1) {
+            json_object *jstring1 = json_object_new_string("X");
+            json_object *jstring2 = json_object_new_string("X");
+            json_object *jstring3 = json_object_new_string("X");
+            json_object *jstring4 = json_object_new_string("X");
+            json_object *jstring5 = json_object_new_string("X");
+            json_object *jstring6 = json_object_new_string("X");
+            json_object *jstring7 = json_object_new_string("X");
+            json_object *jstring8 = json_object_new_string("X");
+            json_object *jstring9 = json_object_new_string("X");
+            json_object *jstring10 = json_object_new_string("X");
+            json_object *jstring11 = json_object_new_string("X");
+            json_object *jstring12 = json_object_new_string("X");
+            json_object *jstring13 = json_object_new_string("X");
+
+            json_object_object_add(jobjGlad,"NOMBRE",jstring1);
+            json_object_object_add(jobjGlad,"EDAD",jstring2);
+            json_object_object_add(jobjGlad,"PROBSUP",jstring3);
+            json_object_object_add(jobjGlad,"EXPECT",jstring4);
+            json_object_object_add(jobjGlad,"INTEL",jstring5);
+            json_object_object_add(jobjGlad,"CONDFIS",jstring6);
+            json_object_object_add(jobjGlad,"FRZSUP",jstring7);
+            json_object_object_add(jobjGlad,"FRZINF",jstring8);
+            json_object_object_add(jobjGlad,"RESIST",jstring9);
+            json_object_object_add(jobjGlad,"MUERTO",jstring10);
+            json_object_object_add(jobjGlad,"GEN",jstring11);
+            json_object_object_add(jobjGlad,"PAD1",jstring12);
+            json_object_object_add(jobjGlad,"PAD2",jstring13);
+        }else{
+            json_object *jstring1 = json_object_new_string("Y");
+            json_object *jstring2 = json_object_new_string("Y");
+            json_object *jstring3 = json_object_new_string("Y");
+            json_object *jstring4 = json_object_new_string("Y");
+            json_object *jstring5 = json_object_new_string("Y");
+            json_object *jstring6 = json_object_new_string("Y");
+            json_object *jstring7 = json_object_new_string("Y");
+            json_object *jstring8 = json_object_new_string("Y");
+            json_object *jstring9 = json_object_new_string("Y");
+            json_object *jstring10 = json_object_new_string("Y");
+            json_object *jstring11 = json_object_new_string("Y");
+            json_object *jstring12 = json_object_new_string("Y");
+            json_object *jstring13 = json_object_new_string("Y");
+
+            json_object_object_add(jobjGlad,"NOMBRE",jstring1);
+            json_object_object_add(jobjGlad,"EDAD",jstring2);
+            json_object_object_add(jobjGlad,"PROBSUP",jstring3);
+            json_object_object_add(jobjGlad,"EXPECT",jstring4);
+            json_object_object_add(jobjGlad,"INTEL",jstring5);
+            json_object_object_add(jobjGlad,"CONDFIS",jstring6);
+            json_object_object_add(jobjGlad,"FRZSUP",jstring7);
+            json_object_object_add(jobjGlad,"FRZINF",jstring8);
+            json_object_object_add(jobjGlad,"RESIST",jstring9);
+            json_object_object_add(jobjGlad,"MUERTO",jstring10);
+            json_object_object_add(jobjGlad,"GEN",jstring11);
+            json_object_object_add(jobjGlad,"PAD1",jstring12);
+            json_object_object_add(jobjGlad,"PAD2",jstring13);
         }
 
-        json_object *jobjATypeToSend1 = json_object_new_object();
-
-        json_object *jstringATypeToSend1 = json_object_new_string( to_string(aTypeToSend1).c_str());
-
-        json_object_object_add(jobjATypeToSend1, "ATYPEG1", jstringATypeToSend1);
-
-        return json_object_to_json_string(jobjATypeToSend1);
-
-
-    } else if (gladiador == "2") {
-
-        Gladiador* gladInstance2 = juego->getGladiador2();
-
-        int towerId = gladInstance2->getHitTower(pathIndexG2,indexFlecha);
-
-        Node* towerNode = juego->getCuadricula()->getNode(towerId);
-
-        int aTypeToSend2 = 10;
-
-        if (towerNode != nullptr) {
-            cout << "sendAType: " << towerNode->getTorre()->getTipo() << endl;
-            aTypeToSend2 = towerNode->getTorre()->getTipo() * 10;
-            aTypeToSend2 += juego->getGladiador2()->getArrowDirection(pathIndexG2,indexFlecha);
-        } else {
-            aTypeToSend2 = -1;
-        }
-
-        json_object *jobjATypeToSend2 = json_object_new_object();
-
-        json_object *jstringATypeToSend2 = json_object_new_string( to_string(aTypeToSend2).c_str());
-
-        json_object_object_add(jobjATypeToSend2, "ATYPEG2", jstringATypeToSend2);
-
-        return json_object_to_json_string(jobjATypeToSend2);
-
-
-    } else {
-
-        cout << "sendAType: failed" << endl;
+        indiceGen=0;
+        indiceGlad=0;
+        indicePob+=1;
 
     }
+    else {
 
+        if (indicePob == 1) {
+            gtmp = juego->getPoblacion1()->getGeneraciones()[indiceGen]->recorrer(indiceGlad);
+            if (gtmp == nullptr) {
+                indiceGen += 1;
+                indiceGlad = 0;
+                return sendGladiador();
+            }
+
+        } else {
+            gtmp = juego->getPoblacion2()->getGeneraciones()[indiceGen]->recorrer(indiceGlad);
+            if (gtmp == nullptr) {
+                indiceGen += 1;
+                indiceGlad = 0;
+                return sendGladiador();
+            }
+        }
+
+        nombretmp = gtmp->getNombre();
+        edadtmp = to_string(gtmp->getEdad());
+        probsuptmp = to_string(gtmp->getProbabilidadSupervivencia());
+        expecttmp = to_string(gtmp->getExpectativaVida());
+        inteltmp = to_string(gtmp->getInteligencia());
+        condfistmp = to_string(gtmp->getCondicionFisica());
+        frzsuptmp = to_string(gtmp->getFuerzaSuperior());
+        frzinftmp = to_string(gtmp->getFuerzaInferior());
+        resisttmp = to_string(gtmp->getResistencia());
+        muertotmp = to_string(gtmp->getMuerto());
+        gentmp = to_string(gtmp->getGeneracion());
+        pad1tmp = gtmp->getNombrePadre1();
+        pad2tmp = gtmp->getNombrePadre2();
+
+        json_object *jstring1 = json_object_new_string(nombretmp.c_str());
+        json_object *jstring2 = json_object_new_string(edadtmp.c_str());
+        json_object *jstring3 = json_object_new_string(probsuptmp.c_str());
+        json_object *jstring4 = json_object_new_string(expecttmp.c_str());
+        json_object *jstring5 = json_object_new_string(inteltmp.c_str());
+        json_object *jstring6 = json_object_new_string(condfistmp.c_str());
+        json_object *jstring7 = json_object_new_string(frzsuptmp.c_str());
+        json_object *jstring8 = json_object_new_string(frzinftmp.c_str());
+        json_object *jstring9 = json_object_new_string(resisttmp.c_str());
+        json_object *jstring10 = json_object_new_string(muertotmp.c_str());
+        json_object *jstring11 = json_object_new_string(gentmp.c_str());
+        json_object *jstring12 = json_object_new_string(pad1tmp.c_str());
+        json_object *jstring13 = json_object_new_string(pad2tmp.c_str());
+
+        json_object_object_add(jobjGlad,"NOMBRE",jstring1);
+        json_object_object_add(jobjGlad,"EDAD",jstring2);
+        json_object_object_add(jobjGlad,"PROBSUP",jstring3);
+        json_object_object_add(jobjGlad,"EXPECT",jstring4);
+        json_object_object_add(jobjGlad,"INTEL",jstring5);
+        json_object_object_add(jobjGlad,"CONDFIS",jstring6);
+        json_object_object_add(jobjGlad,"FRZSUP",jstring7);
+        json_object_object_add(jobjGlad,"FRZINF",jstring8);
+        json_object_object_add(jobjGlad,"RESIST",jstring9);
+        json_object_object_add(jobjGlad,"MUERTO",jstring10);
+        json_object_object_add(jobjGlad,"GEN",jstring11);
+        json_object_object_add(jobjGlad,"PAD1",jstring12);
+        json_object_object_add(jobjGlad,"PAD2",jstring13);
+
+
+
+        indiceGlad += 1;
+    }
+
+    return json_object_to_json_string(jobjGlad);
 }
 
 /**
@@ -964,7 +1061,28 @@ int runServer() {
             //cout<<"GMUERTO"<<endl;
             json_object *parsed_jsonGMUERTO = json_tokener_parse(buff);
             json_object_object_get_ex(parsed_jsonGMUERTO, "GMUERTO", &tempGMUERTO);
+            ///KEY: STORICLABELS
+            ///Obtiene un request para
+            struct json_object *tempPobla1;
+            cout<<"STORIC LABELS"<<endl;
+            json_object *parsed_jsonPobla1 = json_tokener_parse(buff);
+            json_object_object_get_ex(parsed_jsonPobla1, "STORICLABELS", &tempPobla1);
 
+            /*
+            ///KEY: POBLA2
+            ///Obtiene un request para
+            struct json_object *tempPobla2;
+            cout<<"Pobla2"<<endl;
+            json_object *parsed_jsonPobla2 = json_tokener_parse(buff);
+            json_object_object_get_ex(parsed_jsonPobla2, "POBLA2", &tempPobla2);
+*/
+
+            /*///KEY: ASTAR
+            ///Genera la ejecucion del algoritmo AStar (A*)
+            struct json_object *tempAStar;
+            cout<<"AStar"<<endl;
+            json_object *parsed_jsonAStar = json_tokener_parse(buff);
+            json_object_object_get_ex(parsed_jsonAStar, "ASTAR", &tempAStar);*/
 
             ///KEY: NEXTPOSITIONG1
             ///Obtiene un request para obtener el cambio de posicion del gladiador 1
@@ -1207,9 +1325,31 @@ int runServer() {
                 printf("\nWRITE: %s\n", resistenciaG2.c_str());
             }
 
-            ///Obtendra un request para obtener la proxima posicion en el path del gladiador 1
-            ///Verifica que reciba los KEYS: NEXTPOSITIONG1
-            if (json_object_get_string(tempNextPositionG1) != nullptr ) {
+            ///Obtendra un request para obtener la Poblacion 1
+            ///Verifica que reciba los KEYS: STORICLABEL
+            if (json_object_get_string(tempPobla1) != nullptr ) {
+                ///JSON saliente del servidor
+                string glad = sendGladiador();
+                ///Envio al cliente
+                send(fd2, glad.c_str(), MAXDATASIZE, 0);
+            }
+
+            /*
+
+            ///Obtendra un request para obtener la Poblacion 2
+            ///Verifica que reciba los KEYS: POBLA2
+            if (json_object_get_string(tempPobla2) != nullptr ) {
+                ///JSON saliente del servidor
+                string glad = sendGladiador("2");
+                ///Envio al cliente
+                send(fd2, glad.c_str(), MAXDATASIZE, 0);
+            }
+             */
+
+            /*
+            ///Obtendra un request para obtener
+            ///Verifica que reciba los KEYS: ASTAR
+            if (json_object_get_string(tempAStar) != nullptr ) {
                 ///JSON saliente del servidor
                 string nextPositionG1 = changePathIndex("1",json_object_get_string(tempNextPositionG1));
                 ///Envio al cliente
@@ -1285,9 +1425,31 @@ int main() {
 
     ///Instanciación del juego
     juego = new Juego();
+    ///Genera generaciones
+    //poblacion->nuevageneracion();
+    //poblacion->nuevageneracion();
+    //poblacion->nuevageneracion();
+    //poblacion->nuevageneracion();
+    //poblacion->nuevageneracion();
+    //poblacion->nuevageneracion();
+
+    ///Genera las torres
+    juego->generateTowers();
+
+
+    ///Corre los algoritmos
+    //juego->generateTowers();
+
+    ///ANDREY
+    ///Verificar que no quede ningun camino en los algoritmos cuando se generan las torres
+
+    juego->doBacktracking();
+
+    juego->doAStar();
+
 
     ///Corre el servidor
-    runServer();
+    //runServer();
 
 
 }

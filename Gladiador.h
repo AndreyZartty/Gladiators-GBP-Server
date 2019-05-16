@@ -28,6 +28,11 @@ private:
     Cuadricula* cuadricula;
     int hits[ZONE_SIZE*ZONE_SIZE][24];
 
+    string nombrePadre1;
+    string nombrePadre2;
+
+    int generacion;
+
 
 public:
 
@@ -55,6 +60,9 @@ public:
     void setResistencia();
     void setResistencia(int id);
     void setPathToGoal(vector<int> _pathToGoal);
+    void setNombrePadre1(string _nombre);
+    void setNombrePadre2(string _nombre);
+    void setGeneracion(int _generacion);
     void setCuadricula(Cuadricula* _cuadricula);
 
     int getEdad();
@@ -70,6 +78,9 @@ public:
     vector<int> getPathToGoal();
     Cuadricula* getCuadricula();
     bool isHit(int pathIndex, int arrowIndex);
+    string getNombrePadre1();
+    string getNombrePadre2();
+    int getGeneracion();
     int getHitTower(int pathIndex, int arrowIdex);
 
 

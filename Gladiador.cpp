@@ -540,6 +540,29 @@ void Gladiador::setPathToGoal(vector<int> _pathToGoal) {
     pathToGoal = _pathToGoal;
 }
 
+void Gladiador::setNombrePadre1(string _nombre) {
+    nombrePadre1 = _nombre;
+}
+
+void Gladiador::setNombrePadre2(string _nombre) {
+    nombrePadre2 = _nombre;
+}
+
+string Gladiador::getNombrePadre1() {
+    return nombrePadre1;
+}
+
+string Gladiador::getNombrePadre2() {
+    return nombrePadre2;
+}
+
+void Gladiador::setGeneracion(int _generacion) {
+    generacion = _generacion;
+}
+
+int Gladiador::getGeneracion() {
+    return generacion;
+}
 Cuadricula* Gladiador::getCuadricula() {
     return cuadricula;
 }

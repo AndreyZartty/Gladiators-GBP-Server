@@ -52,6 +52,9 @@ public:
 
 
 
+    Poblacion* getPoblacion1();
+    Poblacion* getPoblacion2();
+
 
 };
 
