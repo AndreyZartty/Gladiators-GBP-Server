@@ -45,6 +45,9 @@ public:
     Gladiador* getGladiador1();
     Gladiador* getGladiador2();
 
+    Poblacion* getPoblacion1();
+    Poblacion* getPoblacion2();
+
 
 };
 

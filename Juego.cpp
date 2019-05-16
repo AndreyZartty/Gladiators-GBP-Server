@@ -260,3 +260,11 @@ Gladiador* Juego::getGladiador1() {
 Gladiador* Juego::getGladiador2() {
     return gladiador2;
 }
+
+Poblacion* Juego::getPoblacion1() {
+    return poblacion1;
+}
+
+Poblacion* Juego::getPoblacion2() {
+    return poblacion2;
+}
