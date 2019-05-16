@@ -41,7 +41,7 @@ public:
     ///Metodos
     void doAStar();
     void doBacktracking();
-    void generateTowers();
+    void generateTowers(int ctt);
 
     ///Getters & Setters
     Cuadricula* getCuadricula();

@@ -804,7 +804,7 @@ void iniciar(string tipo) {
     if (tipo == "0") {
 
         ///Genera las torres por primera vez
-        juego->generateTowers();
+        juego->generateTowers(3);
 
         ///Genera el camino para ambos gladiadores por medio de su algoritmo
         juego->doBacktracking();
@@ -825,7 +825,7 @@ void iniciar(string tipo) {
         juego->getGladiador2()->setCuadricula(juego->getCuadricula());
 
         ///Agrega tres torres a la Zona de Intimidación
-        juego->generateTowers();
+        juego->generateTowers(3);
 
         ///Genera el camino para ambos gladiadores por medio de su algoritmo
         juego->doBacktracking();
@@ -835,6 +835,24 @@ void iniciar(string tipo) {
     } else if (tipo == "2") {
 
             ///Para actualizarlo en la tercera iteración por cada movimiento del gladiador.
+
+            int cantTorres = juego->getCuadricula()->getTowerIdList().size();
+
+            juego->getCuadricula()->getTowerIdList().clear();
+
+        for(int i=0; i<juego->getCuadricula()->getSize()*juego->getCuadricula()->getSize(); i++){
+
+            juego->getCuadricula()->getNode(i)->setTorre(nullptr);
+
+        }
+
+        juego->generateTowers(cantTorres);
+
+        ///Genera el camino para ambos gladiadores por medio de su algoritmo
+        juego->doBacktracking();
+        juego->doAStar();
+
+        
 
     }
 

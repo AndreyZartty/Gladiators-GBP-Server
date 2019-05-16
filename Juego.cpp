@@ -82,7 +82,7 @@ void Juego::doBacktracking() {
 /**
  * Inicia ambos algoritmos y previamente establece todas sus condiciones de inicio
  */
-void Juego::generateTowers() {
+void Juego::generateTowers(int ctt) {
 
     cout << "Generating Towers\n" << endl;
 
@@ -90,7 +90,7 @@ void Juego::generateTowers() {
     int c = 0;
 
     ///Cantidad de Torres
-    int ct = 3;
+    int ct = ctt;
 
     while (c < ct) {
 
