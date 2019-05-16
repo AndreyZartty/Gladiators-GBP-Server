@@ -216,7 +216,6 @@ void AStar::pathOpened(int fila, int columna, float newGCost, Node *parent){
     Node* child = cuadricula->getNode(fila, columna);
 
 
-
     ///Si no está en el open list
     if (child->getGCost() == 0) {
 
@@ -344,7 +343,7 @@ Cuadricula* AStar::getCuadricula() {
 }
 
 /**
- * Setter de Cuadricula de .
+ * Setter de Cuadricula de AStar.
  * @param _cuadricula
  */
 void AStar::setCuadricula(Cuadricula* _cuadricula) {

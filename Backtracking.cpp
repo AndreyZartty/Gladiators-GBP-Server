@@ -148,7 +148,6 @@ bool Backtracking::continuePath(Node* currentPosition) {
 
 }
 
-
 /**
  * Imprime el vector deseado
  * @param list
@@ -176,7 +175,6 @@ void Backtracking::printVector(string list) {
     cout << "\n" << endl;
 
 }
-
 
 /**
  * Muestra y retorna el path de Backtracking.

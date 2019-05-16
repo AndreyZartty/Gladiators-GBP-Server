@@ -35,12 +35,9 @@ private:
 public:
 
     ///Constructor
-
     AStar(Cuadricula* _cuadricula);
 
-
     ///Métodos
-
     void findPath(Node *currentPosition, Node *targetPosition);
     void setStartAndGoal(Node *start, Node *goal);
     void continuePath(Node *currentNode);
@@ -50,9 +47,7 @@ public:
     vector<int> showPath();
     void rotatePath();
 
-
     ///Getters & Setters
-
     Cuadricula* getCuadricula();
     void setCuadricula(Cuadricula* _cuadricula);
     bool isInitializedStartGoal();
@@ -63,7 +58,6 @@ public:
     void setStartNode(Node* _startNode);
     Node* getGoalNode();
     void setGoalNode(Node* _goalNode);
-
     vector<int> getPathToGoal();
 
 };

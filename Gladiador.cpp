@@ -67,7 +67,11 @@ Gladiador::Gladiador(int generacion)
 
 ///Conversiones
 
-
+/**
+ * Convierte un numero de decimal a binario.
+ * @param n
+ * @return resultado
+ */
 string decToBinary(int n)
 {
     // Size of an integer is assumed to be 32 bits
@@ -82,11 +86,15 @@ string decToBinary(int n)
     return res;
 }
 
+/**
+ * Convierte un numero de binario a decimal.
+ * @param binario
+ * @return resultado
+ */
 int binToDec(int binario)
 {
     int exp,digito;
     int decimal;
-    //cout << "Binario: "<< binario<<endl;
 
     exp=0;
     decimal=0;
@@ -146,6 +154,10 @@ Gladiador::Gladiador(int generacion, Gladiador *padre1, Gladiador *padre2)
 ///Metodos
 
 
+/**
+ * Genera una mutación en el algortimo genético.
+ * @param gen
+ */
 void Gladiador::mutacion(string *gen){
     cout<<"mutacion de gen: "<<*gen;
     int random = rand() % 2;
@@ -167,7 +179,7 @@ void Gladiador::mutacion(string *gen){
 
 
 /**
- * Empieza a llenar la matriz "hits" con los valores de la de las torres que lo lastiman por el camino
+ * Empieza a llenar la matriz "hits" con los valores de la de las torres que lo lastiman por el camino.
  * y sus respectivas flechas.
  */
 void Gladiador::generateHits() {
@@ -220,8 +232,6 @@ void Gladiador::generateHits() {
 
     }
 
-
-
     for (int i = 0 ; i < pathToGoal.size() ; i++) {
         for (int j = 0 ; j < 24 ; j++) {
 
@@ -237,7 +247,7 @@ void Gladiador::generateHits() {
 }
 
 /**
- * Retorna si este gladiador ha sido golpeado
+ * Retorna si este gladiador ha sido golpeado.
  * @param pathIndex
  * @param arrowIndex
  * @return bool
@@ -253,9 +263,12 @@ bool Gladiador::isHit(int pathIndex, int arrowIndex) {
 
 }
 
-
-
-
+/**
+ * Verifica si alguna Torre ha golpeado a este gladiador.
+ * @param pathIndex
+ * @param arrowIndex
+ * @return id
+ */
 int Gladiador::getHitTower(int pathIndex, int arrowIndex) {
 
     int towerId = hits[pathIndex][arrowIndex];
@@ -269,45 +282,57 @@ int Gladiador::getHitTower(int pathIndex, int arrowIndex) {
 
 }
 
-
+/**
+ * Establece la resistencia luego de verificar cuanto ha sido golpeado el gladiador.
+ * @param pathIndex
+ */
 void Gladiador::restarResistencia(int pathIndex) {
 
     for (int i = 1; i < 24; i++) {
 
-        int id = hits[pathIndex][i];
+        int gladiatorId = hits[pathIndex][0];
 
-        if (id != 0) {
+        int towerId = hits[pathIndex][i];
 
-            int towerType = cuadricula->getNode(id)->getTorre()->getTipo();
+        int resultantX = cuadricula->getNode(gladiatorId)->getXCoord() - cuadricula->getNode(towerId)->getXCoord();
+        int resultantY = cuadricula->getNode(gladiatorId)->getYCoord() - cuadricula->getNode(towerId)->getYCoord();
 
-            cout << "TowerType @ restarResistencia: " << towerType << endl;
+        if (towerId != 0 && pathIndex != 0) {
 
-            if ( towerType == 1 ) {
+            if (cuadricula->getNode(towerId) != nullptr) {
 
-                resistencia -= 1;
+                int towerType = cuadricula->getNode(towerId)->getTorre()->getTipo();
 
-            } else if ( towerType == 2 ) {
+                cout << "TowerType @ restarResistencia: " << towerType << endl;
 
-                resistencia -= 2;
+                if ( towerType == 1 && abs(resultantX) == 1 && abs(resultantY) == 1 ) {
 
-            } else if ( towerType == 3 ) {
+                    resistencia -= 1;
 
-                resistencia -= 3;
+                } else if (towerType == 2) {
 
-            } else {
+                    resistencia -= 2;
 
-                cout << "restarResistencia: failed" << endl;
+                } else if (towerType == 3) {
 
-            }
+                    resistencia -= 4;
 
-            if (resistencia < 0) {
-                resistencia = 0;
-                return;
+                } else {
+
+                   cout << "restarResistencia: failed" << endl;
+
+                }
+
+                if (resistencia < 0) {
+                    resistencia = 0;
+                    return;
+                }
+
             }
 
         } else {
 
-            cout << "restarResistencia: Id not correct " << endl;
+            //cout << "restarResistencia: Id not correct " << endl;
 
         }
 
@@ -315,6 +340,68 @@ void Gladiador::restarResistencia(int pathIndex) {
 
 }
 
+/**
+ * Obtiene la direccion de la flecha de donde es disparada.
+ * @param pathIndex
+ * @param towerIndex
+ * @return int con direccion
+ */
+int Gladiador::getArrowDirection(int pathIndex, int towerIndex) {
+    int gladiatorId = hits[pathIndex][0];
+    int towerId = hits[pathIndex][towerIndex];
+
+    int resultantX = cuadricula->getNode(gladiatorId)->getXCoord() - cuadricula->getNode(towerId)->getXCoord();
+
+    int resultantY = cuadricula->getNode(gladiatorId)->getYCoord() - cuadricula->getNode(towerId)->getYCoord();
+
+    ///Diagonal izquierda arriba
+    if ( (resultantX == -2 && resultantY == -2) || (resultantX == -1 && resultantY == -2) ||
+         (resultantX == -2 && resultantY == -1) || (resultantX == -1 && resultantY == -1) ) {
+        return 0;
+    }
+
+    ///Arriba
+    else if ( (resultantX == 0 && resultantY == -2) || (resultantX == 0 && resultantY == 2) ) {
+        return 1;
+    }
+
+    ///Diagonal derecha arriba
+    else if ( (resultantX == 1 && resultantY == -2 ) || (resultantX == 2 && resultantY == -2) ||
+              (resultantX == 1 && resultantY == -1 ) || (resultantX == 2 && resultantY == -1) ) {
+        return 2;
+    }
+
+    ///Izquierda
+    else if ( (resultantX == -2 && resultantY == 0 ) || (resultantX == -1 && resultantY == 0 ) ) {
+        return 3;
+    }
+
+    ///Derecha
+    else if ( (resultantX == 1 && resultantY == 0 ) || (resultantX == 2 && resultantY == 0 ) ) {
+        return 4;
+    }
+
+    ///Diagonal izquierda abajo
+    else if ( (resultantX == -2 && resultantY == 1 ) || (resultantX == -1 && resultantY == 1 ) ||
+              (resultantX == -2 && resultantY == 2 ) || (resultantX == -1 && resultantY == 2 ) ) {
+        return 5;
+    }
+
+    ///Abajo
+    else if ( (resultantX == 0 && resultantY == 1 ) || (resultantX == 0 && resultantY == 2 ) ) {
+        return 6;
+    }
+
+    ///Diagonal derecha abajo
+    else if ( (resultantX == 1 && resultantY == 1 ) || (resultantX == 2 && resultantY == 1 ) ||
+              (resultantX == 1 && resultantY == 2 ) || (resultantX == 2 && resultantY == 2 ) ) {
+        return 7;
+    }
+    else {
+        return 8;
+    }
+
+}
 
 
 ///Getters & Setters
@@ -384,8 +471,7 @@ void Gladiador::setResistencia()
     }
 
     resistencia = resist;
-    //cout <<"resistencia de " << nombre << ": " <<resistencia << endl;
-    //cout <<"edad: "<< edad << endl;
+
 }
 
 void Gladiador::morir(){

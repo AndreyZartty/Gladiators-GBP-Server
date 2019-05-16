@@ -32,14 +32,12 @@ public:
     ///Constructor
     explicit Backtracking(Cuadricula* _cuadricula);
 
-
     ///Métodos
     void findPath(Node* currentPosition, Node* targetPosition);
     bool continuePath(Node* currentPosition);
     void printVector(string list);
     vector<int> showPath();
     void rotatePath();
-
 
     ///Getters & Setters
     void setCuadricula(Cuadricula* _cuadricula);

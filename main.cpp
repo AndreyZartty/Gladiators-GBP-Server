@@ -8,28 +8,31 @@
 #include <unistd.h>
 #include <cstring>
 #include <json-c/json.h>
+#include <iostream>
 
 #include "Gladiador.h"
 #include "poblacion.h"
 #include "list.h"
+#include "Juego.h"
 
 #define PORT 3550
 #define BACKLOG 4
 #define MAXDATASIZE 1000
 
-#include <iostream>
-#include "Juego.h"
+
+
+using namespace std;
 
 
 /**
  * Main del programa
+ *
  * @since 30/04/19
  */
 
 
-
 ///Instancia estatica del juego
-static Juego* juego = new Juego();
+static Juego* juego;
 static int pathIndexG1 = 0;
 static int pathIndexG2 = 0;
 
@@ -52,7 +55,7 @@ string sendZoneSize() {
 }
 
 /**
- * Retora la coordenada del Nodo deseada.
+ * Envia un JSON con la coordenada del Nodo deseado.
  * @param coord
  * @param id
  * @return JSON
@@ -64,8 +67,6 @@ string sendCoord(string coord, string id) {
     if (coord == "x") {
 
         coordToSend = juego->getCuadricula()->getNode( stoi(id) )->getXCoord();
-
-        ///cout<<"\nxCoord: " << coordToSend << endl;
 
         json_object *jobjXCoord = json_object_new_object();
 
@@ -79,8 +80,6 @@ string sendCoord(string coord, string id) {
     else if (coord == "y") {
 
         coordToSend = juego->getCuadricula()->getNode( stoi(id) )->getYCoord();
-
-        //cout<<"\nyCoord: " << coordToSend << endl;
 
         json_object *jobjYCoord = json_object_new_object();
 
@@ -96,57 +95,6 @@ string sendCoord(string coord, string id) {
     }
 
 }
-
-/**
- * Retorna la resistencia del Gladiador deseado.
- * @param gladiador
- * @param id
- * @return JSON
- */
- /*
-string sendLife(string gladiador, string id) {
-
-    int muertoSend;
-
-    if (gladiador == "1") {
-
-        juego->getGladiador1()->setResistencia(stoi(id));
-
-        muertoSend = juego->getGladiador1()->getMuerto();
-
-        cout<<"\nG1Muerto: " << muertoSend << endl;
-
-        json_object *jobjlifeG1 = json_object_new_object();
-
-        json_object *jstringlifeG1 = json_object_new_string(to_string(muertoSend).c_str());
-
-        json_object_object_add(jobjlifeG1,"LIFEG1", jstringlifeG1);
-
-        return json_object_to_json_string(jobjlifeG1);
-
-    }
-    else if (gladiador == "2") {
-
-        juego->getGladiador2()->setResistencia(stoi(id));
-
-        muertoSend = juego->getGladiador2()->getMuerto();
-
-        cout<<"\nG2Muerto: " << muertoSend << endl;
-
-        json_object *jobjlifeG2 = json_object_new_object();
-
-        json_object *jstringlifeG2 = json_object_new_string(to_string(muertoSend).c_str());
-
-        json_object_object_add(jobjlifeG2,"LIFEG2", jstringlifeG2);
-
-        return json_object_to_json_string(jobjlifeG2);
-
-    } else {
-        cout << "Error en sendCoord" << endl;
-        muertoSend = -1;
-    }
-
-}*/
 
 /**
  * Retorna la coordenada de la Torre deseada.
@@ -177,8 +125,6 @@ string sendCoordTorre(string coord, string i) {
                 coordToSendTorre = -1;
             }
 
-            //cout<<"\nxCoordTorre: " << coordToSendTorre << endl;
-
             json_object *jobjXCoordTorre = json_object_new_object();
 
             json_object *jstringXCoordTorre = json_object_new_string(to_string(coordToSendTorre).c_str());
@@ -198,8 +144,6 @@ string sendCoordTorre(string coord, string i) {
             else {
                 coordToSendTorre = -1;
             }
-
-            //cout<<"\nyCoordTorre: " << coordToSendTorre << endl;
 
             json_object *jobjYCoordTorre = json_object_new_object();
 
@@ -222,8 +166,6 @@ string sendCoordTorre(string coord, string i) {
 
         coordToSendTorre = -1;
 
-        //cout<<"\nCoordTorre: " << coordToSendTorre << endl;
-
         json_object *jobjXCoordTorre = json_object_new_object();
 
         json_object *jstringXCoordTorre = json_object_new_string(to_string(coordToSendTorre).c_str());
@@ -237,8 +179,6 @@ string sendCoordTorre(string coord, string i) {
 
 
         coordToSendTorre = -1;
-
-        //cout<<"\nCoordTorre: " << coordToSendTorre << endl;
 
         json_object *jobjYCoordTorre = json_object_new_object();
 
@@ -286,8 +226,6 @@ string sendCoordGladiador(string poblacion, string coord, string i) {
 
                 coordToSendGladiator = juego->getCuadricula()->getNode( id )->getXCoord();
 
-                //cout<<"\nxCoordGladiador: " << coordToSendGladiator << endl;
-
                 json_object *jobjXCoordGladiador = json_object_new_object();
 
                 json_object *jstringXCoordGladiador = json_object_new_string(to_string(coordToSendGladiator).c_str());
@@ -300,8 +238,6 @@ string sendCoordGladiador(string poblacion, string coord, string i) {
             else if (coord == "y") {
 
                 coordToSendGladiator = juego->getCuadricula()->getNode( id )->getYCoord();
-
-                //cout<<"\nyCoordGladiador: " << coordToSendGladiator << endl;
 
                 json_object *jobjYCoordGladiador = json_object_new_object();
 
@@ -327,8 +263,6 @@ string sendCoordGladiador(string poblacion, string coord, string i) {
 
                 coordToSendGladiator = juego->getCuadricula()->getNode( id )->getXCoord();
 
-                //cout<<"\nxCoordGladiador: " << coordToSendGladiator << endl;
-
                 json_object *jobjXCoordGladiador = json_object_new_object();
 
                 json_object *jstringXCoordGladiador = json_object_new_string(to_string(coordToSendGladiator).c_str());
@@ -342,8 +276,6 @@ string sendCoordGladiador(string poblacion, string coord, string i) {
             else if (coord == "y") {
 
                 coordToSendGladiator = juego->getCuadricula()->getNode( id )->getYCoord();
-
-                //cout<<"\nyCoordGladiador: " << coordToSendGladiator << endl;
 
                 json_object *jobjYCoordGladiador = json_object_new_object();
 
@@ -379,8 +311,6 @@ string sendCoordGladiador(string poblacion, string coord, string i) {
 
                 coordToSendGladiator = -1;
 
-                //cout << "\nxCoordGladiador: " << coordToSendGladiator << endl;
-
                 json_object *jobjXCoordGP1 = json_object_new_object();
 
                 json_object *jstringXCoordGladiadorGP1 = json_object_new_string(
@@ -393,8 +323,6 @@ string sendCoordGladiador(string poblacion, string coord, string i) {
             } else if (coord == "y") {
 
                 coordToSendGladiator = -1;
-
-                //cout << "\nyCoordGladiador: " << coordToSendGladiator << endl;
 
                 json_object *jobjYCoordGP1 = json_object_new_object();
 
@@ -414,8 +342,6 @@ string sendCoordGladiador(string poblacion, string coord, string i) {
 
                 coordToSendGladiator = -1;
 
-                //cout << "\nxCoordGladiador: " << coordToSendGladiator << endl;
-
                 json_object *jobjXCoordGP2 = json_object_new_object();
 
                 json_object *jstringXCoordGladiadorGP2 = json_object_new_string(
@@ -428,8 +354,6 @@ string sendCoordGladiador(string poblacion, string coord, string i) {
             } else if (coord == "y") {
 
                 coordToSendGladiator = -1;
-
-                //cout << "\nyCoordGladiador: " << coordToSendGladiator << endl;
 
                 json_object *jobjYCoordGP2 = json_object_new_object();
 
@@ -557,9 +481,12 @@ string sendCoordFlecha(string gladiador, string coord, string arrowIndex) {
 
 }
 
-
-
-
+/**
+ * Envia un JSON con el tipo de flecha y su dirección para ser graficado.
+ * @param gladiador
+ * @param arrowIndex
+ * @return
+ */
 string sendAType(string gladiador, string arrowIndex) {
 
     int indexFlecha = stoi(arrowIndex);
@@ -577,6 +504,7 @@ string sendAType(string gladiador, string arrowIndex) {
         if (towerNode != nullptr) {
             cout << "sendAType: " << towerNode->getTorre()->getTipo() << endl;
             aTypeToSend1 = towerNode->getTorre()->getTipo() * 10;
+            aTypeToSend1 += juego->getGladiador1()->getArrowDirection(pathIndexG1,indexFlecha);
         } else {
             aTypeToSend1 = -1;
         }
@@ -603,6 +531,7 @@ string sendAType(string gladiador, string arrowIndex) {
         if (towerNode != nullptr) {
             cout << "sendAType: " << towerNode->getTorre()->getTipo() << endl;
             aTypeToSend2 = towerNode->getTorre()->getTipo() * 10;
+            aTypeToSend2 += juego->getGladiador2()->getArrowDirection(pathIndexG2,indexFlecha);
         } else {
             aTypeToSend2 = -1;
         }
@@ -624,7 +553,12 @@ string sendAType(string gladiador, string arrowIndex) {
 
 }
 
-
+/**
+ * Envia un JSON para confirmar la modificación del pathIndex para conocer por que posicion del path se encuentra el gladiador deseado
+ * @param gladiador
+ * @param modificacion
+ * @return JSON
+ */
 string changePathIndex(string gladiador, string modificacion) {
 
     int mod = stoi(modificacion);
@@ -651,7 +585,11 @@ string changePathIndex(string gladiador, string modificacion) {
 
 }
 
-
+/**
+ * Envia un JSON con la resistencia que le queda al gladiador respectivo
+ * @param gladiador
+ * @return JSON
+ */
 string sendResistencia(string gladiador) {
 
     if (gladiador == "1") {
@@ -694,9 +632,22 @@ string sendResistencia(string gladiador) {
 
 }
 
-void reiniciar(string tipo) {
+/**
+ * Genera los atributos y clases necesarias para el inicio y seguimiento del juego.
+ * @param tipo
+ */
+void iniciar(string tipo) {
 
     if (tipo == "0") {
+
+        ///Genera las torres por primera vez
+        juego->generateTowers();
+
+        ///Genera el camino para ambos gladiadores por medio de su algoritmo
+        juego->doBacktracking();
+        juego->doAStar();
+
+    } else if (tipo == "1") {
 
         ///Nuevas generaciones de las poblaciones
         juego->getPoblacion1()->nuevageneracion();
@@ -706,27 +657,96 @@ void reiniciar(string tipo) {
         juego->setGladiador1(juego->getPoblacion1()->getMejor());
         juego->setGladiador2(juego->getPoblacion2()->getMejor());
 
+        ///Añade a los gladiadores la cuadricula
         juego->getGladiador1()->setCuadricula(juego->getCuadricula());
         juego->getGladiador2()->setCuadricula(juego->getCuadricula());
 
-        ///Genera las torres nuevamente
+        ///Agrega tres torres a la Zona de Intimidación
         juego->generateTowers();
 
         ///Genera el camino para ambos gladiadores por medio de su algoritmo
         juego->doBacktracking();
         juego->doAStar();
 
-    } else if (tipo == "1") {
 
-        ///Cada movimiento del gladiador
+    } else if (tipo == "2") {
+
+            ///Para actualizarlo en la tercera iteración por cada movimiento del gladiador.
 
     }
 
-
-
-    ///juego.
 }
 
+/**
+ * Envia un JSON con los labels necesarios para que aparezcan en tiempo real.
+ * @return JSON
+ */
+string sendLiveLabels() {
+
+    json_object *jobjLivelabels = json_object_new_object();
+
+    ///Gladiador 1
+
+    string nombreG1 = juego->getGladiador1()->getNombre();
+    string edadG1 = to_string(juego->getGladiador1()->getEdad());
+    string resistenciaG1 = to_string(juego->getGladiador1()->getResistencia());
+    string inteligenciaG1 = to_string(juego->getGladiador1()->getInteligencia());
+    string tSuperiorG1 = to_string(juego->getGladiador1()->getFuerzaSuperior());
+    string tInferiorG1 = to_string(juego->getGladiador1()->getFuerzaInferior());
+    string probabilidadG1 = to_string(juego->getGladiador1()->getProbabilidadSupervivencia());
+    string expectativaG1 = to_string(juego->getGladiador1()->getExpectativaVida());
+
+    json_object *jstringNombreG1 = json_object_new_string(nombreG1.c_str());
+    json_object *jstringEdadG1 = json_object_new_string(edadG1.c_str());
+    json_object *jstringResistenciaG1 = json_object_new_string(resistenciaG1.c_str());
+    json_object *jstringInteligenciaG1 = json_object_new_string(inteligenciaG1.c_str());
+    json_object *jstringTSuperiorG1 = json_object_new_string(tSuperiorG1.c_str());
+    json_object *jstringTInferiorG1 = json_object_new_string(tInferiorG1.c_str());
+    json_object *jstringProbabilidadG1 = json_object_new_string(probabilidadG1.c_str());
+    json_object *jstringExpectativaG1 = json_object_new_string(expectativaG1.c_str());
+
+    json_object_object_add(jobjLivelabels, "NOMBREG1", jstringNombreG1);
+    json_object_object_add(jobjLivelabels, "EDADG1", jstringEdadG1);
+    json_object_object_add(jobjLivelabels, "RESISTENCIAG1", jstringResistenciaG1);
+    json_object_object_add(jobjLivelabels, "INTELIGENCIAG1", jstringInteligenciaG1);
+    json_object_object_add(jobjLivelabels, "TSUPERIORG1", jstringTSuperiorG1);
+    json_object_object_add(jobjLivelabels, "TINFERIORG1", jstringTInferiorG1);
+    json_object_object_add(jobjLivelabels, "PROBABILIDADG1", jstringProbabilidadG1);
+    json_object_object_add(jobjLivelabels, "EXPECTATIVAG1", jstringExpectativaG1);
+
+
+    ///Gladiador 2
+
+    string nombreG2 = juego->getGladiador2()->getNombre();
+    string edadG2 = to_string(juego->getGladiador2()->getEdad());
+    string resistenciaG2 = to_string(juego->getGladiador2()->getResistencia());
+    string inteligenciaG2 = to_string(juego->getGladiador2()->getInteligencia());
+    string tSuperiorG2 = to_string(juego->getGladiador2()->getFuerzaSuperior());
+    string tInferiorG2 = to_string(juego->getGladiador2()->getFuerzaInferior());
+    string probabilidadG2 = to_string(juego->getGladiador2()->getProbabilidadSupervivencia());
+    string expectativaG2 = to_string(juego->getGladiador2()->getExpectativaVida());
+
+    json_object *jstringNombreG2 = json_object_new_string(nombreG2.c_str());
+    json_object *jstringEdadG2 = json_object_new_string(edadG1.c_str());
+    json_object *jstringResistenciaG2 = json_object_new_string(resistenciaG1.c_str());
+    json_object *jstringInteligenciaG2 = json_object_new_string(inteligenciaG2.c_str());
+    json_object *jstringTSuperiorG2 = json_object_new_string(tSuperiorG1.c_str());
+    json_object *jstringTInferiorG2 = json_object_new_string(tInferiorG1.c_str());
+    json_object *jstringProbabilidadG2 = json_object_new_string(probabilidadG2.c_str());
+    json_object *jstringExpectativaG2 = json_object_new_string(expectativaG2.c_str());
+
+    json_object_object_add(jobjLivelabels, "NOMBREG2", jstringNombreG2);
+    json_object_object_add(jobjLivelabels, "EDADG2", jstringEdadG2);
+    json_object_object_add(jobjLivelabels, "RESISTENCIAG2", jstringResistenciaG2);
+    json_object_object_add(jobjLivelabels, "INTELIGENCIAG2", jstringInteligenciaG2);
+    json_object_object_add(jobjLivelabels, "TSUPERIORG2", jstringTSuperiorG2);
+    json_object_object_add(jobjLivelabels, "TINFERIORG2", jstringTInferiorG2);
+    json_object_object_add(jobjLivelabels, "PROBABILIDADG2", jstringProbabilidadG2);
+    json_object_object_add(jobjLivelabels, "EXPECTATIVAG2", jstringExpectativaG2);
+
+    return json_object_to_json_string(jobjLivelabels);
+
+}
 
 /**
  * Corre el servidor
@@ -960,28 +980,24 @@ int runServer() {
             json_object *parsed_jsonPositionG2 = json_tokener_parse(buff);
             json_object_object_get_ex(parsed_jsonPositionG2, "NEXTPOSITIONG2", &tempNextPositionG2);
 
-            ///KEY: REINICIAR
+            ///KEY: INICIAR
             ///Obtiene un request para continuar el algoritmo genetico y volver a pasar la zona
             struct json_object *tempReiniciar;
-            cout<<"Reiniciar"<<endl;
+            //cout<<"Iniciar"<<endl;
             json_object *parsed_jsonReiniciar = json_tokener_parse(buff);
-            json_object_object_get_ex(parsed_jsonReiniciar, "REINICIAR", &tempReiniciar);
+            json_object_object_get_ex(parsed_jsonReiniciar, "INICIAR", &tempReiniciar);
+
+            ///KEYS LIVE LABELS
+
+            ///KEY: LIVELABELS
+            ///Obtiene un request para obtener el nombre del gladiador 1
+            struct json_object *tempLiveLabels;
+            json_object *parsed_jsonLiveLabels = json_tokener_parse(buff);
+            json_object_object_get_ex(parsed_jsonLiveLabels, "LIVELABELS", &tempLiveLabels);
 
 
-            /*///KEY: ASTAR
-            ///Genera la ejecucion del algoritmo AStar (A*)
-            struct json_object *tempAStar;
-            cout<<"AStar"<<endl;
-            json_object *parsed_jsonAStar = json_tokener_parse(buff);
-            json_object_object_get_ex(parsed_jsonAStar, "ASTAR", &tempAStar);*/
 
-            /*///KEY: BACKTRACKING
-            ///Genera la ejecucion del algoritmo Backtracking
-            struct json_object *tempBacktracking;
-            cout<<"Backtracking"<<endl;
-            json_object *parsed_jsonBacktracking = json_tokener_parse(buff);
-            json_object_object_get_ex(parsed_jsonBacktracking, "BACKTRACKING", &tempBacktracking);*/
-
+            ///KEYS HISTORIC LABELS
 
 
 
@@ -1191,7 +1207,7 @@ int runServer() {
                 printf("\nWRITE: %s\n", resistenciaG2.c_str());
             }
 
-            ///Obtendra un request para obtener
+            ///Obtendra un request para obtener la proxima posicion en el path del gladiador 1
             ///Verifica que reciba los KEYS: NEXTPOSITIONG1
             if (json_object_get_string(tempNextPositionG1) != nullptr ) {
                 ///JSON saliente del servidor
@@ -1201,7 +1217,7 @@ int runServer() {
                 printf("\nWRITE: %s\n", nextPositionG1.c_str());
             }
 
-            ///Obtendra un request para obtener
+            ///Obtendra un request para obtener la proxima posicion en el path del gladiador 2
             ///Verifica que reciba los KEYS: NEXTPOSITIONG2
             if (json_object_get_string(tempNextPositionG2) != nullptr ) {
                 ///JSON saliente del servidor
@@ -1211,35 +1227,23 @@ int runServer() {
                 printf("\nWRITE: %s\n", nextPositionG2.c_str());
             }
 
-            ///Obtendra un request para obtener
-            ///Verifica que reciba los KEYS: REINICIAR
+            ///Obtendra un request para obtener para iniciar, reiniciar y recalcular los algoritmos del programa
+            ///Verifica que reciba los KEYS: INICIAR
             if (json_object_get_string(tempReiniciar) != nullptr ) {
                 ///JSON saliente del servidor
-                reiniciar(json_object_get_string(tempReiniciar));
+                iniciar(json_object_get_string(tempReiniciar));
                 ///Envio al cliente
-                send(fd2, "Reinicio", MAXDATASIZE, 0);
-            }
-
-            /*
-            ///Obtendra un request para obtener
-            ///Verifica que reciba los KEYS: ASTAR
-            if (json_object_get_string(tempAStar) != nullptr ) {
-                ///JSON saliente del servidor
-                string aStar = sendAStar("",json_object_get_string(tempAStar));
-                ///Envio al cliente
-                send(fd2, aStar.c_str(), MAXDATASIZE, nullptr);
+                send(fd2, "Inicio", MAXDATASIZE, 0);
             }
 
             ///Obtendra un request para obtener
-            ///Verifica que reciba los KEYS: BACKTRACKING
-            if (json_object_get_string(tempBacktracking) != 0 ) {
+            ///Verifica que reciba los KEYS: LIVELABELS
+            if (json_object_get_string(tempLiveLabels) != nullptr ) {
                 ///JSON saliente del servidor
-                string backtracking = sendBacktracking("",json_object_get_string(tempBacktracking));
+                string liveLabels = sendLiveLabels();
                 ///Envio al cliente
-                send(fd2, backtracking.c_str(), MAXDATASIZE, 0);
-            }*/
-
-
+                send(fd2, liveLabels.c_str(), MAXDATASIZE, 0);
+            }
 
 
             /*
@@ -1276,21 +1280,11 @@ int runServer() {
  */
 int main() {
 
+    ///Para obtener un random real a base del tiempo
     srand(time(NULL));
 
-    ///Genera las torres
-    juego->generateTowers();
-
-    ///ANDREY
-    ///Verificar que no quede ningun camino en los algoritmos cuando se generan las torres
-
-    juego->doBacktracking();
-
-    juego->doAStar();
-
-    cout << "Resistencia Gladiador 1: " << juego->getGladiador1()->getResistencia() << endl;
-    cout << "Resistencia Gladiador 2: " << juego->getGladiador2()->getResistencia() << endl;
-
+    ///Instanciación del juego
+    juego = new Juego();
 
     ///Corre el servidor
     runServer();

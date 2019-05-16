@@ -7,6 +7,7 @@
 #include <vector>
 #include <algorithm>
 
+///Se define el tamaño de la cuadricula
 #define ZONE_SIZE 10
 
 using namespace std;
@@ -22,6 +23,7 @@ using namespace std;
 class Cuadricula {
 
 private:
+
     int size = ZONE_SIZE;
     Node* matriz [ZONE_SIZE][ZONE_SIZE];
     Node* nodoInicial;
@@ -32,6 +34,7 @@ private:
 
 
 public:
+
     ///Constructor
     Cuadricula();
 
@@ -48,7 +51,6 @@ public:
     void deleteTower(int evaluatingTower);
     void resetVerifiedNot();
     int newTower();
-
 
     ///Getters & Setters
     int getSize();

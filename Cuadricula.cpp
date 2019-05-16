@@ -3,6 +3,8 @@
 #include <iostream>
 
 using namespace std;
+
+
 /**
  * Representa la cuadricula
  *
@@ -11,7 +13,7 @@ using namespace std;
 
 
 /**
- * Constructor de Cuadricula
+ * Constructor de Cuadricula.
  */
 Cuadricula::Cuadricula() {
 
@@ -28,7 +30,7 @@ Cuadricula::Cuadricula() {
 
 
 /**
- * Construye la matriz nxn con Nodes preestablecidos
+ * Construye la matriz nxn con Nodes preestablecidos.
  */
 void Cuadricula::buildZone(int n) {
 
@@ -57,7 +59,10 @@ void Cuadricula::buildZone(int n) {
 
 }
 
-
+/**
+ * Crea una nueva Torre e imprime sus vectores.
+ * @return int
+ */
 int Cuadricula::newTower() {
 
     int randomTowerType ;
@@ -124,7 +129,7 @@ int Cuadricula::newTower() {
 }
 
 /**
- * Calcular el valor de Heuristico
+ * Calcula el valor de Heuristico para el algoritmo A*
  */
 void Cuadricula::calculateHeuristic() {
 
@@ -137,14 +142,12 @@ void Cuadricula::calculateHeuristic() {
             else {
                 matriz[i][j]->ManhattanDistance(matriz[size - 1][size - 1]);
             }
-
         }
     }
-
 }
 
 /**
- * Obtiene un nodo por medio de su fila y su columna
+ * Obtiene un nodo por medio de su fila y su columna.
  * @param i - fila
  * @param j - columna
  * @return Node
@@ -157,7 +160,7 @@ Node* Cuadricula::getNode(int i, int j) {
 }
 
 /**
- * Obtiene un nodo por medio de su id
+ * Obtiene un nodo por medio de su id.
  * @param id - id
  * @return Node
  */
@@ -197,8 +200,6 @@ void Cuadricula::print() {
                 hayTorre = "T";
                 towerType = printee->getTorre()->getTipo();
             }
-
-
 
             int x = printee->getXCoord();
             int y = printee->getYCoord();
@@ -254,18 +255,75 @@ void Cuadricula::printTorres() {
     cout << "\n" << endl;
 }
 
+/**
+ * Añade una posible torre.
+ */
+void Cuadricula::addPosibleTowerIdList() {
+    for(int i=0; i<ZONE_SIZE; i++){
+        for (int j=0; j<ZONE_SIZE; j++){
+            if (matriz[i][j]->getTorre() == nullptr && matriz[i][j]->getId() != 0 && matriz[i][j]->getId() != ( (ZONE_SIZE-1)*(ZONE_SIZE) + (ZONE_SIZE-1) ) ){
+                posibleTowerIdList.push_back( matriz[i][j]->getId() );
+            }
+        }
+    }
+}
+
+/**
+ * Añade una torre a la liste toVerifiedNot
+ * @param evaluatingTower
+ */
+void Cuadricula::addToVerifiedNot(int evaluatingTower) {
+    verfifiedNotTowersIdList.push_back(evaluatingTower);
+
+}
+
+/**
+ * Elimina una torre cuando esta no funciona en la zona.
+ * @param evaluatingTower
+ */
+void Cuadricula::deleteTower(int evaluatingTower) {
+    std::vector<int>::iterator buscador = find(towerIdList.begin(), towerIdList.end(), evaluatingTower);
+    int posTorre = std::distance(towerIdList.begin(), buscador);
+    towerIdList.erase(towerIdList.begin() + posTorre);
+    getNode(evaluatingTower)->setTorre(nullptr);
+}
+
+/**
+ * Reestablece verifiedNot.
+ */
+void Cuadricula::resetVerifiedNot() {
+    while(verfifiedNotTowersIdList.size() != 0){
+
+        ///Imprime las opciones descartadas
+        cout << "VerifiedNot Id's: ";
+        for (int i = 0; i < verfifiedNotTowersIdList.size(); i++) {
+
+            if (i == 0) {
+                cout << "[" << verfifiedNotTowersIdList[i] << ", ";
+            } else if (i == verfifiedNotTowersIdList.size() - 1) {
+                cout << verfifiedNotTowersIdList[i] << "]\n" << endl;
+            } else {
+                cout << verfifiedNotTowersIdList[i] << ", ";
+            }
+
+        }
+        posibleTowerIdList.push_back(verfifiedNotTowersIdList[verfifiedNotTowersIdList.size()-1]);
+        verfifiedNotTowersIdList.pop_back();
+
+    }
+}
+
 
 ///Getters & Setters
 
 
 /**
- * Getter del size de Cuadricula;
+ * Getter del size de Cuadricula.
  * @return size
  */
 int Cuadricula::getSize() {
     return size;
 }
-
 
 /**
  * Getter de towerIdList de Cuadricula.
@@ -274,7 +332,6 @@ int Cuadricula::getSize() {
 vector<int> Cuadricula::getTowerIdList() {
     return towerIdList;
 }
-
 
 /**
  * Getter de clientTowerIdList de Cuadricula.
@@ -299,53 +356,11 @@ Node *Cuadricula::getNodoInicial() {
 Node* Cuadricula::getNodoFinal() {
     return nodoFinal;
 }
+
+/**
+ * Getter del verifiedNotTowersIdList de Cuadricula.
+ * @return vector
+ */
 vector<int> Cuadricula::getVerfifiedNotTowersIdList() {
     return verfifiedNotTowersIdList;
 }
-
-void Cuadricula::addPosibleTowerIdList() {
-    for(int i=0; i<ZONE_SIZE; i++){
-        for (int j=0; j<ZONE_SIZE; j++){
-            if (matriz[i][j]->getTorre() == nullptr && matriz[i][j]->getId() != 0 && matriz[i][j]->getId() != ( (ZONE_SIZE-1)*(ZONE_SIZE) + (ZONE_SIZE-1) ) ){
-                posibleTowerIdList.push_back( matriz[i][j]->getId() );
-            }
-        }
-    }
-}
-
-void Cuadricula::addToVerifiedNot(int evaluatingTower) {
-    verfifiedNotTowersIdList.push_back(evaluatingTower);
-
-}
-
-void Cuadricula::deleteTower(int evaluatingTower) {
-    std::vector<int>::iterator buscador = find(towerIdList.begin(), towerIdList.end(), evaluatingTower);
-    int posTorre = std::distance(towerIdList.begin(), buscador);
-    towerIdList.erase(towerIdList.begin() + posTorre);
-    getNode(evaluatingTower)->setTorre(nullptr);
-}
-
-void Cuadricula::resetVerifiedNot() {
-    while(verfifiedNotTowersIdList.size() != 0){
-
-        ///Imprime las opciones descartadas
-        cout << "VerifiedNot Id's: ";
-        for (int i = 0; i < verfifiedNotTowersIdList.size(); i++) {
-
-            if (i == 0) {
-                cout << "[" << verfifiedNotTowersIdList[i] << ", ";
-            } else if (i == verfifiedNotTowersIdList.size() - 1) {
-                cout << verfifiedNotTowersIdList[i] << "]\n" << endl;
-            } else {
-                cout << verfifiedNotTowersIdList[i] << ", ";
-            }
-
-        }
-        posibleTowerIdList.push_back(verfifiedNotTowersIdList[verfifiedNotTowersIdList.size()-1]);
-        verfifiedNotTowersIdList.pop_back();
-
-    }
-}
-
-
-

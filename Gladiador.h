@@ -40,6 +40,7 @@ public:
     void mutacion(string *gen);
     void generateHits();
     void restarResistencia(int valor);
+    int getArrowDirection(int pathIndex, int towerIndex);
 
 
     ///Getters & Setters
