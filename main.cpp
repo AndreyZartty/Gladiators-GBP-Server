@@ -485,16 +485,82 @@ string sendCoordFlecha(string gladiador, string coord, string arrowIndex) {
 
 }
 
+/**
+ * Envia un JSON con el tipo de flecha y su dirección para ser graficado.
+ * @param gladiador
+ * @param arrowIndex
+ * @return
+ */
 string sendAType(string gladiador, string arrowIndex) {
 
     int indexFlecha = stoi(arrowIndex);
 
     if (gladiador == "1") {
 
-}
+        Gladiador* gladInstance1 = juego->getGladiador1();
 
         int towerId = gladInstance1->getHitTower(pathIndexG1,indexFlecha);
 
+        Node* towerNode = juego->getCuadricula()->getNode(towerId);
+
+        int aTypeToSend1 = -1;
+
+        if (towerNode != nullptr) {
+            cout << "sendAType: " << towerNode->getTorre()->getTipo() << endl;
+            aTypeToSend1 = towerNode->getTorre()->getTipo() * 10;
+            aTypeToSend1 += juego->getGladiador1()->getArrowDirection(pathIndexG1,indexFlecha);
+        } else {
+            aTypeToSend1 = -1;
+        }
+
+        json_object *jobjATypeToSend1 = json_object_new_object();
+
+        json_object *jstringATypeToSend1 = json_object_new_string( to_string(aTypeToSend1).c_str());
+
+        json_object_object_add(jobjATypeToSend1, "ATYPEG1", jstringATypeToSend1);
+
+        return json_object_to_json_string(jobjATypeToSend1);
+
+
+    } else if (gladiador == "2") {
+
+        Gladiador* gladInstance2 = juego->getGladiador2();
+
+        int towerId = gladInstance2->getHitTower(pathIndexG2,indexFlecha);
+
+        Node* towerNode = juego->getCuadricula()->getNode(towerId);
+
+        int aTypeToSend2 = 10;
+
+        if (towerNode != nullptr) {
+            cout << "sendAType: " << towerNode->getTorre()->getTipo() << endl;
+            aTypeToSend2 = towerNode->getTorre()->getTipo() * 10;
+            aTypeToSend2 += juego->getGladiador2()->getArrowDirection(pathIndexG2,indexFlecha);
+        } else {
+            aTypeToSend2 = -1;
+        }
+
+        json_object *jobjATypeToSend2 = json_object_new_object();
+
+        json_object *jstringATypeToSend2 = json_object_new_string( to_string(aTypeToSend2).c_str());
+
+        json_object_object_add(jobjATypeToSend2, "ATYPEG2", jstringATypeToSend2);
+
+        return json_object_to_json_string(jobjATypeToSend2);
+
+
+    } else {
+
+        cout << "sendAType: failed" << endl;
+
+    }
+
+}
+
+/**
+ * Envia un JSON con todos los atributos del Gladiador para ser graficado en la historia genética de la población.
+ * @return JSON
+ */
 string sendGladiador() {
 
     ///Gladiador temporal
@@ -1325,31 +1391,9 @@ int runServer() {
                 printf("\nWRITE: %s\n", resistenciaG2.c_str());
             }
 
-            ///Obtendra un request para obtener la Poblacion 1
-            ///Verifica que reciba los KEYS: STORICLABEL
-            if (json_object_get_string(tempPobla1) != nullptr ) {
-                ///JSON saliente del servidor
-                string glad = sendGladiador();
-                ///Envio al cliente
-                send(fd2, glad.c_str(), MAXDATASIZE, 0);
-            }
-
-            /*
-
-            ///Obtendra un request para obtener la Poblacion 2
-            ///Verifica que reciba los KEYS: POBLA2
-            if (json_object_get_string(tempPobla2) != nullptr ) {
-                ///JSON saliente del servidor
-                string glad = sendGladiador("2");
-                ///Envio al cliente
-                send(fd2, glad.c_str(), MAXDATASIZE, 0);
-            }
-             */
-
-            /*
-            ///Obtendra un request para obtener
-            ///Verifica que reciba los KEYS: ASTAR
-            if (json_object_get_string(tempAStar) != nullptr ) {
+            ///Obtendra un request para obtener la proxima posicion en el path del gladiador 1
+            ///Verifica que reciba los KEYS: NEXTPOSITIONG1
+            if (json_object_get_string(tempNextPositionG1) != nullptr ) {
                 ///JSON saliente del servidor
                 string nextPositionG1 = changePathIndex("1",json_object_get_string(tempNextPositionG1));
                 ///Envio al cliente
@@ -1397,7 +1441,6 @@ int runServer() {
             }
              */
 
-
         }
 
         ///Reestablece el buffer
@@ -1425,31 +1468,8 @@ int main() {
 
     ///Instanciación del juego
     juego = new Juego();
-    ///Genera generaciones
-    //poblacion->nuevageneracion();
-    //poblacion->nuevageneracion();
-    //poblacion->nuevageneracion();
-    //poblacion->nuevageneracion();
-    //poblacion->nuevageneracion();
-    //poblacion->nuevageneracion();
-
-    ///Genera las torres
-    juego->generateTowers();
-
-
-    ///Corre los algoritmos
-    //juego->generateTowers();
-
-    ///ANDREY
-    ///Verificar que no quede ningun camino en los algoritmos cuando se generan las torres
-
-    juego->doBacktracking();
-
-    juego->doAStar();
-
 
     ///Corre el servidor
-    //runServer();
-
+    runServer();
 
 }
