@@ -30,7 +30,8 @@ Poblacion::Poblacion(string _nombrePoblacion)
         insertarGladiador(gladiador);
         insertarCopia(gladiador);
         listagen->insertLast(gladiador);
-        cout<< "Se ha creado el gladiador: "<< gladiador->getNombre() <<" gen: "<<getGeneracion()<<" resistencia: "<<gladiador->getResistencia()<<endl;
+        ///Nombre de los gladiadores al crearse
+        //cout<< "Se ha creado el gladiador: "<< gladiador->getNombre() <<" gen: "<<getGeneracion()<<" resistencia: "<<gladiador->getResistencia()<<endl;
     }
     setMejor();
     generaciones.push_back(listagen);
@@ -112,7 +113,7 @@ void Poblacion::setMejor(){
 }
 
 Gladiador* Poblacion::getMejor(){
-    cout<<"El mejor de la poblacion "<< nombrePoblacion <<" es: "<<mejor->getNombre()<<endl;
+    //cout<<"El mejor de la poblacion "<< nombrePoblacion <<" es: "<<mejor->getNombre()<<endl;
     gladiadores.bubbleSort();
     return mejor;
 }
@@ -159,7 +160,8 @@ void Poblacion::nuevageneracion(){
         insertarGladiador(gladiador);
         insertarCopia(gladiador);
         listgeneracion->insertLast(gladiador);
-        cout<< "Se ha creado el gladiador: "<< gladiador->getNombre() <<" gen: "<<getGeneracion()<<" resistencia: "<<gladiador->getResistencia()<<endl;
+        ///Nombre de los gladiadores al crearse
+        //cout<< "Se ha creado el gladiador: "<< gladiador->getNombre() <<" gen: "<<getGeneracion()<<" resistencia: "<<gladiador->getResistencia()<<endl;
     }
 
     for (int i=0; i <8; i+=2){
@@ -181,7 +183,8 @@ void Poblacion::nuevageneracion(){
         insertarGladiador(gladiador);
         insertarCopia(gladiador);
         listgeneracion->insertLast(gladiador);
-        cout<< "Se ha creado el gladiador: "<< gladiador->getNombre() <<" gen: "<<getGeneracion()<<" resistencia: "<<gladiador->getResistencia()<<endl;
+        ///Nombre de los gladiadores al crearse
+        //cout<< "Se ha creado el gladiador: "<< gladiador->getNombre() <<" gen: "<<getGeneracion()<<" resistencia: "<<gladiador->getResistencia()<<endl;
     }
     generaciones.push_back(listgeneracion);
     gladiadores.bubbleSort();

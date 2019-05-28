@@ -9,6 +9,8 @@
 #include <cstring>
 #include <json-c/json.h>
 #include <iostream>
+#include <thread>
+#include <gtest/gtest.h>
 
 #include "Gladiador.h"
 #include "poblacion.h"
@@ -1480,7 +1482,7 @@ int runServer() {
 /**
  * Main del programa
  */
-int main() {
+int main(int argc, char **argv) {
 
     ///Para obtener un random real a base del tiempo
     srand(time(NULL));
@@ -1489,6 +1491,14 @@ int main() {
     juego = new Juego();
 
     ///Corre el servidor
-    runServer();
+    //runServer();
+
+    testing::InitGoogleTest(&argc, argv);
+
+    return RUN_ALL_TESTS();
+
+
+
+
 
 }
