@@ -35,11 +35,20 @@ private:
 
 public:
 
-    ///Constructor
+/**
+ * Constructor de Cuadricula.
+ */
     Cuadricula();
 
     ///Metodos
+
+
+    /**
+ * Construye la matriz nxn con Nodes preestablecidos.
+ */
     void buildZone(int n);
+
+
     void generateFirstTowers();
     void calculateHeuristic();
     Node* getNode(int i, int j);
@@ -50,6 +59,11 @@ public:
     void addToVerifiedNot(int evaluatingTower);
     void deleteTower(int evaluatingTower);
     void resetVerifiedNot();
+
+    /**
+ * Crea una nueva Torre e imprime sus vectores.
+ * @return int
+ */
     int newTower();
 
     ///Getters & Setters

@@ -746,6 +746,8 @@ string changePathIndex(string gladiador, string modificacion) {
         cout << " changePathIndex: failed " << endl;
     }
 
+    return "p";
+
 }
 
 /**
@@ -852,7 +854,6 @@ void iniciar(string tipo) {
         juego->doBacktracking();
         juego->doAStar();
 
-        
 
     }
 

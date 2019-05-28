@@ -35,12 +35,26 @@ private:
 
 public:
 
-    ///Constructor
+    /**
+      * Constructor de Juego
+      */
     Juego();
 
     ///Metodos
+
+    /**
+ * Inicia el algoritmo A*.
+ */
     void doAStar();
+
+    /**
+ * Inicia el algoritmo Backtracking.
+ */
     void doBacktracking();
+
+    /**
+ * Inicia ambos algoritmos y previamente establece todas sus condiciones de inicio
+ */
     void generateTowers(int ctt);
 
     ///Getters & Setters
