@@ -1,6 +1,8 @@
 
 #include "Juego.h"
 
+#include <gtest/gtest.h>
+
 
 /**
  * Representa el Juego
@@ -290,4 +292,12 @@ Poblacion* Juego::getPoblacion1() {
  */
 Poblacion* Juego::getPoblacion2() {
     return poblacion2;
+}
+
+///TESTS
+
+TEST(Juego, CreacionDeTorres){
+    Juego* gameT = new Juego();
+    gameT->generateTowers(3);
+    EXPECT_EQ(gameT->getCuadricula()->getTowerIdList().size(),3);
 }

@@ -9,11 +9,15 @@
 #include <cstring>
 #include <json-c/json.h>
 #include <iostream>
+#include <thread>
 
 #include "Gladiador.h"
 #include "poblacion.h"
 #include "list.h"
 #include "Juego.h"
+
+
+#include <gtest/gtest.h>
 
 #define PORT 3550
 #define BACKLOG 4
@@ -1479,7 +1483,11 @@ int runServer() {
 /**
  * Main del programa
  */
-int main() {
+int main(int argc, char** argv) {
+
+    ///Inicializa las pruebas unitarias
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 
     ///Para obtener un random real a base del tiempo
     srand(time(NULL));

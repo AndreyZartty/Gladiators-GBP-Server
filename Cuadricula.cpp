@@ -1,6 +1,7 @@
 
 #include "Cuadricula.h"
 #include <iostream>
+#include <gtest/gtest.h>
 
 using namespace std;
 
@@ -97,6 +98,7 @@ int Cuadricula::newTower() {
 
         }
 
+
         ///IMPRIMIR VECTOR DE TORRES
         cout << "Tower Id's: ";
         for (int i = 0; i < towerIdList.size(); i++) {
@@ -127,6 +129,7 @@ int Cuadricula::newTower() {
         }
     }
 }
+
 
 /**
  * Calcula el valor de Heuristico para el algoritmo A*
@@ -314,6 +317,7 @@ void Cuadricula::resetVerifiedNot() {
 }
 
 
+
 ///Getters & Setters
 
 
@@ -363,4 +367,32 @@ Node* Cuadricula::getNodoFinal() {
  */
 vector<int> Cuadricula::getVerfifiedNotTowersIdList() {
     return verfifiedNotTowersIdList;
+}
+
+
+///TESTS
+
+TEST(Cuadricula, CreacionDeLaCuadriculaInicial){
+    Cuadricula* testC = new Cuadricula();
+    EXPECT_EQ(testC->getNodoInicial()->getId(),0);
+}
+
+TEST(Cuadricula, CreacionDeTorre){
+    Cuadricula* testC = new Cuadricula();
+    testC->newTower();
+    EXPECT_EQ(testC->getTowerIdList().size(),1);
+}
+
+TEST(Cuadricula, BorrarTorre){
+    Cuadricula* testC = new Cuadricula();
+    testC->newTower();
+    testC->deleteTower(testC->getTowerIdList()[0]);
+    EXPECT_EQ(testC->getTowerIdList().size(),0);
+}
+
+TEST(Cuadricula, ResetearVerificados){
+    Cuadricula* testC = new Cuadricula();
+    testC->addToVerifiedNot(51);
+    testC->resetVerifiedNot();
+    EXPECT_EQ(testC->getVerfifiedNotTowersIdList().size(),0);
 }
