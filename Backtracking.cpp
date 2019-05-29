@@ -19,7 +19,7 @@
 Backtracking::Backtracking(Cuadricula*_cuadricula) {
 
     cuadricula = _cuadricula;
-    towerIdList = cuadricula->getTowerIdList();
+    //towerIdList = cuadricula->getTowerIdList();
     initializedStartGoal = false;
     foundGoal = false;
 
@@ -207,14 +207,6 @@ void Backtracking::rotatePath() {
 
 
 /**
- * Setter de initializedStartGoal de Backtracking.
- * @param _initializedStartGoal
- */
-void Backtracking::setInitializedStartGoal(bool _initializedStartGoal) {
-    initializedStartGoal = _initializedStartGoal;
-}
-
-/**
  * Getter de pathToGoal de Backtracking.
  * @return pathToGoal
  */
@@ -246,6 +238,16 @@ void Backtracking::setFoundGoal(bool _foundGoal) {
     foundGoal = _foundGoal;
 }
 
+
+/**
+ * Getter de la cuadricula de Backtracking.
+ * @return Cuadricula
+ */
+Cuadricula* Backtracking::getCuadricula() {
+    return cuadricula;
+}
+
+
 /**
  * Setter de la cuadricula de Backtracking.
  * @param _cuadricula
@@ -253,3 +255,26 @@ void Backtracking::setFoundGoal(bool _foundGoal) {
 void Backtracking::setCuadricula(Cuadricula *_cuadricula) {
     cuadricula = _cuadricula;
 }
+
+
+/**
+ * Getter de initializedStartGoal de Backtracking.
+ * @return initializedStartGoal
+ */
+bool Backtracking::isInitializedStartGoal() {
+    return initializedStartGoal;
+}
+
+/**
+ * Setter de initializedStartGoal de Backtracking.
+ * @param _initializedStartGoal
+ */
+void Backtracking::setInitializedStartGoal(bool _initializedStartGoal) {
+    initializedStartGoal = _initializedStartGoal;
+}
+
+/*
+vector<int> Backtracking::getTowerIdList() {
+    return towerIdList;
+}
+*/

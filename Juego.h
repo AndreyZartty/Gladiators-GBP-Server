@@ -36,25 +36,25 @@ private:
 public:
 
     /**
-      * Constructor de Juego
-      */
+     * Constructor de Juego
+     */
     Juego();
 
     ///Metodos
 
     /**
- * Inicia el algoritmo A*.
- */
+    * Inicia el algoritmo A*.
+    */
     void doAStar();
 
     /**
- * Inicia el algoritmo Backtracking.
- */
+    * Inicia el algoritmo Backtracking.
+    */
     void doBacktracking();
 
     /**
- * Inicia ambos algoritmos y previamente establece todas sus condiciones de inicio
- */
+    * Inicia ambos algoritmos y previamente establece todas sus condiciones de inicio
+    */
     void generateTowers(int ctt);
 
     ///Getters & Setters
@@ -70,6 +70,8 @@ public:
     void setGladiador2(Gladiador* _gladiador2);
     Poblacion* getPoblacion1();
     Poblacion* getPoblacion2();
+    Node* getNodoInicio();
+    Node* getNodoFinal();
 
 };
 

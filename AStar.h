@@ -58,8 +58,13 @@ public:
     void setStartNode(Node* _startNode);
     Node* getGoalNode();
     void setGoalNode(Node* _goalNode);
-    vector<int> getPathToGoal();
 
+    vector<int> getPathToGoal();
+    void setPathToGoal(vector<int> _pathToGoal);
+    vector<int> getOpenList();
+    void setOpenList(vector<int> _openList);
+    vector<int> getClosedList();
+    void setClosedList(vector<int> _closedList);
 };
 
 

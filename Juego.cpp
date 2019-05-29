@@ -291,3 +291,11 @@ Poblacion* Juego::getPoblacion1() {
 Poblacion* Juego::getPoblacion2() {
     return poblacion2;
 }
+
+Node *Juego::getNodoInicio() {
+    return nodoInicio;
+}
+
+Node *Juego::getNodoFinal() {
+    return nodoFinal;
+}

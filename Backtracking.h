@@ -20,7 +20,7 @@ private:
     Cuadricula* cuadricula;
     bool initializedStartGoal;
     bool foundGoal;
-    vector<int> towerIdList;
+    //vector<int> towerIdList;
     vector<int> pathToGoal;
     vector<int> fullPath;
     Node* startNode;
@@ -40,12 +40,15 @@ public:
     void rotatePath();
 
     ///Getters & Setters
-    void setCuadricula(Cuadricula* _cuadricula);
-    void setInitializedStartGoal(bool _initializedStartGoal);
     bool isFoundGoal();
     void setFoundGoal(bool _foundGoal);
     vector<int> getPathToGoal();
     vector<int> getFullPath();
+    Cuadricula* getCuadricula();
+    void setCuadricula(Cuadricula* _cuadricula);
+    bool isInitializedStartGoal();
+    void setInitializedStartGoal(bool _initializedStartGoal);
+    vector<int> getTowerIdList();
 
 };
 

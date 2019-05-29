@@ -38,7 +38,7 @@ void AStar::findPath(Node *currentPosition, Node *targetPosition) {
     ///En la primera iteracion
     if (!initializedStartGoal) {
 
-        cout << "[Starting A*]\n" << endl;
+        //cout << "[Starting A*]\n" << endl;
 
         ///Limpia openList
         openList.clear();
@@ -65,7 +65,7 @@ void AStar::findPath(Node *currentPosition, Node *targetPosition) {
 
         }
 
-        ///Calcula el Heuristicos de la zona
+        ///Calcula los Heuristicos de la zona
         cuadricula->calculateHeuristic();
 
         ///Modifica los nodos inicial y final
@@ -115,7 +115,8 @@ void AStar::continuePath(Node *currentNode){
     ///Si llega al goal comienza a llenar lista del Path
     if (currentNode->getId() == goalNode->getId()) {
 
-        cuadricula->print();
+        ///Imprime la cuaricula al final
+        //cuadricula->print();
 
         goalNode->setParent( currentNode->getParent() );
 
@@ -421,4 +422,24 @@ void AStar::setGoalNode(Node* _goalNode) {
  */
 vector<int> AStar::getPathToGoal() {
     return pathToGoal;
+}
+
+void AStar::setPathToGoal(vector<int> _pathToGoal) {
+    pathToGoal = _pathToGoal;
+}
+
+vector<int> AStar::getOpenList() {
+    return openList;
+}
+
+void AStar::setOpenList(vector<int> _openList) {
+    openList = _openList;
+}
+
+vector<int> AStar::getClosedList() {
+    return closedList;
+}
+
+void AStar::setClosedList(vector<int> _closedList) {
+    closedList = _closedList;
 }
