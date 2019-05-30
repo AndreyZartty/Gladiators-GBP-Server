@@ -31,6 +31,10 @@ using namespace std;
  * @since 30/04/19
  */
 
+/**
+ * Constructor vacio de Gladiador.
+ */
+Gladiador::Gladiador() {}
 
 /**
  * Constructor de Gladiador.
@@ -148,6 +152,8 @@ Gladiador::Gladiador(int generacion, Gladiador *padre1, Gladiador *padre2)
         setExpectativaVida(getResistencia()/10);
         setProbabilidadSupervivencia(getResistencia()-4);
     }
+    setNombrePadre1(padre1->getNombre());
+    setNombrePadre2(padre2->getNombre());
 }
 
 

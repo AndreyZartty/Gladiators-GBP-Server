@@ -11,6 +11,7 @@
 #include <iostream>
 #include <thread>
 #include <gtest/gtest.h>
+#include <gmock/gmock.h>
 
 #include "Gladiador.h"
 #include "poblacion.h"
@@ -1488,7 +1489,7 @@ int main(int argc, char **argv) {
     srand(time(NULL));
 
     ///Instanciación del juego
-    juego = new Juego();
+    //juego = new Juego();
 
     ///Corre el servidor
     //runServer();

@@ -39,6 +39,7 @@ public:
     ///Constructores
     Gladiador(int generacion);
     Gladiador(int generacion, Gladiador *padre1, Gladiador *parte2);
+    Gladiador();
 
     ///Metodos
     void morir();
