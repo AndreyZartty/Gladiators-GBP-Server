@@ -345,21 +345,9 @@ TEST_F(CuadriculaTest, Test_ResetVerifiedNot) {
 
 //////////////////////////////GLADIADOR//////////////////////////////*
 
-/*
-namespace {
-    class TestGladiadores : public testing::Test {
-    public:
-        Gladiador obj;
-        TestGladiadores(){
-            obj;
-        }
-    };
-}
-*/
-
 
 /**
- * Text Fixture de una instancia de la Cuadrícula obtenida de una instancia
+ * Text Fixture de una instancia de Gladiador obtenida de una instancia
  * de Juego.
  */
 struct TestGladiadores : public testing::Test {
@@ -516,6 +504,51 @@ TEST_F(JuegoTest, Test_Creacion_Torres) {
 
 //////////////////////////////POBLACION//////////////////////////////*
 
+/*
+namespace {
+    class TestPoblacion : public testing::Test {
+    public:
+        Poblacion obj2;
+        TestPoblacion(){
+            obj2;
+        }
+    };
+}*/
+
+
+/**
+ * Text Fixture de una instancia de Poblacion obtenida de una instancia
+ * de Juego.
+ */
+struct TestPoblacion : public testing::Test {
+    Juego* jt;
+    Poblacion* p1;
+    void SetUp() { jt = new Juego(); p1 = jt->getPoblacion1(); }
+    void TearDown() { delete jt; delete p1; }
+};
+
+
+TEST_F(TestPoblacion, testCantidadInicial){
+
+    ASSERT_EQ(10, p1->getGladiadores().getSize());
+}
+
+TEST_F(TestPoblacion, testAgregarUnGladiador){
+
+    Gladiador *gladiador;
+
+    p1->insertarGladiador(gladiador);
+
+    ASSERT_EQ(11, p1->getGladiadores().getSize());
+}
+
+TEST_F(TestPoblacion, testAgregarGeneracion){
+
+    p1->nuevageneracion();
+
+
+    ASSERT_EQ(18, p1->getGladiadores().getSize());
+}
 
 
 //////////////////////////////POBLACION//////////////////////////////

@@ -93,7 +93,7 @@ void Poblacion::setPadres(){
     }
     */
     for (int h=0;h<padres.getSize();h++) {
-        cout<<"ltemp "<<padres.recorrer(h)->getNombre()<<endl;
+        //cout<<"ltemp "<<padres.recorrer(h)->getNombre()<<endl;
     }
 
 }

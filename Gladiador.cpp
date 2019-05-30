@@ -165,7 +165,7 @@ Gladiador::Gladiador(int generacion, Gladiador *padre1, Gladiador *padre2)
  * @param gen
  */
 void Gladiador::mutacion(string *gen){
-    cout<<"mutacion de gen: "<<*gen;
+    //cout<<"mutacion de gen: "<<*gen;
     int random = rand() % 2;
     if (random==1){
         if(gen->substr(0,1)=="1"){
@@ -180,7 +180,7 @@ void Gladiador::mutacion(string *gen){
             *gen=gen->substr(0,1)+"1";
         }
     }
-    cout<<" a: "<<*gen<<endl;
+    //cout<<" a: "<<*gen<<endl;
 }
 
 

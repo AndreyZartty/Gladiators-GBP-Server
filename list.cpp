@@ -109,11 +109,11 @@ void List::bubbleSort()
 }
 
 void List::vaciar(){
-    cout<<"El tamano de la lista antes es: "<<getSize()<<endl;
+    //cout<<"El tamano de la lista antes es: "<<getSize()<<endl;
     int n = getSize();
     while(n>0) {
         sacar(n-1);
         n-=1;
     }
-    cout<<"El tamano de la lista es: "<<getSize()<<endl;
+    //cout<<"El tamano de la lista es: "<<getSize()<<endl;
 }
