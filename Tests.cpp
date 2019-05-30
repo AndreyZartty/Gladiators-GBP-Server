@@ -248,6 +248,54 @@ TEST_F(CuadriculaTest, Test_Constructor_Atributos) {
 
 }
 
+/**
+ * Test de la creacion de torres en Cuadricula
+ */
+TEST_F(CuadriculaTest, Test_Creacion_Torres) {
+
+    ///Act
+    cd->newTower();
+    cd->newTower();
+    cd->newTower();
+
+    ///Assert
+    ASSERT_EQ(cd->getTowerIdList().size(),3);
+
+}
+
+/**
+ * Test del borrado de torres en Cuadricula
+ */
+TEST_F(CuadriculaTest, Test_Borrado_Torres) {
+
+    ///Act
+    cd->newTower();
+    cd->newTower();
+    cd->deleteTower(cd->getTowerIdList()[0]);
+
+
+    ///Assert
+    ASSERT_EQ(cd->getTowerIdList().size(),1);
+
+}
+
+/**
+ * Test del restaurado de la lista de Torres no Verificadas en Cuadricula
+ */
+TEST_F(CuadriculaTest, Test_ResetVerifiedNot) {
+
+    ///Act
+    cd->newTower();
+    int towerId = cd->getTowerIdList()[0];
+    cd->addToVerifiedNot(towerId);
+    cd->resetVerifiedNot();
+
+    ///Assert
+    ASSERT_EQ(cd->getVerfifiedNotTowersIdList().size(),0);
+
+}
+
+
 
 //////////////////////////////CUADRICULA//////////////////////////////
 
@@ -284,7 +332,7 @@ struct JuegoTest : public testing::Test {
 TEST_F(JuegoTest, Test_Constructor) {
 
     ///Assert
-    EXPECT_NE(jt,nullptr);
+    ASSERT_NE(jt,nullptr);
 
 }
 
@@ -306,6 +354,18 @@ TEST_F(JuegoTest, Test_Constructor_Atributos) {
 
 }
 
+/**
+ * Test de la creación torres para la Cuadricula dentro de Juego
+ */
+TEST_F(JuegoTest, Test_Creacion_Torres) {
+
+    ///Act
+    jt->generateTowers(8);
+
+    ///Assert
+    EXPECT_EQ(jt->getCuadricula()->getTowerIdList().size(),8);
+
+}
 
 ////////////////////////////////JUEGO////////////////////////////////
 

@@ -295,15 +295,15 @@ void Cuadricula::resetVerifiedNot() {
     while(verfifiedNotTowersIdList.size() != 0){
 
         ///Imprime las opciones descartadas
-        cout << "VerifiedNot Id's: ";
+        //cout << "VerifiedNot Id's: ";
         for (int i = 0; i < verfifiedNotTowersIdList.size(); i++) {
 
             if (i == 0) {
-                cout << "[" << verfifiedNotTowersIdList[i] << ", ";
+                //cout << "[" << verfifiedNotTowersIdList[i] << ", ";
             } else if (i == verfifiedNotTowersIdList.size() - 1) {
-                cout << verfifiedNotTowersIdList[i] << "]\n" << endl;
+                //cout << verfifiedNotTowersIdList[i] << "]\n" << endl;
             } else {
-                cout << verfifiedNotTowersIdList[i] << ", ";
+                //cout << verfifiedNotTowersIdList[i] << ", ";
             }
 
         }

@@ -184,7 +184,7 @@ void Gladiador::mutacion(string *gen){
  */
 void Gladiador::generateHits() {
 
-    cout << "Hits->Start\n" << endl;
+    //cout << "Hits->Start\n" << endl;
 
     int zoneSize = cuadricula->getSize();
 
@@ -232,7 +232,7 @@ void Gladiador::generateHits() {
 
     }
 
-    for (int i = 0 ; i < pathToGoal.size() ; i++) {
+    /*for (int i = 0 ; i < pathToGoal.size() ; i++) {
         for (int j = 0 ; j < 24 ; j++) {
 
             int printee = hits[i][j];
@@ -241,8 +241,9 @@ void Gladiador::generateHits() {
 
         }
         cout << "\n" << endl;
-    }
-    cout << "Hits->End\n\n" << endl;
+    }*/
+
+    //cout << "Hits->End\n\n" << endl;
 
 }
 

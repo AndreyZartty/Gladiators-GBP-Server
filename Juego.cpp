@@ -84,7 +84,7 @@ void Juego::doBacktracking() {
  */
 void Juego::generateTowers(int ctt) {
 
-    cout << "Generating Towers\n" << endl;
+    //cout << "Generating Towers\n" << endl;
 
     ///Se crea un contador
     int c = 0;
@@ -99,13 +99,13 @@ void Juego::generateTowers(int ctt) {
 
         ///Se evalua si hay mas posibilidades para colocar torres
         if (evaluatingTower == -1) {
-            cout << "No se pueden asignar mas torres" << endl;
+            //cout << "No se pueden asignar mas torres" << endl;
             c=ct;
         }
         else {
 
             ///Imprime solo las torres
-            cuadricula->printTorres();
+            //cuadricula->printTorres();
 
             for (int i = 0 ; i < cuadricula->getSize() ; i++) {
                 for (int j = 0 ; j < cuadricula->getSize() ; j++) {
@@ -121,31 +121,31 @@ void Juego::generateTowers(int ctt) {
 
             ///Hace el algortimo A*
             doAStar();
-            aStarAlgorithm->showPath();
+            //aStarAlgorithm->showPath();
 
             ///Hace el algoritmo Backtracking
             doBacktracking();
-            backtrackingAlgorithm->showPath();
+            //backtrackingAlgorithm->showPath();
 
             ///Verificacion de si el algortimo A* ha sido completado
             if (aStarAlgorithm->isFoundGoal()) {
                 if (backtrackingAlgorithm->isFoundGoal()) {
-                    cout << "Backtracking Completed" << endl;
+                    //cout << "Backtracking Completed" << endl;
                     c++;
                 } else {
 
                     ///Rechaza la torre evaluada
-                    cout << "Backtracking Failed" << endl;
-                    cout << "La torre de id "<< evaluatingTower << " bloquea el camino" << endl;
+                    //cout << "Backtracking Failed" << endl;
+                    //cout << "La torre de id "<< evaluatingTower << " bloquea el camino" << endl;
                     cuadricula->addToVerifiedNot(evaluatingTower);
                     cuadricula->deleteTower(evaluatingTower);
 
                 }
-                cout << "A* Completed" << endl;
+                //cout << "A* Completed" << endl;
             } else {
                 ///Rechaza la torre evaluada
-                cout << "A* Failed" << endl;
-                cout << "La torre de id "<< evaluatingTower << " bloquea el camino" << endl;
+                //cout << "A* Failed" << endl;
+                //cout << "La torre de id "<< evaluatingTower << " bloquea el camino" << endl;
                 cuadricula->addToVerifiedNot(evaluatingTower);
                 cuadricula->deleteTower(evaluatingTower);
             }
@@ -159,10 +159,10 @@ void Juego::generateTowers(int ctt) {
     cuadricula->resetVerifiedNot();
 
     ///Imprime los caminos
-    cuadricula->printTorres();
+    //cuadricula->printTorres();
 
     ///IMPRIMIR VECTOR DE TORRES
-    cout << "Tower Id's: ";
+    /*cout << "Tower Id's: ";
     for (int i = 0; i < cuadricula->getTowerIdList().size(); i++) {
 
         if (i == 0) {
@@ -173,11 +173,11 @@ void Juego::generateTowers(int ctt) {
             cout << cuadricula->getTowerIdList()[i] << ", ";
         }
 
-    }
+    }*/
 
     ///IMPRIMIR VECTOR DE POSIBLES TORRES
 
-    cout << "PosibleTower Id's: ";
+    /*cout << "PosibleTower Id's: ";
     for (int i = 0; i < cuadricula->getPosibleTowerIdList().size(); i++) {
 
         if (i == 0) {
@@ -188,7 +188,7 @@ void Juego::generateTowers(int ctt) {
             cout << cuadricula->getPosibleTowerIdList()[i] << ", ";
         }
 
-    }
+    }*/
 
 }
 

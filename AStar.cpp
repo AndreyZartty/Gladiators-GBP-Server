@@ -328,7 +328,7 @@ void AStar::rotatePath() {
 
     pathToGoal = auxPath;
 
-    showPath();
+    //showPath();
 }
 
 
