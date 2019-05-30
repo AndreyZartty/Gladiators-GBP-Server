@@ -13,6 +13,7 @@
 class Poblacion
 {
 public:
+    Poblacion();
     Poblacion(string _nombrePoblacion);
     int getGeneracion();
     void setGeneracion(int Generacion);

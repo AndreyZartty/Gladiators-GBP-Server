@@ -4,6 +4,7 @@
 
 #include "poblacion.h"
 
+Poblacion::Poblacion(){}
 
 Poblacion::Poblacion(string _nombrePoblacion)
 {
