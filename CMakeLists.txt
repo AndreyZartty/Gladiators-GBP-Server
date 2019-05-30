@@ -10,7 +10,7 @@ include_directories(lib/googletest/googletest/include)
 include_directories(lib/googletest/googlemock/include)
 ######################GoogleTest######################
 
-add_executable(Gladiators_GBP main.cpp AStar.cpp AStar.h Node.cpp Node.h Vector2.cpp Vector2.h Gladiador.cpp Gladiador.h Torre.cpp Torre.h Cuadricula.cpp Cuadricula.h Juego.cpp Juego.h Backtracking.cpp Backtracking.h list.cpp list.h nodeG.cpp nodeG.h poblacion.cpp poblacion.h Tests/main_test.cpp Tests.cpp)
+add_executable(Gladiators_GBP main.cpp AStar.cpp AStar.h Node.cpp Node.h Vector2.cpp Vector2.h Gladiador.cpp Gladiador.h Torre.cpp Torre.h Cuadricula.cpp Cuadricula.h Juego.cpp Juego.h Backtracking.cpp Backtracking.h list.cpp list.h nodeG.cpp nodeG.h poblacion.cpp poblacion.h Tests/main_test.cpp)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(JSON-C json-c)
