@@ -144,21 +144,22 @@ TEST_F(AStarTest, Test_SetStartAndGoal) {
 
 }
 
-/*
-TEST_F(AStarTest, TestName_1) {
-
-    ///Arrange:
-    //Arrange everything to run the Test
-
+/**
+ * Test para verificar el largo del path, siendo así
+ * un path completo de start a goal
+ */
+TEST_F(AStarTest, Test_FindPath_PathToGo) {
 
     ///Act
-    //Run the Test
+    as->setInitializedStartGoal(false);
+    as->setFoundGoal(false);
+    as->findPath(jt->getNodoInicio(),jt->getNodoFinal());
 
     ///Assert
-    //Verify the Output
+    ASSERT_GE(as->getPathToGoal().size(),10);
 
 }
-*/
+
 
 ////////////////////////////////ASTAR////////////////////////////////
 
