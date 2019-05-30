@@ -574,8 +574,8 @@ class Foo {
 class FooTest : public ::testing::Test {
  protected:
   ...
-  T1 get_private_member1(Foo* obj) {
-    return obj->private_member1_;
+  T1 get_private_member1(Foo* gl) {
+    return gl->private_member1_;
   }
 };
 
@@ -602,8 +602,8 @@ class TestableYourClass : public YourClass {
 };
 
 TEST_F(YourClassTest, DoSomethingTest) {
-  TestableYourClass obj;
-  assertEquals(expected_value, obj.DoSomethingReturningInt());
+  TestableYourClass gl;
+  assertEquals(expected_value, gl.DoSomethingReturningInt());
 }
 ```
 

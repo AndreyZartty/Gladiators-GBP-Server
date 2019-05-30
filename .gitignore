@@ -21,7 +21,7 @@ _deps
 *.slo
 *.lo
 *.o
-*.obj
+*.gl
 
 # Precompiled Headers
 *.gch

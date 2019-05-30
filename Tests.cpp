@@ -350,43 +350,43 @@ TEST_F(CuadriculaTest, Test_ResetVerifiedNot) {
  * Text Fixture de una instancia de Gladiador obtenida de una instancia
  * de Juego.
  */
-struct TestGladiadores : public testing::Test {
+struct GladiadorTest : public testing::Test {
     Juego* jt;
-    Gladiador* obj;
-    void SetUp() { jt = new Juego(); obj = jt->getGladiador1(); }
-    void TearDown() { delete jt; delete obj; }
+    Gladiador* gl;
+    void SetUp() { jt = new Juego(); gl = jt->getGladiador1(); }
+    void TearDown() { delete jt; delete gl; }
 };
 
 
 
-TEST_F(TestGladiadores, testResistencia){
+TEST_F(GladiadorTest, testResistencia){
 
     ///Se establecen todos los atributos necesarios para realizar el algoritmo que calcula la resistencia
 
-    obj->setEdad(16);///Se establece una edad pequena para confirmar que la resistencia cambia segun la edad
+    gl->setEdad(16);///Se establece una edad pequena para confirmar que la resistencia cambia segun la edad
 
-    obj->setInteligencia(1);
-    obj->setCondicionFisica(1);
-    obj->setFuerzaSuperior(1);
-    obj->setFuerzaInferior(1);
-    obj->setResistencia();
-    ASSERT_EQ(23, obj->getResistencia());
+    gl->setInteligencia(1);
+    gl->setCondicionFisica(1);
+    gl->setFuerzaSuperior(1);
+    gl->setFuerzaInferior(1);
+    gl->setResistencia();
+    ASSERT_EQ(23, gl->getResistencia());
 
-    obj->setEdad(30);///Se establece una edad media para confirmar si resistencia aumenta como deberia
-    obj->setResistencia();
-    ASSERT_EQ(28, obj->getResistencia());
+    gl->setEdad(30);///Se establece una edad media para confirmar si resistencia aumenta como deberia
+    gl->setResistencia();
+    ASSERT_EQ(28, gl->getResistencia());
 
-    obj->setEdad(50);///Se establece una edad avanzada para confirmar si resistencia disminuye como deberia
-    obj->setResistencia();
-    ASSERT_EQ(18, obj->getResistencia());
+    gl->setEdad(50);///Se establece una edad avanzada para confirmar si resistencia disminuye como deberia
+    gl->setResistencia();
+    ASSERT_EQ(18, gl->getResistencia());
 
-    obj->setEdad(80);///Se establece una edad muy alta para confirmar si el gladiador muere y su resistencia llega a 0
-    obj->setResistencia();
-    ASSERT_EQ(0, obj->getResistencia());
+    gl->setEdad(80);///Se establece una edad muy alta para confirmar si el gladiador muere y su resistencia llega a 0
+    gl->setResistencia();
+    ASSERT_EQ(0, gl->getResistencia());
 }
 
 
-TEST_F(TestGladiadores, testPadres){
+TEST_F(GladiadorTest, testPadres){
 
     Gladiador *padre1 = new Gladiador(1);
     Gladiador *padre2 = new Gladiador(1);
@@ -403,16 +403,16 @@ TEST_F(TestGladiadores, testPadres){
 
 }
 
-TEST_F(TestGladiadores, testMuerte){
+TEST_F(GladiadorTest, testMuerte){
 
-    obj->setEdad(80);
-    obj->setInteligencia(1);
-    obj->setCondicionFisica(1);
-    obj->setFuerzaSuperior(1);
-    obj->setFuerzaInferior(1);
-    obj->setResistencia();
+    gl->setEdad(80);
+    gl->setInteligencia(1);
+    gl->setCondicionFisica(1);
+    gl->setFuerzaSuperior(1);
+    gl->setFuerzaInferior(1);
+    gl->setResistencia();
 
-    ASSERT_EQ(1, obj->getMuerto());
+    ASSERT_EQ(1, gl->getMuerto());
 }
 
 
@@ -482,38 +482,7 @@ TEST_F(JuegoTest, Test_Creacion_Torres) {
 
 
 
-/////////////////////////////////LIST/////////////////////////////////*
-
-
-
-/////////////////////////////////LIST/////////////////////////////////
-
-
-
-
-
-/////////////////////////////////NODE/////////////////////////////////*
-
-
-
-/////////////////////////////////NODE/////////////////////////////////
-
-
-
-
-
 //////////////////////////////POBLACION//////////////////////////////*
-
-/*
-namespace {
-    class TestPoblacion : public testing::Test {
-    public:
-        Poblacion obj2;
-        TestPoblacion(){
-            obj2;
-        }
-    };
-}*/
 
 
 /**
@@ -553,42 +522,3 @@ TEST_F(TestPoblacion, testAgregarGeneracion){
 
 //////////////////////////////POBLACION//////////////////////////////
 
-
-
-
-
-/////////////////////////////___/////////////////////////////
-
-
-/*
-//Fixture
-
-struct FixtureName : public testing::Test {
-    Class* cl;
-    void SetUp() { cl = new Class(); }
-    void TearDown() { delete cl; }
-};
-
-*/
-
-
-/*
-//TEST_F
-
-TEST_F(FixtureName, TestName_1) {
-
-    ///Arrange
-    //Arrange everything to run the Test
-
-
-    ///Act
-    //Run the Test
-
-    ///Assert
-    //Verify the Output
-
-}
-
- */
-
-/////////////////////////////___/////////////////////////////
