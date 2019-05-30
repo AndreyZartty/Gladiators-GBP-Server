@@ -2,6 +2,13 @@
 #include <gtest/gtest.h>
 #include "Juego.h"
 
+#include <gmock/gmock.h>
+
+#include "Gladiador.h"
+#include "poblacion.h"
+
+using testing::Eq;
+
 using namespace std;
 
 
@@ -205,6 +212,38 @@ TEST_F(BacktrackingTest, Test_Constructor_Atributos) {
 }
 
 
+/**
+ * Test del borrado correcto de las listas que utiliza el algoritmo Backtracking
+ */
+TEST_F(BacktrackingTest, Test_FindPath_Wipe_Lists) {
+
+    ///Arrange:
+    //PathToGoal
+    bt->getPathToGoal().push_back(0);
+    bt->getPathToGoal().push_back(11);
+    bt->getPathToGoal().push_back(22);
+    bt->getPathToGoal().push_back(33);
+    //FullPath
+    bt->getFullPath().push_back(0);
+    bt->getFullPath().push_back(10);
+    bt->getFullPath().push_back(11);
+    bt->getFullPath().push_back(22);
+    bt->getFullPath().push_back(23);
+    bt->getFullPath().push_back(33);
+
+    ///Act
+    //Limpia pathToGoal
+    bt->getPathToGoal().clear();
+    ///Limpia fullPath
+    bt->getFullPath().clear();
+
+    ///Assert
+    ASSERT_EQ(bt->getPathToGoal().size(),0);
+    ASSERT_EQ(bt->getPathToGoal().size(),0);
+
+}
+
+
 /////////////////////////////BACKTRACKING/////////////////////////////
 
 
@@ -306,6 +345,87 @@ TEST_F(CuadriculaTest, Test_ResetVerifiedNot) {
 
 //////////////////////////////GLADIADOR//////////////////////////////*
 
+/*
+namespace {
+    class TestGladiadores : public testing::Test {
+    public:
+        Gladiador obj;
+        TestGladiadores(){
+            obj;
+        }
+    };
+}
+*/
+
+
+/**
+ * Text Fixture de una instancia de la Cuadrícula obtenida de una instancia
+ * de Juego.
+ */
+struct TestGladiadores : public testing::Test {
+    Juego* jt;
+    Gladiador* obj;
+    void SetUp() { jt = new Juego(); obj = jt->getGladiador1(); }
+    void TearDown() { delete jt; delete obj; }
+};
+
+
+
+TEST_F(TestGladiadores, testResistencia){
+
+    ///Se establecen todos los atributos necesarios para realizar el algoritmo que calcula la resistencia
+
+    obj->setEdad(16);///Se establece una edad pequena para confirmar que la resistencia cambia segun la edad
+
+    obj->setInteligencia(1);
+    obj->setCondicionFisica(1);
+    obj->setFuerzaSuperior(1);
+    obj->setFuerzaInferior(1);
+    obj->setResistencia();
+    ASSERT_EQ(23, obj->getResistencia());
+
+    obj->setEdad(30);///Se establece una edad media para confirmar si resistencia aumenta como deberia
+    obj->setResistencia();
+    ASSERT_EQ(28, obj->getResistencia());
+
+    obj->setEdad(50);///Se establece una edad avanzada para confirmar si resistencia disminuye como deberia
+    obj->setResistencia();
+    ASSERT_EQ(18, obj->getResistencia());
+
+    obj->setEdad(80);///Se establece una edad muy alta para confirmar si el gladiador muere y su resistencia llega a 0
+    obj->setResistencia();
+    ASSERT_EQ(0, obj->getResistencia());
+}
+
+
+TEST_F(TestGladiadores, testPadres){
+
+    Gladiador *padre1 = new Gladiador(1);
+    Gladiador *padre2 = new Gladiador(1);
+
+    padre1->setNombre("Padre");
+    padre2->setNombre("Madre");
+
+    Gladiador *gladiador = new Gladiador(2,padre1,padre2);
+
+    Gladiador* glad = gladiador;
+
+    ASSERT_EQ("Padre", glad->getNombrePadre1());
+    ASSERT_EQ("Madre", glad->getNombrePadre2());
+
+}
+
+TEST_F(TestGladiadores, testMuerte){
+
+    obj->setEdad(80);
+    obj->setInteligencia(1);
+    obj->setCondicionFisica(1);
+    obj->setFuerzaSuperior(1);
+    obj->setFuerzaInferior(1);
+    obj->setResistencia();
+
+    ASSERT_EQ(1, obj->getMuerto());
+}
 
 
 //////////////////////////////GLADIADOR//////////////////////////////
